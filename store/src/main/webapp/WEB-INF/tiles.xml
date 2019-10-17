@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+        
+<tiles-definitions>  
+    <!-- Base Define -->
+    <definition name="empty.definition" template="/WEB-INF/jsp/emptyLayout.jsp">  
+        <put-attribute name="body" value="" />
+    </definition>
+    
+    <definition name="plain.definition" template="/WEB-INF/jsp/plainLayout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="body" value="" />
+    </definition>
+    
+    <definition name="base.definition" template="/WEB-INF/jsp/horizontalLayout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/menus.jsp" />  
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
+    </definition>
+    
+    <!-- <definition name="base.definition" template="/WEB-INF/jsp/layout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />  
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
+    </definition>-->
+    
+    <definition name="login" extends="plain.definition">  
+        <put-attribute name="title" value="Login" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />  
+    </definition>
+    
+    <definition name="forgetPassword" extends="plain.definition">  
+        <put-attribute name="title" value="Forget Password" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/forgetPassword.jsp" />  
+    </definition>
+    
+    <definition name="changePassword" extends="plain.definition">  
+        <put-attribute name="title" value="Change Password" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/changePassword.jsp" />  
+    </definition>
+
+    <definition name="resetPassword" extends="plain.definition">  
+        <put-attribute name="title" value="Reset Password" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/resetPassword.jsp" />  
+    </definition>
+
+    <definition name="registration" extends="plain.definition">
+        <put-attribute name="title" value="Registration" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/registration.jsp" />  
+    </definition>
+    
+    <definition name="home" extends="base.definition">  
+        <put-attribute name="title" value="Dashboard" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/home.jsp" />  
+    </definition>
+
+    <definition name="myAccount" extends="base.definition">  
+        <put-attribute name="title" value="My Account" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/myAccount.jsp" />  
+    </definition>
+    
+    <definition name="editProfile" extends="base.definition">  
+        <put-attribute name="title" value="Edit Profile" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/editProfile.jsp" />  
+    </definition>
+
+    <definition name="failure" extends="empty.definition">  
+        <put-attribute name="title" value="Admin" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/failure.jsp" />  
+    </definition>
+
+    <definition name="admin" extends="base.definition">  
+        <put-attribute name="title" value="Admin" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin.jsp" />  
+    </definition>
+    
+    <definition name="composeEmail" extends="base.definition">  
+        <put-attribute name="title" value="Compose Email" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/composeEmail.jsp" />  
+    </definition>
+    
+    <definition name="addEmailAccount" extends="base.definition">  
+        <put-attribute name="title" value="Add Email Account" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/addEmailAccount.jsp" />  
+    </definition>
+    
+    <definition name="addEmailTemplates" extends="base.definition">  
+        <put-attribute name="title" value="Add Email Templates" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/addEmailTemplates.jsp" />  
+    </definition>
+    
+    <definition name="emailTemplates" extends="base.definition">  
+        <put-attribute name="title" value="Email Templates" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/emailTemplates.jsp" />  
+    </definition>
+    
+    <definition name="addCategory" extends="base.definition">  
+        <put-attribute name="title" value="Add Category" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/addCategory.jsp" />  
+    </definition>
+    
+    <definition name="categories" extends="base.definition">  
+        <put-attribute name="title" value="Categories" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/categories.jsp" />  
+    </definition>
+    
+    <definition name="addProduct" extends="base.definition">  
+        <put-attribute name="title" value="Add Product" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/addProduct.jsp" />  
+    </definition>
+    
+    <definition name="products" extends="base.definition">  
+        <put-attribute name="title" value="Products" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/products.jsp" />  
+    </definition>
+    
+    <definition name="importProducts" extends="base.definition">  
+        <put-attribute name="title" value="Import Products" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/importProducts.jsp" />  
+    </definition>
+    
+    <definition name="users" extends="base.definition">  
+        <put-attribute name="title" value="Users" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/users.jsp" />  
+    </definition>
+    
+    <definition name="editUser" extends="base.definition">  
+        <put-attribute name="title" value="Edit User" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/editUser.jsp" />  
+    </definition>
+    
+    <definition name="roles" extends="base.definition">  
+        <put-attribute name="title" value="Roles" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/roles.jsp" />  
+    </definition>
+    
+    <definition name="addRole" extends="base.definition">  
+        <put-attribute name="title" value="Add Role" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/addRole.jsp" />  
+    </definition>
+    
+    <definition name="addPrivilege" extends="base.definition">  
+        <put-attribute name="title" value="Add Privilege" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/addPrivilege.jsp" />  
+    </definition>
+    
+    <definition name="privileges" extends="base.definition">  
+        <put-attribute name="title" value="Privileges" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/privileges.jsp" />  
+    </definition>
+    
+    <definition name="allProducts" extends="base.definition">  
+        <put-attribute name="title" value="All Products" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/allProducts.jsp" />  
+    </definition>
+    
+    <definition name="productListing" extends="empty.definition">  
+        <put-attribute name="title" value="Product Listing" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/productListing.jsp" />  
+    </definition>
+    
+    <definition name="profitLoss" extends="base.definition">  
+        <put-attribute name="title" value="Profit and Loss" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/profitLoss.jsp" />  
+    </definition>
+    
+    <definition name="dailyProfitLoss" extends="empty.definition">  
+        <put-attribute name="title" value="Profit and Loss" />
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/dailyProfitLoss.jsp" />  
+    </definition>
+    
+    <definition name="monthlyProfitLoss" extends="empty.definition">  
+        <put-attribute name="title" value="Profit and Loss" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/monthlyProfitLoss.jsp" />  
+    </definition>
+    
+    <definition name="quarterlyProfitLoss" extends="empty.definition">  
+        <put-attribute name="title" value="Profit and Loss" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/quarterlyProfitLoss.jsp" />  
+    </definition>
+    
+    <definition name="yearlyProfitLoss" extends="empty.definition">  
+        <put-attribute name="title" value="Profit and Loss" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/yearlyProfitLoss.jsp" />  
+    </definition>
+    
+    <definition name="order" extends="base.definition">  
+        <put-attribute name="title" value="Order" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/order.jsp" />  
+    </definition>
+    
+    <definition name="orders" extends="base.definition">  
+        <put-attribute name="title" value="Orders" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/orders.jsp" />  
+    </definition>
+    
+    <definition name="shoppingCart" extends="base.definition">  
+        <put-attribute name="title" value="Shopping Cart" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/shoppingCart.jsp" />  
+    </definition>
+    
+    <definition name="shoppingCartConfirm" extends="base.definition">  
+        <put-attribute name="title" value="Confirm" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/shoppingCartConfirm.jsp" />  
+    </definition>
+    
+    <definition name="stock" extends="base.definition">  
+        <put-attribute name="title" value="Stock" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/stock.jsp" />  
+    </definition>
+    
+    <definition name="customers" extends="base.definition">  
+        <put-attribute name="title" value="Stock" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/customers.jsp" />  
+    </definition>
+    
+    <definition name="addAddress" extends="empty.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addAddress.jsp" />  
+    </definition>
+    
+ </tiles-definitions>
