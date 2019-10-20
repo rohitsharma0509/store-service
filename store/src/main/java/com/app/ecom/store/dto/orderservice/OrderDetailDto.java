@@ -1,4 +1,4 @@
-package com.app.ecom.store.orderservice.dto;
+package com.app.ecom.store.dto.orderservice;
 
 import java.time.ZonedDateTime;
 
@@ -16,6 +16,18 @@ public class OrderDetailDto {
 
 	@JsonProperty("productId")
 	private Long productId;
+	
+	@JsonProperty("name")
+	private String name;
+	
+	@JsonProperty("code")
+	private String code;
+	
+	@JsonProperty("perProductPrice")
+	private Double perProductPrice;
+	
+	@JsonProperty("availableQuantity")
+	private Integer availableQuantity;
 	
 	@JsonProperty("createdBy")
 	private String createdBy;
@@ -51,6 +63,38 @@ public class OrderDetailDto {
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Double getPerProductPrice() {
+		return perProductPrice;
+	}
+
+	public void setPerProductPrice(Double perProductPrice) {
+		this.perProductPrice = perProductPrice;
+	}
+
+	public Integer getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+	public void setAvailableQuantity(Integer availableQuantity) {
+		this.availableQuantity = availableQuantity;
 	}
 
 	public String getCreatedBy() {

@@ -69,20 +69,20 @@ function validate(form) {
 	   </div>
        <div class="card-body">
        		<c:choose>
-			<c:when test="${productDtos.size() > 0}">	
-       		<c:forEach var="product" items="${productDtos}" varStatus="loop">
+			<c:when test="${orderDetailDtos.size() > 0}">	
+       		<c:forEach var="orderDetailDto" items="${orderDetailDtos}" varStatus="loop">
 		   		<div class="row">
 			   		<div class="col-sm-4 text-center">
 			            <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">
 			        </div>
 			        <div class="col-sm-3">
-			            <h5><strong>${product.name}</strong></h5>
+			            <h5><strong>${orderDetailDto.name}</strong></h5>
 			            <h6>
-			                <small>${product.code}</small>
+			                <small>${orderDetailDto.code}</small>
 			            </h6>
 			        </div>
 			        <div class="col-sm-5 text-md-right">
-			        	<h6>${product.perProductPrice} <span class="text-muted">x</span> ${product.quantity} = <strong>${ product.perProductPrice*product.quantity }</strong></h6>
+			        	<h6>${orderDetailDto.perProductPrice} <span class="text-muted">x</span> ${orderDetailDto.quantity} = <strong>${ orderDetailDto.perProductPrice*orderDetailDto.quantity }</strong></h6>
 			        </div>
 		    	</div>
 	        	<hr>
@@ -101,7 +101,7 @@ function validate(form) {
 			</c:otherwise>
 			</c:choose>
      	</div>
-     	<c:if test="${productDtos.size() > 0}">
+     	<c:if test="${orderDetailDtos.size() > 0}">
      	<div class="card-footer">
 	         <div class="row">
 	        	<div class="col-sm-9 text-center"></div>

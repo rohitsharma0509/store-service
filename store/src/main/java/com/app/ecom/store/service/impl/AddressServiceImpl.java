@@ -39,10 +39,10 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override 
-	public Address getAddressById(Long addressId) {
+	public AddressDto getAddressById(Long addressId) {
 		Optional<Address> optionalAddress = addressRepository.findById(addressId);
 		if(optionalAddress.isPresent()) {
-			return optionalAddress.get();
+			return addressMapper.addressToAddressDto(optionalAddress.get());
 		} else {
 			return null;
 		}

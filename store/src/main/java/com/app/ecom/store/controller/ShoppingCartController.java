@@ -11,6 +11,7 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
+import com.app.ecom.store.dto.orderservice.OrderDetailDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.ProductService;
@@ -41,24 +42,24 @@ public class ShoppingCartController {
 	@GetMapping(value = RequestUrls.ADD_TO_CART)
 	public String addToCart(Model model, @RequestParam(value = FieldNames.ID, required=true) Long id) {
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-		Optional<ProductDto> optionalProductDto = shoppingCart.getProductDtos().stream().filter(productDto -> productDto.getId()==id).findFirst();
+		Optional<OrderDetailDto> optionalOrderDetailDto = shoppingCart.getOrderDetailDtos().stream().filter(orderDetailDto -> id.equals(orderDetailDto.getProductId())).findFirst();
 		Integer availableQuantity = productService.getAvailableQuantity(id);
-		if(optionalProductDto.isPresent()){
-			if(availableQuantity > optionalProductDto.get().getQuantity()) {
-				optionalProductDto.get().setQuantity(optionalProductDto.get().getQuantity()+1);
+		ProductDto productDto = productService.getProductById(id);
+		if(optionalOrderDetailDto.isPresent()) {
+			if(availableQuantity > optionalOrderDetailDto.get().getQuantity()) {
+				optionalOrderDetailDto.get().setQuantity(optionalOrderDetailDto.get().getQuantity() + 1);
 			}
-			optionalProductDto.get().setAvailableQuantity(availableQuantity);
-		}else{
-			ProductDto productDto = productService.getProductByIdForCart(id);
-			productDto.setAvailableQuantity(availableQuantity);
-			shoppingCart.getProductDtos().add(productDto);
-		}
-		
-		shoppingCart.setTotalPrice(0.0);
-		if(!CollectionUtils.isEmpty(shoppingCart.getProductDtos())){
-			for(ProductDto productDto : shoppingCart.getProductDtos()){
-				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice() + (productDto.getPerProductPrice()*productDto.getQuantity()));
-			}
+			optionalOrderDetailDto.get().setAvailableQuantity(availableQuantity);
+		} else {
+			OrderDetailDto orderDetailDto = new OrderDetailDto();
+			orderDetailDto.setQuantity(1);
+			orderDetailDto.setProductId(id);
+			orderDetailDto.setName(productDto.getName());
+			orderDetailDto.setCode(productDto.getCode());
+			orderDetailDto.setPerProductPrice(productDto.getPerProductPrice());
+			orderDetailDto.setAvailableQuantity(availableQuantity);
+			shoppingCart.getOrderDetailDtos().add(orderDetailDto);
+			shoppingCart.setTotalPrice(shoppingCart.getTotalPrice()==null?0:shoppingCart.getTotalPrice() + productDto.getPerProductPrice());
 		}
 		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCart);
 		return "redirect:"+FieldNames.SHOPPING_CART;
@@ -98,13 +99,16 @@ public class ShoppingCartController {
 		User user = (User) httpSession.getAttribute(FieldNames.USER);
 		if(null == id){
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-			model.addAttribute(FieldNames.PRODUCTDTOS, shoppingCart.getProductDtos());
+			//model.addAttribute(FieldNames.PRODUCTDTOS, shoppingCart.getProductDtos());
+			//model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
+			model.addAttribute("orderDetailDtos", shoppingCart.getOrderDetailDtos());
 			model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
 		}else {
-			List<ProductDto> productDtos = new ArrayList<>();
+			List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
 			ProductDto productDto = productService.getProductByIdForCart(id);
-			productDtos.add(productDto);
-			model.addAttribute(FieldNames.PRODUCTDTOS, productDtos);
+			OrderDetailDto orderDetailDto = getOrderDetailDto(id, productDto);
+			orderDetailDtos.add(orderDetailDto);
+			model.addAttribute("orderDetailDtos", orderDetailDtos);
 			model.addAttribute(FieldNames.TOTAL_PRICE, productDto.getPerProductPrice());
 		}
 		model.addAttribute("addresses", addressService.getAddressByUser(user));
@@ -115,5 +119,15 @@ public class ShoppingCartController {
 	public String updateShoppingCart(Model model, @ModelAttribute ShoppingCart shoppingCart) {
 		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCartService.updateShoppingCart(shoppingCart));
 		return "redirect:checkout";
+	}
+	
+	private OrderDetailDto getOrderDetailDto(Long productId, ProductDto productDto) {
+		OrderDetailDto orderDetailDto = new OrderDetailDto();
+		orderDetailDto.setQuantity(1);
+		orderDetailDto.setProductId(productId);
+		orderDetailDto.setName(productDto.getName());
+		orderDetailDto.setCode(productDto.getCode());
+		orderDetailDto.setPerProductPrice(productDto.getPerProductPrice());
+		return orderDetailDto;
 	}
 }

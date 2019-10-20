@@ -1,8 +1,10 @@
-package com.app.ecom.store.orderservice.dto;
+package com.app.ecom.store.dto.orderservice;
+
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.app.ecom.store.dto.DefaultSearchRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;

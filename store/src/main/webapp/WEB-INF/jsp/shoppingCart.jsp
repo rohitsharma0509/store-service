@@ -17,45 +17,45 @@
 	   		<div class="clearfix"></div>
 	   </div>
        <div class="card-body">
-       		<c:choose>
-			<c:when test="${shoppingCart.getProductDtos().size() > 0}">	
-       		<c:forEach var="product" items="${shoppingCart.productDtos}" varStatus="loop">
-       		<form:hidden path="productDtos[${loop.index}].id" value="${product.id}"/>
-       		<form:hidden path="productDtos[${loop.index}].name" value="${product.name}"/>
-       		<form:hidden path="productDtos[${loop.index}].code" value="${product.code}"/>
-       		<form:hidden path="productDtos[${loop.index}].perProductPrice" value="${product.perProductPrice}"/>
-       		<form:hidden path="productDtos[${loop.index}].availableQuantity" value="${product.availableQuantity}"/>
+       <c:choose>
+			   <c:when test="${shoppingCart.getOrderDetailDtos().size() > 0}">	
+       		<c:forEach var="orderDetailDto" items="${shoppingCart.orderDetailDtos}" varStatus="loop">
+       		<form:hidden path="orderDetailDtos[${loop.index}].productId" value="${orderDetailDto.productId}"/>
+       		<form:hidden path="orderDetailDtos[${loop.index}].name" value="${orderDetailDto.name}"/>
+       		<form:hidden path="orderDetailDtos[${loop.index}].code" value="${orderDetailDto.code}"/>
+       		<form:hidden path="orderDetailDtos[${loop.index}].perProductPrice" value="${orderDetailDto.perProductPrice}"/>
+       		<form:hidden path="orderDetailDtos[${loop.index}].availableQuantity" value="${orderDetailDto.availableQuantity}"/>
        		<form:hidden path="totalPrice"/>
 		   		<div class="row">
 			   		<div class="col-sm-3 text-center">
 			            <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">
 			        </div>
 			        <div class="col-sm-3">
-			            <h5><strong>${product.name}</strong></h5>
+			            <h5><strong>${orderDetailDto.name}</strong></h5>
 			            <h6>
-			                <small>${product.code}</small>
+			                <small>${orderDetailDto.code}</small>
 			            </h6>
 			        </div>
 			        <div class="col-sm-2 text-md-right">
-			        	<h6><strong>${product.perProductPrice} <span class="text-muted">x</span></strong></h6>
+			        	<h6><strong>${orderDetailDto.perProductPrice} <span class="text-muted">x</span></strong></h6>
 			        </div>
 			        <div class="col-sm-1">
 			        	<div class="quantity">
-			        		<input type="button" value="+" class="plus btn-number" data-type="plus" data-field="productDtos[${loop.index}].quantity">
-          					<input type="number" id="productDtos${loop.index}.quantity" name="productDtos[${loop.index}].quantity" step="1" max="${product.availableQuantity}" min="1" value="${product.quantity}" title="Qty" class="qty input-number" size="4" readonly>
-              				<input type="button" value="-" class="minus btn-number" data-type="minus" data-field="productDtos[${loop.index}].quantity">
+			        		<input type="button" value="+" class="plus btn-number" data-type="plus" data-field="orderDetailDtos[${loop.index}].quantity">
+          					<input type="number" id="orderDetailDtos${loop.index}.quantity" name="orderDetailDtos[${loop.index}].quantity" step="1" max="${orderDetailDto.availableQuantity}" min="1" value="${orderDetailDto.quantity}" title="Qty" class="qty input-number" size="4" readonly>
+              				<input type="button" value="-" class="minus btn-number" data-type="minus" data-field="orderDetailDtos[${loop.index}].quantity">
 		                </div>
 			        </div>
 			        <div class="col-sm-2">
-			        	<input type="text" name="subTotal[${loop.index}]" value="${product.perProductPrice*product.quantity}" data-field="${product.perProductPrice}" class="form-control input-sm" readonly />
+			        	<input type="text" name="subTotal[${loop.index}]" value="${orderDetailDto.perProductPrice*orderDetailDto.quantity}" data-field="${orderDetailDto.perProductPrice}" class="form-control input-sm" readonly />
 			        </div>
 			        <div class="col-sm-1">
-			        	<button type="button" class="btn btn-outline-danger btn-xs" onclick="callAjaxForDelete('${contextPath}/shoppingCart/${product.id}')">
+			        	<button type="button" class="btn btn-outline-danger btn-xs" onclick="callAjaxForDelete('${contextPath}/shoppingCart/${orderDetailDto.productId}')">
 				        	<i class="fa fa-trash" aria-hidden="true"></i>
 				        </button>
 			        </div>
 		    	</div>
-	        	<c:if test="${shoppingCart.getProductDtos().size() != (loop.index+1)}">
+	        	<c:if test="${shoppingCart.getOrderDetailDtos().size() != (loop.index+1)}">
 	        	<hr>
 	        	</c:if>
         	</c:forEach>
@@ -66,7 +66,7 @@
 			</c:otherwise>
 			</c:choose>
      	</div>
-     	<c:if test="${shoppingCart.getProductDtos().size() > 0}">
+     	<c:if test="${shoppingCart.getOrderDetailDtos().size() > 0}">
      	<div class="card-footer">
 	         <div class="pull-right" style="margin: 10px">
 	         	 <button type="submit" class="btn btn-info pull-right"> <spring:message code="Checkout" text="Checkout" /></button>

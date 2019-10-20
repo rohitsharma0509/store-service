@@ -7,8 +7,7 @@ $(document).ready(function() {
 		
 		var input = $("input[name='"+fieldName+"']");
 		var currentVal = parseInt(input.val());
-		//var index = fieldName.substring(6, fieldName.lastIndexOf("]"));
-		var index = fieldName.substring(12, fieldName.lastIndexOf("]"));
+		var index = fieldName.substring(16, fieldName.lastIndexOf("]"));
 		var subTotalInput = $("input[name='subTotal["+index+"]']");
 		var price = parseFloat(subTotalInput.attr('data-field'));
 		var totalPriceLabel = $("#totalPriceLabel");
@@ -20,7 +19,7 @@ $(document).ready(function() {
 	        	if(currentVal > input.attr('min')) {
 	            	input.val(currentVal - 1).change();
 	            	subTotalInput.val(parseFloat((currentVal - 1)*price));
-	            	totalPriceLabel.text(parseFloat(totalPrice - price));
+	            	totalPriceLabel.text(parseFloat(totalPrice - price).toFixed(1));
 	            	totalPriceHidden.val(parseFloat(totalPrice - price));
 	        	} 
 	        	if(parseInt(input.val()) == input.attr('min')) {
@@ -30,7 +29,7 @@ $(document).ready(function() {
 				if(currentVal < input.attr('max')) {
 	        		input.val(currentVal + 1).change();
 	        		subTotalInput.val(parseFloat((currentVal + 1)*price));
-	        		totalPriceLabel.text(parseFloat(totalPrice + price));
+	        		totalPriceLabel.text(parseFloat(totalPrice + price).toFixed(1));
 	        		totalPriceHidden.val(parseFloat(totalPrice + price));
 	    		}
 	    		if(parseInt(input.val()) == input.attr('max')) {

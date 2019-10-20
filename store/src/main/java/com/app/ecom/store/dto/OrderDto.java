@@ -1,8 +1,10 @@
 package com.app.ecom.store.dto;
 
-import java.util.HashSet;
-import java.util.Set;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
+import com.app.ecom.store.dto.orderservice.OrderDetailDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,21 +20,30 @@ public class OrderDto {
 
 	@JsonProperty("totalAmount")
 	private Double totalAmount;
-
-	@JsonProperty("orderDate")
-	private String orderDate;
 	
 	@JsonProperty("status")
 	private String status;
 
-	@JsonProperty("userDto")
-	private UserDto userDto;
-
-	@JsonProperty("productDtos")
-	private Set<ProductDto> productDtos = new HashSet<>();
+	@JsonProperty("userId")
+	private Long userId;
 	
-	@JsonProperty("addressDto")
-	private AddressDto addressDto;
+	@JsonProperty("addressId")
+	private Long addressId;
+	
+	@JsonProperty("createdBy")
+	private String createdBy;
+
+	@JsonProperty("createdTs")
+	private ZonedDateTime createdTs;
+
+	@JsonProperty("lastModifiedBy")
+	private String lastModifiedBy;
+
+	@JsonProperty("lastModifiedTs")
+	private ZonedDateTime lastModifiedTs;
+	
+	@JsonProperty("orderDetailDtos")
+	private List<OrderDetailDto> orderDetailDtos;
 
 	public Long getId() {
 		return id;
@@ -58,14 +69,6 @@ public class OrderDto {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -74,28 +77,59 @@ public class OrderDto {
 		this.status = status;
 	}
 
-	public UserDto getUserDto() {
-		return userDto;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public Set<ProductDto> getProductDtos() {
-		return productDtos;
+	public Long getAddressId() {
+		return addressId;
 	}
 
-	public void setProductDtos(Set<ProductDto> productDtos) {
-		this.productDtos = productDtos;
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
 	}
 
-	public AddressDto getAddressDto() {
-		return addressDto;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setAddressDto(AddressDto addressDto) {
-		this.addressDto = addressDto;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
+	public ZonedDateTime getCreatedTs() {
+		return createdTs;
+	}
+
+	public void setCreatedTs(ZonedDateTime createdTs) {
+		this.createdTs = createdTs;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public ZonedDateTime getLastModifiedTs() {
+		return lastModifiedTs;
+	}
+
+	public void setLastModifiedTs(ZonedDateTime lastModifiedTs) {
+		this.lastModifiedTs = lastModifiedTs;
+	}
+
+	public List<OrderDetailDto> getOrderDetailDtos() {
+		return orderDetailDtos;
+	}
+
+	public void setOrderDetailDtos(List<OrderDetailDto> orderDetailDtos) {
+		this.orderDetailDtos = orderDetailDtos;
+	}
 }

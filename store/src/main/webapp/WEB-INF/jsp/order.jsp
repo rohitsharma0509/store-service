@@ -25,16 +25,16 @@
 		<div class="col-sm-6">
 			<spring:message code="Order Number" text="Order Number" />: <strong>${orderDto.orderNumber}</strong>
 			<div>
-				<strong>${orderDto.userDto.firstName} ${orderDto.userDto.lastName}</strong>
+				<strong>${userDto.firstName} ${userDto.lastName}</strong>
 			</div>
-			<div>${orderDto.addressDto.addressLine1},</div>
-			<div>${orderDto.addressDto.addressLine2}</div>
-			<div>${orderDto.addressDto.city}, ${orderDto.addressDto.state}, ${orderDto.addressDto.pincode}</div>
-			<div><strong><spring:message code="Email" text="Email" />:</strong> ${orderDto.userDto.email}</div>
-			<div><strong><spring:message code="Mobile" text="Mobile" />:</strong> ${orderDto.userDto.mobile}</div>
+			<div>${addressDto.addressLine1},</div>
+			<div>${addressDto.addressLine2}</div>
+			<div>${addressDto.city}, ${addressDto.state}, ${addressDto.pincode}</div>
+			<div><strong><spring:message code="Email" text="Email" />:</strong> ${userDto.email}</div>
+			<div><strong><spring:message code="Mobile" text="Mobile" />:</strong> ${userDto.mobile}</div>
 		</div>
 		<div class="col-sm-6">
-			<div style="float:right"><strong><spring:message code="Order Date" text="Order Date" />:</strong> ${orderDto.orderDate}</div>
+			<div style="float:right"><strong><spring:message code="Order Date" text="Order Date" />:</strong> ${orderDto.createdTs}</div>
 		</div>
 	</div>
 	<div class="row" style="height: 30px;"></div>
@@ -51,14 +51,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="product" items="${orderDto.productDtos}" varStatus="loop">
+				<c:forEach var="orderDetailDto" items="${orderDto.orderDetailDtos}" varStatus="loop">
 				<tr>
 					<td class="text-left">${loop.index + 1}</td>
-					<td class="text-center">${product.name}</td>
-					<td class="text-center">${product.code}</td>
-					<td class="text-center">${product.perProductPrice}</td>
-					<td class="text-center">${product.quantity}</td>
-					<td class="text-right">${product.perProductPrice * product.quantity}</td>
+					<td class="text-center">${orderDetailDto.name}</td>
+					<td class="text-center">${orderDetailDto.code}</td>
+					<td class="text-center">${orderDetailDto.perProductPrice}</td>
+					<td class="text-center">${orderDetailDto.quantity}</td>
+					<td class="text-right">${orderDetailDto.perProductPrice * orderDetailDto.quantity}</td>
 				</tr>
 				</c:forEach>
 			</tbody>

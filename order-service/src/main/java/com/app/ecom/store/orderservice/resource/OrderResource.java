@@ -37,6 +37,7 @@ public class OrderResource {
 			OrderDtos orderDtos = orderService.getOrders(orderSearchRequest);
 			return new ResponseEntity<>(orderDtos, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -47,6 +48,7 @@ public class OrderResource {
 			Long noOfOrders = orderService.countOrders(orderSearchRequest);
 			return new ResponseEntity<>(noOfOrders, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

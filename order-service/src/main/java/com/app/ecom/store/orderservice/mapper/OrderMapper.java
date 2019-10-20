@@ -1,5 +1,6 @@
 package com.app.ecom.store.orderservice.mapper;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -47,6 +48,10 @@ public class OrderMapper {
 		order.setUserId(orderDto.getUserId());
 		order.setOrderDetails(orderDetailsDtosToOrderDetails(orderDto.getOrderDetailDtos(), order));
 		order.setAddressId(orderDto.getAddressId());
+		order.setCreatedBy(orderDto.getCreatedBy());
+		order.setCreatedTs(ZonedDateTime.now());
+		order.setLastModifiedBy(orderDto.getLastModifiedBy());
+		order.setLastModifiedTs(ZonedDateTime.now());
 		return order;
 	}
 	
@@ -105,10 +110,10 @@ public class OrderMapper {
 	}
 	
 	public List<WhereClause> orderSearchRequestToWhereClauses(OrderSearchRequest orderSearchRequest) {
-		return getWhereClauses(orderSearchRequest.getOrderId(), orderSearchRequest.getOrderNumber(), orderSearchRequest.getFromDate(), orderSearchRequest.getToDate());
+		return getWhereClauses(orderSearchRequest.getOrderId(), orderSearchRequest.getOrderNumber(), orderSearchRequest.getFromDate(), orderSearchRequest.getToDate(), orderSearchRequest.getUserId(), orderSearchRequest.getProductIds());
 	}
 	
-	private List<WhereClause> getWhereClauses(Long id, String orderNumber, String fromDate, String toDate) {
+	private List<WhereClause> getWhereClauses(Long id, String orderNumber, ZonedDateTime fromDate, ZonedDateTime toDate, Long userId, List<Long> productIds) {
 		List<WhereClause> whereClauses = new ArrayList<>();
 		if (id != null) {
 			WhereClause whereClause = new WhereClause("id", String.valueOf(id), OperationType.EQUALS);
@@ -119,13 +124,18 @@ public class OrderMapper {
 				whereClauses.add(whereClause);
 			}
 			if (!StringUtils.isEmpty(fromDate)) {
-				WhereClause whereClause = new WhereClause("orderDate", fromDate, OperationType.GREATER_OR_EQUAL);
+				WhereClause whereClause = new WhereClause("createdTs", fromDate, OperationType.GREATER_OR_EQUAL);
 				whereClauses.add(whereClause);
 			}
 			if (!StringUtils.isEmpty(toDate)) {
-				WhereClause whereClause = new WhereClause("orderDate", toDate, OperationType.LESS_OR_EQUAL);
+				WhereClause whereClause = new WhereClause("createdTs", toDate, OperationType.LESS_OR_EQUAL);
 				whereClauses.add(whereClause);
 			}
+			if (userId != null) {
+				WhereClause whereClause = new WhereClause("userId", userId, OperationType.EQUALS);
+				whereClauses.add(whereClause);
+			}
+			
 		}
 		return whereClauses;
 	}

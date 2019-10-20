@@ -1,5 +1,6 @@
 package com.app.ecom.store.orderservice.handler;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -85,13 +86,29 @@ public class QueryHandler<T> {
 		} if (OperationType.NOT_NULL == whereClause.getOperation()) {
 			return criteriaBuilder.isNotNull(root.get(whereClause.getKey()));
 		} else if (OperationType.GREATER == whereClause.getOperation()) {
-			return criteriaBuilder.greaterThan(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			if(whereClause.getValue() instanceof ZonedDateTime || whereClause.getValue() instanceof String) {
+				return criteriaBuilder.greaterThan(root.get(whereClause.getKey()), (ZonedDateTime) whereClause.getValue());
+			} else {
+				return criteriaBuilder.greaterThan(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			}
 		} else if (OperationType.GREATER_OR_EQUAL == whereClause.getOperation()) {
-			return criteriaBuilder.greaterThanOrEqualTo(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			if(whereClause.getValue() instanceof ZonedDateTime || whereClause.getValue() instanceof String) {
+				return criteriaBuilder.greaterThanOrEqualTo(root.get(whereClause.getKey()), (ZonedDateTime) whereClause.getValue());
+			} else {
+				return criteriaBuilder.greaterThanOrEqualTo(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			}
 		} else if (OperationType.LESS == whereClause.getOperation()) {
-			return criteriaBuilder.lessThan(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			if(whereClause.getValue() instanceof ZonedDateTime || whereClause.getValue() instanceof String) {
+				return criteriaBuilder.lessThan(root.get(whereClause.getKey()), (ZonedDateTime) whereClause.getValue());
+			} else {
+				return criteriaBuilder.lessThan(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			}
 		} else if (OperationType.LESS_OR_EQUAL == whereClause.getOperation()) {
-			return criteriaBuilder.lessThanOrEqualTo(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			if(whereClause.getValue() instanceof ZonedDateTime || whereClause.getValue() instanceof String) {
+				return criteriaBuilder.lessThanOrEqualTo(root.get(whereClause.getKey()), (ZonedDateTime) whereClause.getValue());
+			} else {
+				return criteriaBuilder.lessThanOrEqualTo(root.get(whereClause.getKey()), (Integer) whereClause.getValue());
+			}
 		} else if (OperationType.LIKE == whereClause.getOperation()) {
 			return criteriaBuilder.like(root.<String>get(whereClause.getKey()), PERCENT + whereClause.getValue() + PERCENT);
 		} else {

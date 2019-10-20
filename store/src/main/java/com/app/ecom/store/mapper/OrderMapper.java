@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.enums.OrderStatusEnum;
@@ -69,13 +68,13 @@ public class OrderMapper {
 		
 		OrderDto orderDto = new OrderDto();
 		orderDto.setId(order.getId());
-		orderDto.setOrderDate(commonUtil.convertZonedDateTimeToString(order.getOrderDate(), Constants.DATETIME_FORMAT_YYYYMMDDHHMMSS));
+		//orderDto.setOrderDate(commonUtil.convertZonedDateTimeToString(order.getOrderDate(), Constants.DATETIME_FORMAT_YYYYMMDDHHMMSS));
 		orderDto.setStatus(order.getStatus());
 		orderDto.setOrderNumber(order.getOrderNumber());
 		orderDto.setTotalAmount(order.getTotalAmount());
-		orderDto.setUserDto(userMapper.userToUserDto(order.getUser(), false));
-		orderDto.setProductDtos(orderDetailsToProductDtos(order.getOrderDetails()));
-		orderDto.setAddressDto(addressMapper.addressToAddressDto(order.getAddress()));
+		//orderDto.setUserDto(userMapper.userToUserDto(order.getUser(), false));
+		//orderDto.setProductDtos(orderDetailsToProductDtos(order.getOrderDetails()));
+		//orderDto.setAddressDto(addressMapper.addressToAddressDto(order.getAddress()));
 		return orderDto;
 	}
 

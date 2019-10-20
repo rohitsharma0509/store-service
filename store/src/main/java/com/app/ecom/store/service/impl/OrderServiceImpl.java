@@ -2,23 +2,26 @@ package com.app.ecom.store.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
-import javax.persistence.Tuple;
-
+import com.app.ecom.store.client.OrderServiceClient;
 import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.dto.AddressDto;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
-import com.app.ecom.store.mapper.OrderMapper;
-import com.app.ecom.store.model.Order;
+import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.dto.orderservice.OrderDetailDto;
+import com.app.ecom.store.dto.orderservice.OrderDtos;
+import com.app.ecom.store.dto.orderservice.OrderSearchRequest;
 import com.app.ecom.store.model.User;
-import com.app.ecom.store.querybuilder.QueryBuilder;
-import com.app.ecom.store.repository.OrderRepository;
 import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.OrderService;
+import com.app.ecom.store.service.ProductService;
+import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -31,60 +34,86 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
-	@Autowired
-	private OrderMapper orderMapper;
-
-	@Autowired
-	private OrderRepository orderRepository;
-	
-	@Autowired
-	private QueryBuilder queryBuilder;
 	
 	@Autowired
 	private CommonUtil commonUtil;
 	
 	@Autowired
+	private OrderServiceClient orderServiceClient;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private AddressService addressService;
 	
-	public OrderDto addOrder(java.util.List<ProductDto> productDtos, User user, Double totalPrice, Long addressId) {
-		Order order = orderRepository.save(orderMapper.convertToOrder(productDtos, user, totalPrice, addressService.getAddressById(addressId)));
-		return orderMapper.orderToOrderDto(order);
+	@Autowired
+	private ProductService productService;
+	
+	public OrderDto addOrder(java.util.List<OrderDetailDto> orderDetailDtos, User user, Double totalPrice, Long addressId) {
+		OrderDto orderDto = new OrderDto();
+		orderDto.setAddressId(addressId);
+		orderDto.setOrderDetailDtos(orderDetailDtos);
+		orderDto.setTotalAmount(totalPrice);
+		orderDto.setUserId(user.getId());
+		orderDto.setCreatedBy(user.getUsername());
+		orderDto.setLastModifiedBy(user.getUsername());
+		return orderServiceClient.createUpdateOrder(orderDto);
 	}
 
 	@Override
 	public OrderDto getOrder(Long id) {
-	    Optional<Order> optional = orderRepository.findById(id);
-	    if(optional.isPresent()) {
-	        return orderMapper.orderToOrderDto(optional.get());
-	    } else {
-	        return null;
-	    }
+		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
+		orderSearchRequest.setOrderId(id);
+		OrderDtos orderDtos = orderServiceClient.getOrders(orderSearchRequest);
+		if(null != orderDtos && !CollectionUtils.isEmpty(orderDtos.getOrders())) {
+			Optional<OrderDto> optional = orderDtos.getOrders().stream().filter(Objects::nonNull).findFirst();
+			OrderDto orderDto = optional.isPresent() ? optional.get() : null;
+			for(OrderDetailDto orderDetailDto : orderDto.getOrderDetailDtos()) {
+				ProductDto productDto = productService.getProductById(orderDetailDto.getProductId());
+				orderDetailDto.setName(productDto.getName());
+				orderDetailDto.setCode(productDto.getCode());
+				orderDetailDto.setPerProductPrice(productDto.getPerProductPrice());
+			}
+			return orderDto;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
-	public Page<Order> getOrders(Pageable pageable) {
-		PageRequest request = PageRequest.of(pageable.getPageNumber() - 1,
-				pageable.getPageSize(), pageable.getSort());
-		return orderRepository.findAll(request);
-	}
-	
-	@Override
-	public Long countByOrderDate(ZonedDateTime orderDate){
-		return orderRepository.countByOrderDate(orderDate);
+	public CustomPage<OrderDto> getOrders(Pageable pageable, Map<String, String> params) {
+		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
+		int limit = offset + pageable.getPageSize();
+		
+		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
+		orderSearchRequest.setOffset(offset);
+		orderSearchRequest.setLimit(limit);
+		orderSearchRequest.setFromDate(null);
+		orderSearchRequest.setToDate(null);
+		orderSearchRequest.setOrderNumber(params.get("orderNumber"));
+		orderSearchRequest.setUserId(Long.parseLong(params.get("userId")));
+		OrderDtos orderDtos = orderServiceClient.getOrders(orderSearchRequest);
+		Long totalRecords = orderServiceClient.countOrders(orderSearchRequest);
+		CustomPage<OrderDto> page = new CustomPage<>();
+		page.setContent(orderDtos.getOrders());
+		page.setPageNumber(pageable.getPageNumber() - 1);
+		page.setSize(pageable.getPageSize());
+		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
+		return page;
 	}
 	
 	@Override
 	public Long countByOrderDateGreaterThanEqual(ZonedDateTime orderDate){
-		return orderRepository.countByOrderDateGreaterThanEqual(orderDate);
+		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
+		orderSearchRequest.setFromDate(orderDate);
+		return orderServiceClient.countOrders(orderSearchRequest);
 	}
 	
 	public ByteArrayOutputStream createOrderPdf(Long id){
@@ -98,20 +127,22 @@ public class OrderServiceImpl implements OrderService {
 			PdfWriter.getInstance(document, baos);
 			document.open();
 			
+			UserDto userDto = getUserDtoByUserId(orderDto.getUserId());
+			AddressDto addressDto = getAddressDtoByAddressId(orderDto.getAddressId());
 			Phrase customerPhrase = new Phrase("", normalFont);
 			customerPhrase.add("Order Number: "+ orderDto.getOrderNumber());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getUserDto().getFirstName()+" "+orderDto.getUserDto().getLastName());
+			customerPhrase.add(userDto.getFirstName()+" "+userDto.getLastName());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getAddressDto().getAddressLine1());
+			customerPhrase.add(addressDto.getAddressLine1());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getAddressDto().getAddressLine2());
+			customerPhrase.add(addressDto.getAddressLine2());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getAddressDto().getCity()+", "+orderDto.getAddressDto().getState()+", "+orderDto.getAddressDto().getPincode());
+			customerPhrase.add(addressDto.getCity()+", "+addressDto.getState()+", "+addressDto.getPincode());
 			customerPhrase.add("\n");
-			customerPhrase.add("Email: "+orderDto.getUserDto().getEmail());
+			customerPhrase.add("Email: "+userDto.getEmail());
 			customerPhrase.add("\n");
-			customerPhrase.add("Mobile: "+orderDto.getUserDto().getMobile());
+			customerPhrase.add("Mobile: "+userDto.getMobile());
 
 			PdfPTable table = new PdfPTable(2);
 			table.setWidthPercentage(100);
@@ -119,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
 			cell.setBorder(Rectangle.NO_BORDER);
 			table.addCell(cell);
 			
-			Phrase datePhrase = new Phrase(orderDto.getOrderDate(), normalFont);
+			Phrase datePhrase = new Phrase(commonUtil.convertZonedDateTimeToString(orderDto.getCreatedTs(), Constants.DATETIME_FORMAT_YYYYMMDDHHMMSS), normalFont);
 
 			cell = new PdfPCell(datePhrase);
 			cell.setBorder(Rectangle.NO_BORDER);
@@ -184,7 +215,9 @@ public class OrderServiceImpl implements OrderService {
 			table.addCell(cell);
 			
 			int count = 0;
-			for(ProductDto productDto : orderDto.getProductDtos()) {
+			for(OrderDetailDto orderDetailDto : orderDto.getOrderDetailDtos()) {
+				ProductDto productDto = productService.getProductById(orderDetailDto.getProductId());
+				
 				cell = new PdfPCell(new Phrase(count+1+"",normalFont));
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 	            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -209,13 +242,13 @@ public class OrderServiceImpl implements OrderService {
 				cell.setFixedHeight(30);
 				table.addCell(cell);
 				
-				cell = new PdfPCell(new Phrase(productDto.getQuantity()+"", normalFont));
+				cell = new PdfPCell(new Phrase(orderDetailDto.getQuantity()+"", normalFont));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setFixedHeight(30);
 				table.addCell(cell);
 				
-				cell = new PdfPCell(new Phrase((productDto.getPerProductPrice()*productDto.getQuantity())+"", normalFont));
+				cell = new PdfPCell(new Phrase((productDto.getPerProductPrice()*orderDetailDto.getQuantity())+"", normalFont));
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setFixedHeight(30);
@@ -268,54 +301,21 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return baos;
 	}
-	
-	@Override
-	public CustomPage<OrderDto> searchOrders(String orderNumber, String fromDate, String toDate, Long userId, Pageable pageable) {
-		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
-		StringBuilder query = new StringBuilder("select * from orders where 1=1");
-		StringBuilder countQuery = new StringBuilder("select count(order_id) from orders where 1=1");
-		if(!StringUtils.isEmpty(orderNumber)) {
-			query.append(" and order_number like '%"+orderNumber+"%'");
-			countQuery.append(" and order_number like '%"+orderNumber+"%'");
-		}
-		if(!StringUtils.isEmpty(fromDate)) {
-			query.append(" and date(order_date)<='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
-			countQuery.append(" and date(order_date)<='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
-		}
-		if(!StringUtils.isEmpty(toDate)) {
-			query.append(" and date(order_date)>='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
-			countQuery.append(" and date(order_date)>='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
-		}
-		if(!StringUtils.isEmpty(userId)) {
-			query.append(" and user_id="+userId);
-			countQuery.append(" and user_id="+userId);
-		}
-		query.append(" limit "+offset+", "+limit);
-		List<Tuple> tuples = queryBuilder.getTupleByQuery(query.toString(), null);
-		
-		List<OrderDto> orderDtos = new ArrayList<>();
-		for(Tuple tuple : tuples){
-			OrderDto orderDto = new OrderDto();
-			orderDto.setId(Long.parseLong(String.valueOf(tuple.get("order_id"))));
-			orderDto.setOrderDate(commonUtil.formatDate(String.valueOf(tuple.get("order_date")), Constants.YYYY_MM_DD, Constants.DD_MM_YYYY));
-			orderDto.setOrderNumber(String.valueOf(tuple.get("order_number")));
-			orderDto.setTotalAmount(Double.parseDouble(String.valueOf(tuple.get("total_amount"))));
-			orderDtos.add(orderDto);
-		}
-		
-		Integer totalRecords = queryBuilder.countByQuery(countQuery.toString(), null);
-		
-		CustomPage<OrderDto> page = new CustomPage<>();
-		page.setContent(orderDtos);
-		page.setPageNumber(pageable.getPageNumber() - 1);
-		page.setSize(pageable.getPageSize());
-		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
-		return page;
-	}
 
 	@Override
 	public Long countOrderByProductIdIn(List<Long> ids) {
-		return orderRepository.countOrderByProductIdIn(ids);
+		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
+		orderSearchRequest.setProductIds(ids);
+		return orderServiceClient.countOrders(orderSearchRequest);
+	}
+
+	@Override
+	public UserDto getUserDtoByUserId(Long userId) {
+		return userService.findUserById(userId);
+	}
+
+	@Override
+	public AddressDto getAddressDtoByAddressId(Long addressId) {
+		return addressService.getAddressById(addressId);
 	}
 }

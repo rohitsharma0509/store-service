@@ -13,9 +13,11 @@ import com.app.ecom.store.orderservice.model.Order;
 import com.app.ecom.store.orderservice.repository.OrderRepository;
 import com.app.ecom.store.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
