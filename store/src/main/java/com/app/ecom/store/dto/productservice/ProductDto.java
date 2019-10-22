@@ -1,4 +1,6 @@
-package com.app.ecom.store.dto;
+package com.app.ecom.store.dto.productservice;
+
+import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -7,45 +9,56 @@ import org.springframework.web.multipart.MultipartFile;
 
 @JsonInclude(value = Include.NON_NULL)
 public class ProductDto {
-	
 	@JsonProperty("id")
 	private Long id;
-	
+
 	@JsonProperty("code")
 	private String code;
 
 	@JsonProperty("name")
 	private String name;
-	
+
 	@JsonProperty("description")
 	private String description;
-	
+
 	@JsonProperty("brandName")
 	private String brandName;
 
 	@JsonProperty("quantity")
 	private Integer quantity;
-	
+
 	@JsonProperty("alertQuantity")
 	private Integer alertQuantity;
-	
+
 	@JsonProperty("purchasePrice")
 	private Double purchasePrice;
 
 	@JsonProperty("perProductPrice")
 	private Double perProductPrice;
-	
+
 	@JsonProperty("image")
 	private MultipartFile image;
-	
+
 	@JsonProperty("base64Image")
 	private String base64Image;
-	
+
 	@JsonProperty("categoryId")
 	private Long categoryId;
-	
+
 	@JsonProperty("availableQuantity")
 	private Integer availableQuantity;
+
+	@JsonProperty("createdBy")
+	private String createdBy;
+
+	@JsonProperty("createdTs")
+	private ZonedDateTime createdTs;
+
+	@JsonProperty("lastModifiedBy")
+	private String lastModifiedBy;
+
+	@JsonProperty("lastModifiedTs")
+	private ZonedDateTime lastModifiedTs;
 
 	public Long getId() {
 		return id;
@@ -151,21 +164,35 @@ public class ProductDto {
 		this.availableQuantity = availableQuantity;
 	}
 
-	@Override
-	public String toString() {
-		return "ProductDto [id=" + id + ", code=" + code + ", name=" + name
-				+ ", brandName=" + brandName + ", quantity=" + quantity
-				+ ", alertQuantity=" + alertQuantity + ", purchasePrice="
-				+ purchasePrice + ", perProductPrice=" + perProductPrice
-				+ ", image=" + image + ", base64Image=" + base64Image
-				+ ", categoryId=" + categoryId + ", availableQuantity="+availableQuantity+"]";
-	}
-	
-	/*public Set<Purchase> getPurchases() {
-		return purchases;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setPurchases(Set<Purchase> purchases) {
-		this.purchases = purchases;
-	}*/
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public ZonedDateTime getCreatedTs() {
+		return createdTs;
+	}
+
+	public void setCreatedTs(ZonedDateTime createdTs) {
+		this.createdTs = createdTs;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public ZonedDateTime getLastModifiedTs() {
+		return lastModifiedTs;
+	}
+
+	public void setLastModifiedTs(ZonedDateTime lastModifiedTs) {
+		this.lastModifiedTs = lastModifiedTs;
+	}
 }

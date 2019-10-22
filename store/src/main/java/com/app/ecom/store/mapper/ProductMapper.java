@@ -9,10 +9,10 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
-import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.jaxb.ProductType;
 import com.app.ecom.store.dto.jaxb.ProductsType;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDto;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.model.Product;
 import com.app.ecom.store.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

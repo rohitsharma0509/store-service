@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.OrderDto;
-import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
@@ -60,7 +60,7 @@ public class OrderController {
 			shoppingCartService.removeShoppingCart();
 		} else {
 			List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
-			ProductDto productDto = productService.getProductByIdForCart(id);
+			ProductDto productDto = productService.getProductById(id);
 			OrderDetailDto orderDetailDto = getOrderDetailDto(id, productDto);
 			orderDetailDtos.add(orderDetailDto);
 			orderDto = orderService.addOrder(orderDetailDtos, user, productDto.getPerProductPrice(), addressId);

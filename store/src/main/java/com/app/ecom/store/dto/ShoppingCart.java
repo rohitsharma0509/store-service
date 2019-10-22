@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;

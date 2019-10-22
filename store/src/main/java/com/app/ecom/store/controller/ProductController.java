@@ -10,9 +10,8 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
-import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.Response;
-import com.app.ecom.store.model.Product;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,7 +83,7 @@ public class ProductController {
 		params.put(FieldNames.CATEGORY_ID, categoryId);
 		params.put(FieldNames.BRAND_NAME, brandName);
 		params.put(FieldNames.PRODUCT_NAME, productName);
-		CustomPage<Product> page = productService.searchProducts(pageable, params);
+		CustomPage<ProductDto> page = productService.searchProducts(pageable, params);
 		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.PRODUCTS, page.getPageNumber()+1, page.getTotalPages(), params));
 	    model.addAttribute(FieldNames.PAGE, page);
@@ -98,7 +96,9 @@ public class ProductController {
 		Response response = productValidator.validateProductAssociation(Arrays.asList(id));
 		
 		if(HttpStatus.OK.value() == response.getCode()) {
-			productService.deleteProductById(id);
+			IdsDto idsDto = new IdsDto();
+			idsDto.setIds(Arrays.asList(id));
+			productService.deleteProducts(idsDto);
 		}
 		return response;
 	}
@@ -109,7 +109,7 @@ public class ProductController {
 		Response response = productValidator.validateProductAssociation(idsDto.getIds());
 		
 		if(HttpStatus.OK.value() == response.getCode()) {
-			productService.deleteProducts(idsDto.getIds());
+			productService.deleteProducts(idsDto);
 		}
 		return response;
 	}
@@ -120,15 +120,9 @@ public class ProductController {
 		Response response = productValidator.validateProductAssociation(null);
 		
 		if(HttpStatus.OK.value() == response.getCode()) {
-			productService.deleteAllProducts();
+			productService.deleteProducts(null);
 		}
 		return response;
-	}
-	
-	@PutMapping(value = RequestUrls.PRODUCTS)
-	public String editProduct(Model model, @ModelAttribute(FieldNames.PRODUCT) Product product) {
-		productService.editProduct(product);
-		return "products";
 	}
 	
 	@GetMapping(value = RequestUrls.PRODUCTS_IMPORT)
@@ -154,7 +148,7 @@ public class ProductController {
 		params.put(FieldNames.CATEGORY_ID, categoryId);
 		params.put(FieldNames.BRAND_NAME, brandName);
 		params.put(FieldNames.PRODUCT_NAME, productName);
-		CustomPage<ProductDto> page = productService.searchProductDtos(pageable, params);
+		CustomPage<ProductDto> page = productService.searchProducts(pageable, params);
 		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
 		model.addAttribute(FieldNames.PAGE, page);
 		return "allProducts";
@@ -170,7 +164,7 @@ public class ProductController {
 		params.put(FieldNames.CATEGORY_ID, categoryId);
 		params.put(FieldNames.BRAND_NAME, brandName);
 		params.put(FieldNames.PRODUCT_NAME, productName);
-		CustomPage<ProductDto> page = productService.searchProductDtos(pageable, params);
+		CustomPage<ProductDto> page = productService.searchProducts(pageable, params);
 		model.addAttribute(FieldNames.PAGE, page);
 		return "productListing";
 	}

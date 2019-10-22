@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.app.ecom.store.dto.OrderDto;
-import com.app.ecom.store.dto.ProductDto;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.enums.OrderStatusEnum;
 import com.app.ecom.store.model.Address;
 import com.app.ecom.store.model.Order;

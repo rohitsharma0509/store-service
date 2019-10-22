@@ -29,7 +29,7 @@ public class HomeController {
 	public String home(Model model) {
 		Long totalProducts = productService.getNumberOfProducts();
 		Long outOfStockProduct = productService.getOutOfStockProductQuantity();
-		Long alertProducts = productService.getAlterProductQuantity();
+		Long alertProducts = productService.getAlertProductQuantity();
 		
 		model.addAttribute(FieldNames.TOTAL_PRODUCTS, totalProducts);
 		model.addAttribute(FieldNames.ALERT_PRODUCTS, alertProducts);

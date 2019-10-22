@@ -9,9 +9,9 @@ import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
-import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.ProductService;
@@ -105,7 +105,7 @@ public class ShoppingCartController {
 			model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
 		}else {
 			List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
-			ProductDto productDto = productService.getProductByIdForCart(id);
+			ProductDto productDto = productService.getProductById(id);
 			OrderDetailDto orderDetailDto = getOrderDetailDto(id, productDto);
 			orderDetailDtos.add(orderDetailDto);
 			model.addAttribute("orderDetailDtos", orderDetailDtos);

@@ -3,8 +3,8 @@ package com.app.ecom.store.validator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
