@@ -54,23 +54,27 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public CustomPage<ProductDto> searchProducts(Pageable pageable, Map<String, String> params) {
+		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
+		int limit = offset + pageable.getPageSize();
+		
 		List<Long> categoryIds = new ArrayList<>();
 		if(!StringUtils.isEmpty(params.get(FieldNames.CATEGORY_ID))) {
 			categoryIds.add(Long.parseLong(params.get(FieldNames.CATEGORY_ID)));
 		}
 		ProductSearchRequest productSearchRequest = getProductSearchRequest(null, categoryIds, params.get(FieldNames.PRODUCT_NAME), params.get(FieldNames.BRAND_NAME));
+		productSearchRequest.setOffset(offset);
+		productSearchRequest.setLimit(limit);		
 		ProductDtos productDtos = productServiceClient.getProducts(productSearchRequest);
 		
 		Long totalRecords = productServiceClient.countProducts(productSearchRequest);
 		CustomPage<ProductDto> page = new CustomPage<>();
 		if(productDtos != null) {
-			productDtos.getProducts().stream().filter(Objects::nonNull).forEach(productDto -> {
-				productDto.setAvailableQuantity(productServiceClient.getProductsQuantity(productDto.getId(), QuantityStatus.AVAILED));
-			});	
+			productDtos.getProducts().stream().filter(Objects::nonNull).forEach(productDto -> productDto.setAvailableQuantity(productServiceClient.getProductsQuantity(productDto.getId(), QuantityStatus.AVAILED)));
 			page.setContent(productDtos.getProducts());
 		}
 		page.setPageNumber(pageable.getPageNumber() - 1);
 		page.setSize(pageable.getPageSize());
+		page.setTotalRecords(totalRecords == null ? 0 : totalRecords.intValue());
 		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
 		return page;
 	}
@@ -85,7 +89,6 @@ public class ProductServiceImpl implements ProductService {
 	public Long getNumberOfProducts() {
 		return productServiceClient.countProducts(new ProductSearchRequest());
 	}
-	
 
 	@Override
 	public CustomPage<StockDto> getStockDetails(Pageable pageable, Map<String, String> params) {
@@ -109,7 +112,6 @@ public class ProductServiceImpl implements ProductService {
 		StockDtos stockDtos = productServiceClient.getStockDetails(productSearchRequest);
 		if(!isExcel){
 			Integer totalRecords = productServiceClient.countStockDetails(productSearchRequest);
-			System.out.println(totalRecords);
 			page.setPageNumber(pageable.getPageNumber() - 1);
 			page.setSize(pageable.getPageSize());
 			page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
