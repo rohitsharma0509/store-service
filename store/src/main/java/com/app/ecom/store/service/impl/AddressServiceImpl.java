@@ -1,50 +1,48 @@
 package com.app.ecom.store.service.impl;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.app.ecom.store.dto.AddressDto;
-import com.app.ecom.store.mapper.AddressMapper;
-import com.app.ecom.store.model.Address;
-import com.app.ecom.store.model.User;
-import com.app.ecom.store.repository.AddressRepository;
+import com.app.ecom.store.client.AddressLookupServiceClient;
+import com.app.ecom.store.dto.addresslookupservice.AddressDto;
+import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
+import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class AddressServiceImpl implements AddressService {
 	
 	@Autowired
-	private AddressRepository addressRepository;
-	
-	@Autowired
-	private AddressMapper addressMapper;
-	
-	@Autowired
 	private HttpSession httpSession;
+	
+	@Autowired
+	private AddressLookupServiceClient addressLookupServiceClient;
 
 	@Override
-	public Set<AddressDto> getAddressByUser(User user) {
-		return addressMapper.addressesToAddressDtos(addressRepository.findByUser(user));
+	public List<AddressDto> getAddressByUserId(Long userId) {
+		AddressSearchRequest addressSearchRequest = new AddressSearchRequest();
+		addressSearchRequest.setUserId(userId);
+		AddressDtos addressDtos = addressLookupServiceClient.getAddresses(addressSearchRequest);
+		return addressDtos == null ? null : addressDtos.getAddresses();
 	}
 
 	@Override
 	public void addAddress(AddressDto addressDto) {
-		Address address = addressMapper.addressDtoToAddress(addressDto);
-		address.setUser((User) httpSession.getAttribute("user"));
-		addressRepository.save(address);
+		UserDto userDto = (UserDto) httpSession.getAttribute("user");
+		addressDto.setUserId(userDto.getId());
+		addressLookupServiceClient.createUpdateAddress(addressDto);
 	}
 	
 	@Override 
 	public AddressDto getAddressById(Long addressId) {
-		Optional<Address> optionalAddress = addressRepository.findById(addressId);
-		if(optionalAddress.isPresent()) {
-			return addressMapper.addressToAddressDto(optionalAddress.get());
-		} else {
-			return null;
-		}
+		AddressSearchRequest addressSearchRequest = new AddressSearchRequest();
+		addressSearchRequest.setAddressId(addressId);
+		AddressDtos addressDtos = addressLookupServiceClient.getAddresses(addressSearchRequest);
+		return addressDtos == null || CollectionUtils.isEmpty(addressDtos.getAddresses()) ? null : addressDtos.getAddresses().get(0);
 	}
 }

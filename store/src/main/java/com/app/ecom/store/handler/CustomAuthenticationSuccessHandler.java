@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.constants.RequestUrls;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,9 +35,9 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     protected void setLocale(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
         if (null != authentication && null != authentication.getPrincipal()) {
         	String username = authentication.getName();
-            User user = userService.findByUsername(username);
-            httpSession.setAttribute("user", user);
-            String locale = null == user || StringUtils.isEmpty(user.getLanguage()) ? Locale.ENGLISH.getLanguage() : user.getLanguage();
+            UserDto userDto = userService.findUserByUsername(username);
+            httpSession.setAttribute("user", userDto);
+            String locale = null == userDto || StringUtils.isEmpty(userDto.getLanguage()) ? Locale.ENGLISH.getLanguage() : userDto.getLanguage();
             userService.updateLocale(request, response, locale);
         }
     }

@@ -1,12 +1,11 @@
 package com.app.ecom.store.service;
 
-import java.util.Set;
+import java.util.List;
 
-import com.app.ecom.store.dto.AddressDto;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 
 public interface AddressService {
-	Set<AddressDto> getAddressByUser(User user);
+	List<AddressDto> getAddressByUserId(Long userId);
 	
 	void addAddress(AddressDto addressDto);
 	

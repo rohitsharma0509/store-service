@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.StockDto;
+import com.app.ecom.store.dto.productservice.StockDto;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;

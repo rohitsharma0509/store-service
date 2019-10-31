@@ -12,7 +12,7 @@ import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.ShoppingCart;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
 import com.app.ecom.store.dto.productservice.ProductDto;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.service.ShoppingCartService;
@@ -69,16 +69,16 @@ public class ShoppingCartController {
 	public String removeFromCart(Model model, @PathVariable(value = FieldNames.ID) Long id) {
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 		
-		ProductDto productDtoToDelete = null;
-		if(shoppingCart != null && !CollectionUtils.isEmpty(shoppingCart.getProductDtos())){
-			for(ProductDto productDto : shoppingCart.getProductDtos()){
-				if(id.equals(productDto.getId())){
-					productDtoToDelete = productDto;
+		OrderDetailDto orderDetailDtoToDelete = null;
+		if(shoppingCart != null && !CollectionUtils.isEmpty(shoppingCart.getOrderDetailDtos())){
+			for(OrderDetailDto orderDetailDto : shoppingCart.getOrderDetailDtos()){
+				if(id.equals(orderDetailDto.getProductId())){
+					orderDetailDtoToDelete = orderDetailDto;
 				}
 			}
-			if(null != productDtoToDelete){
-				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice()-productDtoToDelete.getPerProductPrice());
-				shoppingCart.getProductDtos().remove(productDtoToDelete);
+			if(null != orderDetailDtoToDelete){
+				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice()-orderDetailDtoToDelete.getPerProductPrice());
+				shoppingCart.getOrderDetailDtos().remove(orderDetailDtoToDelete);
 				
 			}
 		}
@@ -96,11 +96,9 @@ public class ShoppingCartController {
 	@GetMapping(value = RequestUrls.CHECKOUT)
 	public String checkout(Model model, HttpServletRequest request, @RequestParam(value = FieldNames.ID, required=false) Long id) {
 		HttpSession httpSession = request.getSession();
-		User user = (User) httpSession.getAttribute(FieldNames.USER);
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
 		if(null == id){
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-			//model.addAttribute(FieldNames.PRODUCTDTOS, shoppingCart.getProductDtos());
-			//model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
 			model.addAttribute("orderDetailDtos", shoppingCart.getOrderDetailDtos());
 			model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
 		}else {
@@ -111,7 +109,7 @@ public class ShoppingCartController {
 			model.addAttribute("orderDetailDtos", orderDetailDtos);
 			model.addAttribute(FieldNames.TOTAL_PRICE, productDto.getPerProductPrice());
 		}
-		model.addAttribute("addresses", addressService.getAddressByUser(user));
+		model.addAttribute("addresses", addressService.getAddressByUserId(userDto.getId()));
 		return "shoppingCartConfirm";
 	}
 	

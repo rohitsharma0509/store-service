@@ -1,11 +1,10 @@
 package com.app.ecom.store.validator;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.app.ecom.store.dto.Response;
-import com.app.ecom.store.dto.RoleDto;
+import com.app.ecom.store.dto.userservice.RoleDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.util.CommonUtil;
@@ -35,7 +34,7 @@ public class RoleValidator implements Validator {
 		RoleDto roleDto = (RoleDto) o;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
-		Set<RoleDto> roleDtos = roleService.getAllRoles();
+		List<RoleDto> roleDtos = roleService.getAllRoles();
 		
 		for(RoleDto role : roleDtos) {
 			if(!role.getName().equalsIgnoreCase(roleDto.getOldName()) && role.getName().equalsIgnoreCase(roleDto.getName())) {
@@ -46,7 +45,7 @@ public class RoleValidator implements Validator {
 	
 	
 	public Response validateRoleAssociation(List<Long> roleIds) {
-		Set<RoleDto> roleDtos;
+		List<RoleDto> roleDtos;
 		if(CollectionUtils.isEmpty(roleIds)) {
 			roleDtos = roleService.getAllRoles();
 		} else {
@@ -56,7 +55,7 @@ public class RoleValidator implements Validator {
 		return checkIfAnyRoleAssociatedWithUser(roleDtos, errorCode);
 	}
 	
-	public Response checkIfAnyRoleAssociatedWithUser(Set<RoleDto> roleDtos, String errorCode) {
+	public Response checkIfAnyRoleAssociatedWithUser(List<RoleDto> roleDtos, String errorCode) {
 		List<RoleDto> roles = roleDtos.stream().filter(roleDto -> {
 			boolean flag = false;
 			if (null != roleDto && !CollectionUtils.isEmpty(roleDto.getUserDtos()) && roleDto.getUserDtos().size() > 0) {

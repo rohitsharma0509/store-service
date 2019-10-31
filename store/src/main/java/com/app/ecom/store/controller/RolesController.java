@@ -15,9 +15,9 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
-import com.app.ecom.store.dto.PrivilegeDto;
 import com.app.ecom.store.dto.Response;
-import com.app.ecom.store.dto.RoleDto;
+import com.app.ecom.store.dto.userservice.PrivilegeDto;
+import com.app.ecom.store.dto.userservice.RoleDto;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.util.CommonUtil;
@@ -83,7 +83,7 @@ public class RolesController {
 			roleDto = new RoleDto();
 		}
 		
-		List<PrivilegeDto> allPrivileges = privilegeService.getPrivileges();
+		List<PrivilegeDto> allPrivileges = privilegeService.getAllPrivileges();
 		Set<Long> childPrivilegeIds = new HashSet<>();
 		
 		for(PrivilegeDto privilegeDto : allPrivileges) {
@@ -104,7 +104,9 @@ public class RolesController {
 	public Response deleteRoleById(Model model, @PathVariable(FieldNames.ID) Long id) {
 		Response response = roleValidator.validateRoleAssociation(Arrays.asList(id));
 		if(HttpStatus.OK.value() == response.getCode()) {
-			roleService.deleteRoleById(id);
+			IdsDto idsDto = new IdsDto();
+			idsDto.setIds(Arrays.asList(id));
+			roleService.deleteRoles(idsDto);
 		}
 		return response;
 	}
@@ -114,7 +116,7 @@ public class RolesController {
 	public Response deleteRoles(@RequestBody IdsDto idsDto) {
 		Response response = roleValidator.validateRoleAssociation(idsDto.getIds());
 		if(HttpStatus.OK.value() == response.getCode()) {
-			roleService.deleteRoles(idsDto.getIds());
+			roleService.deleteRoles(idsDto);
 		}
 		return response;
 	}
@@ -124,7 +126,7 @@ public class RolesController {
 	public Response deleteAllRoles() {
 		Response response = roleValidator.validateRoleAssociation(null);
 		if(HttpStatus.OK.value() == response.getCode()) {
-			roleService.deleteAllRoles();
+			roleService.deleteRoles(null);
 		}
 		return response;
 	}

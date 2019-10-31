@@ -1,8 +1,8 @@
 package com.app.ecom.store.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +11,7 @@ import javax.transaction.Transactional;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.UserDto;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +95,8 @@ public class UserController {
 	@GetMapping(value = RequestUrls.MY_ACCOUNT)
 	public String myAccount(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userService.findByUsername(username);
-		model.addAttribute("user", user);
+		UserDto userDto = userService.findUserByUsername(username);
+		model.addAttribute("user", userDto);
 		return "myAccount";
 	}
 	
@@ -110,7 +109,7 @@ public class UserController {
 	
 	@GetMapping(value = "/users/search")
 	@ResponseBody
-	public Set<UserDto> searchCustomer(@RequestParam(required = true) String mobileOrName) {
+	public List<UserDto> searchCustomer(@RequestParam(required = true) String mobileOrName) {
 		return userService.getUserByMobileOrName(mobileOrName);
 	}
 }

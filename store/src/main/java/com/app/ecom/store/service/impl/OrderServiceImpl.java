@@ -9,15 +9,14 @@ import java.util.Optional;
 
 import com.app.ecom.store.client.OrderServiceClient;
 import com.app.ecom.store.constants.Constants;
-import com.app.ecom.store.dto.AddressDto;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.OrderDto;
-import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
+import com.app.ecom.store.dto.orderservice.OrderDto;
 import com.app.ecom.store.dto.orderservice.OrderDtos;
 import com.app.ecom.store.dto.orderservice.OrderSearchRequest;
 import com.app.ecom.store.dto.productservice.ProductDto;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
@@ -56,14 +55,14 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private ProductService productService;
 	
-	public OrderDto addOrder(java.util.List<OrderDetailDto> orderDetailDtos, User user, Double totalPrice, Long addressId) {
+	public OrderDto addOrder(java.util.List<OrderDetailDto> orderDetailDtos, UserDto userDto, Double totalPrice, Long addressId) {
 		OrderDto orderDto = new OrderDto();
 		orderDto.setAddressId(addressId);
 		orderDto.setOrderDetailDtos(orderDetailDtos);
 		orderDto.setTotalAmount(totalPrice);
-		orderDto.setUserId(user.getId());
-		orderDto.setCreatedBy(user.getUsername());
-		orderDto.setLastModifiedBy(user.getUsername());
+		orderDto.setUserId(userDto.getId());
+		orderDto.setCreatedBy(userDto.getUsername());
+		orderDto.setLastModifiedBy(userDto.getUsername());
 		return orderServiceClient.createUpdateOrder(orderDto);
 	}
 

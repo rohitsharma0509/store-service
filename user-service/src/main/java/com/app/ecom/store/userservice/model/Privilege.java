@@ -1,7 +1,7 @@
 package com.app.ecom.store.userservice.model;
 
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class Privilege {
 	private String description;
 	
 	@ManyToMany(mappedBy = "privileges")
-	private Set<Role> roles;
+	private List<Role> roles;
 	
 	@Column(name = "parent_id")
 	private Long parentId;
@@ -67,11 +67,11 @@ public class Privilege {
 		this.description = description;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 

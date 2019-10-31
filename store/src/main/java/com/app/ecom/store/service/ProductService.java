@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
-import com.app.ecom.store.dto.StockDto;
 import com.app.ecom.store.dto.productservice.ProductDto;
+import com.app.ecom.store.dto.productservice.StockDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
-import com.app.ecom.store.dto.UserDto;
-import com.app.ecom.store.dto.UserTokenDto;
+import com.app.ecom.store.dto.userservice.UserDto;
+import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.service.UserTokenService;
 import com.app.ecom.store.service.impl.UserServiceImpl;
@@ -73,7 +73,7 @@ public class SignupController {
             return RequestUrls.LOGIN;
         }
         
-        UserDto userDto = userTokenDto.getUserDto();
+        UserDto userDto = userService.findUserById(userTokenDto.getUserId());
         userDto.setIsEnabled(true);
         userService.updateUser(userDto);
         model.addAttribute(FieldNames.MESSAGE, "Your acount has been activated now.");

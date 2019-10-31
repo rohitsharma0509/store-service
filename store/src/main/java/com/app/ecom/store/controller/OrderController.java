@@ -13,11 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ShoppingCart;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
+import com.app.ecom.store.dto.orderservice.OrderDto;
 import com.app.ecom.store.dto.productservice.ProductDto;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.service.ShoppingCartService;
@@ -53,17 +53,17 @@ public class OrderController {
 	@GetMapping(value = RequestUrls.BUY)
 	public String buyNow(HttpServletRequest request, @RequestParam(value = "addressId", required=true) Long addressId, @RequestParam(value = "productId", required=false) Long id) {
 		OrderDto orderDto;
-		User user = (User) httpSession.getAttribute("user");
+		UserDto userDto = (UserDto) httpSession.getAttribute("user");
 		if(StringUtils.isEmpty(id)) {
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-			orderDto = orderService.addOrder(shoppingCart.getOrderDetailDtos(), user, shoppingCart.getTotalPrice(), addressId);
+			orderDto = orderService.addOrder(shoppingCart.getOrderDetailDtos(), userDto, shoppingCart.getTotalPrice(), addressId);
 			shoppingCartService.removeShoppingCart();
 		} else {
 			List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
 			ProductDto productDto = productService.getProductById(id);
 			OrderDetailDto orderDetailDto = getOrderDetailDto(id, productDto);
 			orderDetailDtos.add(orderDetailDto);
-			orderDto = orderService.addOrder(orderDetailDtos, user, productDto.getPerProductPrice(), addressId);
+			orderDto = orderService.addOrder(orderDetailDtos, userDto, productDto.getPerProductPrice(), addressId);
 		}
 		return "redirect:orders/" + orderDto.getId();
 	}
@@ -79,13 +79,13 @@ public class OrderController {
 	
 	@GetMapping(value =RequestUrls.ORDERS)
 	public String searchOrders(Model model, @RequestParam(required=false) String orderNumber, @RequestParam(required=false) String fromDate, @RequestParam(required=false) String toDate, @PageableDefault(page = 1, size = 10) Pageable pageable) {
-		User user = (User) httpSession.getAttribute("user");
+		UserDto userDto = (UserDto) httpSession.getAttribute("user");
 		
 		Map<String, String> params = new HashMap<>();
 		params.put("orderNumber", orderNumber);
 		params.put("fromDate", fromDate);
 		params.put("toDate", toDate);
-		params.put("userId", String.valueOf(user.getId()));
+		params.put("userId", String.valueOf(userDto.getId()));
 		CustomPage<OrderDto> page = orderService.getOrders(pageable, params);
 		model.addAttribute("pagging", commonUtil.getPagging("orders", page.getPageNumber()+1, page.getTotalPages(), params));
 		model.addAttribute("page", page);

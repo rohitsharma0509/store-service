@@ -21,14 +21,18 @@ public class MasterDataClient {
 	
 	private static final Logger logger = LogManager.getLogger(MasterDataClient.class);
 	
+	private static final String CATEGORY = "/category";
+	
+	private static final String COUNT_CATEGORY = "/countCategory";
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
-	@Value("${base.url.master-data-api}")
+	@Value("${base-urls.master-data-api}")
 	private String masterDataApiBaseUrl;
 	
 	public ProductCategoryDto addUpdateProductCategory(ProductCategoryDto productCategoryDto) {
-		String url = new StringBuilder(masterDataApiBaseUrl).append("/category").toString();
+		String url = new StringBuilder(masterDataApiBaseUrl).append(CATEGORY).toString();
 		ExternalApi<ProductCategoryDto> externalApi = getExternalApi(ProductCategoryDto.class, url, HttpMethod.PUT, null, null, productCategoryDto);
 		ResponseEntity<ProductCategoryDto> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
@@ -40,7 +44,7 @@ public class MasterDataClient {
 	}
 	
 	public ProductCategoryDtos getProductCategories(ProductCategorySearchRequest productCategorySearchRequest) {
-		String url = new StringBuilder(masterDataApiBaseUrl).append("/category").toString();
+		String url = new StringBuilder(masterDataApiBaseUrl).append(CATEGORY).toString();
 		ExternalApi<ProductCategoryDtos> externalApi = getExternalApi(ProductCategoryDtos.class, url, HttpMethod.POST, null, null, productCategorySearchRequest);
 		ResponseEntity<ProductCategoryDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -52,7 +56,7 @@ public class MasterDataClient {
 	}
 	
 	public Long countProductCategories(ProductCategoryDto productCategoryDto) {
-		String url = new StringBuilder(masterDataApiBaseUrl).append("/countCategory").toString();
+		String url = new StringBuilder(masterDataApiBaseUrl).append(COUNT_CATEGORY).toString();
 		ExternalApi<Long> externalApi = getExternalApi(Long.class, url, HttpMethod.POST, null, null, productCategoryDto);
 		ResponseEntity<Long> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -64,8 +68,8 @@ public class MasterDataClient {
 	}
 	
 	public void deleteProductCategories(IdsDto idsDto) {
-		String url = new StringBuilder(masterDataApiBaseUrl).append("/category").toString();
-		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, idsDto);
+		String url = new StringBuilder(masterDataApiBaseUrl).append(CATEGORY).toString();
+		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		ResponseEntity<Void> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
 			logger.info(new StringBuilder("Product categories has been deleted successfully.").toString());

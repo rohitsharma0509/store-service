@@ -3,8 +3,8 @@ package com.app.ecom.store.masterdata.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.app.ecom.store.masterdata.dto.SettingDto;
-import com.app.ecom.store.masterdata.dto.SettingDtos;
+import com.app.ecom.store.masterdata.dto.setting.SettingDto;
+import com.app.ecom.store.masterdata.dto.setting.SettingDtos;
 import com.app.ecom.store.masterdata.model.Setting;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

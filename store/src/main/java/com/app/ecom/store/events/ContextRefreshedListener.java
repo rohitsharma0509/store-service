@@ -3,10 +3,9 @@ package com.app.ecom.store.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.app.ecom.store.dto.PrivilegeDto;
-import com.app.ecom.store.dto.RoleDto;
-import com.app.ecom.store.dto.UserDto;
-import com.app.ecom.store.model.User;
+import com.app.ecom.store.dto.userservice.PrivilegeDto;
+import com.app.ecom.store.dto.userservice.RoleDto;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -24,7 +23,7 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if(!isDone) {
-			User user = userService.findByUsername("rohits");
+			UserDto user = userService.findUserByUsername("rohits");
 			if (null == user) {
 				UserDto userDto = new UserDto();
 				userDto.setFirstName("Rohit");

@@ -2,7 +2,7 @@ package com.app.ecom.store.controller;
 
 import javax.validation.Valid;
 
-import com.app.ecom.store.dto.AddressDto;
+import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

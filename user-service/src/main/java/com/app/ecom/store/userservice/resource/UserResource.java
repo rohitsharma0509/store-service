@@ -22,7 +22,7 @@ public class UserResource {
 	private UserService userService;
 	
 	@PutMapping(value = Endpoint.USER)
-	public ResponseEntity<UserDto> createUpdateProduct(@RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> createUpdateUser(@RequestBody UserDto userDto) {
 		try {
 			UserDto createdUserDto = userService.createUpdateUser(userDto);
 			return new ResponseEntity<>(createdUserDto, userDto.getId() == null ? HttpStatus.CREATED : HttpStatus.OK);
@@ -34,7 +34,7 @@ public class UserResource {
 	@PostMapping(value = Endpoint.USER)
 	public ResponseEntity<UserDtos> getUsers(@RequestBody UserSearchRequest userSearchRequest) {
 		try {
-			UserDtos productDtos = userService.getProducts(userSearchRequest);
+			UserDtos productDtos = userService.getUsers(userSearchRequest);
 			return new ResponseEntity<>(productDtos, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class UserResource {
 	}
 	
 	@PostMapping(value = Endpoint.COUNT_USER)
-	public ResponseEntity<Long> countProducts(@RequestBody UserSearchRequest userSearchRequest) {
+	public ResponseEntity<Long> countUsers(@RequestBody UserSearchRequest userSearchRequest) {
 		try {
 			Long noOfUsers = userService.countUsers(userSearchRequest);
 			return new ResponseEntity<>(noOfUsers, HttpStatus.OK);

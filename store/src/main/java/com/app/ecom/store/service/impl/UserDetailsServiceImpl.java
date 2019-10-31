@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.app.ecom.store.model.User;
-import com.app.ecom.store.repository.UserRepository;
+import com.app.ecom.store.dto.userservice.UserDto;
+import com.app.ecom.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,25 +19,25 @@ import org.springframework.util.CollectionUtils;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        UserDto userDto = userService.findUserByUsername(username);
 
-        if(null != user){
+        if(null != userDto){
         	Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         	
-        	user.getRoles().stream().filter(Objects::nonNull).forEach(role -> {
-        		if(!CollectionUtils.isEmpty(role.getPrivileges())) {
-        			role.getPrivileges().stream().filter(Objects::nonNull).forEach(privilege -> 
+        	userDto.getRoles().stream().filter(Objects::nonNull).forEach(role -> {
+        		if(!CollectionUtils.isEmpty(role.getPrivilegeDtos())) {
+        			role.getPrivilegeDtos().stream().filter(Objects::nonNull).forEach(privilege -> 
         				grantedAuthorities.add(new SimpleGrantedAuthority(privilege.getName()))
         			);
         		}
         	});
         	
-        	return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getIsEnabled(), true, true, true, grantedAuthorities);
+        	return new org.springframework.security.core.userdetails.User(userDto.getUsername(), userDto.getPassword(), userDto.isEnabled(), true, true, true, grantedAuthorities);
         }else {
         	throw new UsernameNotFoundException("Username not found");
         }

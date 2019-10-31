@@ -5,12 +5,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.ecom.store.client.OrderServiceClient;
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.ExcelData;
-import com.app.ecom.store.dto.StockDto;
-import com.app.ecom.store.model.Order;
-import com.app.ecom.store.repository.OrderRepository;
+import com.app.ecom.store.dto.orderservice.OrderDto;
+import com.app.ecom.store.dto.orderservice.OrderDtos;
+import com.app.ecom.store.dto.orderservice.OrderSearchRequest;
+import com.app.ecom.store.dto.productservice.StockDto;
 import com.app.ecom.store.service.ExcelService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
@@ -32,7 +34,7 @@ public class ExcelServiceImpl implements ExcelService {
 	private ProductService productService;
 	
 	@Autowired
-	private OrderRepository orderRepository;
+	private OrderServiceClient orderServiceClient;
 
 	@Override
 	public ByteArrayOutputStream getExcelAsBytes(String reportName) {
@@ -64,13 +66,13 @@ public class ExcelServiceImpl implements ExcelService {
 			excelData.setHeaders(headers);
 			excelData.setRows(rows);
 		} else if(Constants.ORDERS.equals(reportName)){
-			List<Order> orders = orderRepository.findAll();
+			OrderDtos orderDtos = orderServiceClient.getOrders(new OrderSearchRequest());
 			List<List<String>> rows = new ArrayList<>();
-			for(Order order : orders){
+			for(OrderDto orderDto : orderDtos.getOrders()){
 				List<String> values = new ArrayList<>();
-				values.add(order.getOrderNumber());
-				values.add(commonUtil.convertZonedDateTimeToString(order.getOrderDate(), Constants.DD_MM_YYYY));
-				values.add(String.valueOf(order.getTotalAmount()));
+				values.add(orderDto.getOrderNumber());
+				values.add(commonUtil.convertZonedDateTimeToString(orderDto.getCreatedTs(), Constants.DD_MM_YYYY));
+				values.add(String.valueOf(orderDto.getTotalAmount()));
 				rows.add(values);
 			}
 			excelData.setSheetName(Constants.ORDERS);

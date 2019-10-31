@@ -1,4 +1,4 @@
-<%@page import="com.app.ecom.store.model.User"%>
+<%@page import="com.app.ecom.store.dto.userservice.UserDto"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,8 +9,8 @@
 <%
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
-User user = (User) session.getAttribute("user");
-String name = String.format("%1$s %2$s", user.getFirstName(), user.getLastName());
+UserDto userDto = (UserDto) session.getAttribute("user");
+String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLastName());
 %>
 
 <link href="../css/bootstrap.min.css" rel="stylesheet">

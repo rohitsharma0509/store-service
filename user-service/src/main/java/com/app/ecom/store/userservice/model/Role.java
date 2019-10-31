@@ -2,7 +2,6 @@ package com.app.ecom.store.userservice.model;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +29,7 @@ public class Role {
 	private String description;
 
 	@ManyToMany(mappedBy = "roles")
-	private Set<User> users;
+	private List<User> users;
 	
 	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(name = "role_privileges", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "privilege_id"))
@@ -72,11 +71,11 @@ public class Role {
 		this.description = description;
 	}
 
-	public Set<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 

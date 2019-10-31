@@ -28,8 +28,8 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 	public CustomPage<ProfitLossDto> searchDailyProfitLoss(Pageable pageable) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
 		int limit = offset + pageable.getPageSize();
-		StringBuilder query = new StringBuilder("select date(o.order_date) orderDate, (select count(*) from orders where date(order_date)=date(o.order_date)) totalOrders, sum(od.quantity) totalSoldQuantity, sum(od.quantity*p.per_product_price) totalAmountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) totalProfitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id group by date(o.order_date) order by date(o.order_date) desc");
-		StringBuilder countQuery = new StringBuilder("select count(*) count from (select count(*) from orders o group by date(o.order_date)) as temp");
+		StringBuilder query = new StringBuilder("select date(o.created_ts) orderDate, (select count(*) from orders where date(created_ts)=date(o.created_ts)) totalOrders, sum(od.quantity) totalSoldQuantity, sum(od.quantity*p.per_product_price) totalAmountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) totalProfitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id group by date(o.created_ts) order by date(o.created_ts) desc");
+		StringBuilder countQuery = new StringBuilder("select count(*) count from (select count(*) from orders o group by date(o.created_ts)) as temp");
 		query.append(" limit "+offset+", "+limit);
 		List<Tuple> tuples = queryBuilder.getTupleByQuery(query.toString(), null);
 		
@@ -56,8 +56,8 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 	public CustomPage<ProfitLossDto> searchMonthlyProfitLoss(Pageable pageable, Integer month, Integer year) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
 		int limit = offset + pageable.getPageSize();
-		StringBuilder dailyQuery = new StringBuilder("select date(o.order_date) orderDate, (select count(*) from orders where date(order_date)=date(o.order_date)) noOfOrders, sum(od.quantity) soldQuantity, sum(od.quantity*p.per_product_price) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where 1=1 ");
-		dailyQuery.append(" group by date(o.order_date)");
+		StringBuilder dailyQuery = new StringBuilder("select date(o.created_ts) orderDate, (select count(*) from orders where date(created_ts)=date(o.created_ts)) noOfOrders, sum(od.quantity) soldQuantity, sum(od.quantity*p.per_product_price) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where 1=1 ");
+		dailyQuery.append(" group by date(o.created_ts)");
 		StringBuilder monthlyQuery = new StringBuilder("select concat(lpad(month(orderDate),2,0),'-',year(orderDate)) month, sum(noOfOrders) totalOrders, sum(soldQuantity) totalSoldQuantity, sum(amountReceived) totalAmountReceived, sum(profitOrLoss) totalProfitOrLoss from (");
 		StringBuilder countQuery = new StringBuilder("select count(*) from ( select orderDate from ("+dailyQuery+") as temp where 1=1 ");
 		monthlyQuery.append(dailyQuery);
@@ -102,8 +102,8 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 	public CustomPage<ProfitLossDto> searchQuarterlyProfitLoss(Pageable pageable, Integer quarter, Integer year) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
 		int limit = offset + pageable.getPageSize();
-		StringBuilder dailyQuery = new StringBuilder("select date(o.order_date) orderDate, (select count(*) from orders where date(order_date)=date(o.order_date)) noOfOrders, sum(od.quantity) soldQuantity, sum(od.quantity*p.per_product_price) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where 1=1 ");
-		dailyQuery.append(" group by date(o.order_date)");
+		StringBuilder dailyQuery = new StringBuilder("select date(o.created_ts) orderDate, (select count(*) from orders where date(created_ts)=date(o.created_ts)) noOfOrders, sum(od.quantity) soldQuantity, sum(od.quantity*p.per_product_price) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where 1=1 ");
+		dailyQuery.append(" group by date(o.created_ts)");
 		StringBuilder quarterlyQuery = new StringBuilder("select year(orderDate) year, quarter(orderDate) quarter, sum(noOfOrders) totalOrders, sum(soldQuantity) totalSoldQuantity, sum(amountReceived) totalAmountReceived, sum(profitOrLoss) totalProfitOrLoss from (");
 		StringBuilder countQuery = new StringBuilder("select count(year) from (select year(orderDate) year from ("+dailyQuery+") as temp where 1=1");
 		
@@ -146,8 +146,8 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 	public CustomPage<ProfitLossDto> searchYearlyProfitLoss(Pageable pageable, Integer year) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
 		int limit = offset + pageable.getPageSize();
-		StringBuilder dailyQuery = new StringBuilder("select date(o.order_date) orderDate, (select count(*) from orders where date(order_date)=date(o.order_date)) noOfOrders, sum(od.quantity) soldQuantity, sum(od.quantity*p.per_product_price) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where 1=1 ");
-		dailyQuery.append(" group by date(o.order_date)");
+		StringBuilder dailyQuery = new StringBuilder("select date(o.created_ts) orderDate, (select count(*) from orders where date(created_ts)=date(o.created_ts)) noOfOrders, sum(od.quantity) soldQuantity, sum(od.quantity*p.per_product_price) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where 1=1 ");
+		dailyQuery.append(" group by date(o.created_ts)");
 		StringBuilder yearlyQuery = new StringBuilder("select year(orderDate) year, sum(noOfOrders) totalOrders, sum(soldQuantity) totalSoldQuantity, sum(amountReceived) totalAmountReceived, sum(profitOrLoss) totalProfitOrLoss from (");
 		StringBuilder countQuery = new StringBuilder("select count(year) from (select year(orderDate) year from ("+dailyQuery+") as temp where 1=1");
 		yearlyQuery.append(dailyQuery);

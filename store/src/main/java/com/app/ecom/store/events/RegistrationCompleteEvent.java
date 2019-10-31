@@ -2,7 +2,7 @@ package com.app.ecom.store.events;
 
 import java.util.Locale;
 
-import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.dto.userservice.UserDto;
 import org.springframework.context.ApplicationEvent;
 
 public class RegistrationCompleteEvent extends ApplicationEvent {

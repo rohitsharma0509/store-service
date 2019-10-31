@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.PrivilegeDto;
+import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import org.springframework.data.domain.Pageable;
 
 public interface PrivilegeService {
 
-	List<PrivilegeDto> getPrivileges();
-	
 	PrivilegeDto getPrivilegeById(Long id);
 	
 	PrivilegeDto addPrivilege(PrivilegeDto privilegeDto);
@@ -19,13 +18,9 @@ public interface PrivilegeService {
 	
 	List<PrivilegeDto> getPrivilegesByIdIn(List<Long> ids);
 
-	boolean deletePrivilegeById(Long id);
-
-	boolean deletePrivileges(List<Long> ids);
-	
 	List<PrivilegeDto> getAllPrivileges();
 
-	boolean deleteAllPrivileges();
+	void deletePrivileges(IdsDto idsDto);
 
 	boolean isRoleAssociatedWithPrivileges(List<Long> privilegeIds);
 

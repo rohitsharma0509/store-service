@@ -24,14 +24,22 @@ public class ProductServiceClient {
 	
 	private static final Logger logger = LogManager.getLogger(ProductServiceClient.class);
 	
+	private static final String PRODUCT = "/product";
+	
+	private static final String COUNT_PRODUCT = "/countProduct";
+	
+	private static final String STOCK = "/stock";
+	
+	private static final String COUNT_STOCK = "/countStock";
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
-	@Value("${base.url.product-service-api}")
+	@Value("${base-urls.product-service-api}")
 	private String productServiceApiBaseUrl;
 	
 	public ProductDto addUpdateProduct(ProductDto productDto) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/product").toString();
+		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
 		ExternalApi<ProductDto> externalApi = getExternalApi(ProductDto.class, url, HttpMethod.PUT, null, null, productDto);
 		ResponseEntity<ProductDto> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
@@ -43,7 +51,7 @@ public class ProductServiceClient {
 	}
 
 	public ProductDtos getProducts(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/product").toString();
+		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
 		ExternalApi<ProductDtos> externalApi = getExternalApi(ProductDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		ResponseEntity<ProductDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -55,7 +63,7 @@ public class ProductServiceClient {
 	}
 	
 	public Long countProducts(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/countProduct").toString();
+		String url = new StringBuilder(productServiceApiBaseUrl).append(COUNT_PRODUCT).toString();
 		ExternalApi<Long> externalApi = getExternalApi(Long.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		ResponseEntity<Long> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -67,8 +75,8 @@ public class ProductServiceClient {
 	}
 	
 	public void deleteProducts(IdsDto idsDto) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/product").toString();
-		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, idsDto);
+		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
+		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		ResponseEntity<Void> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
 			logger.info(new StringBuilder("Orders has been deleted successfully.").toString());
@@ -78,7 +86,7 @@ public class ProductServiceClient {
 	}
 	
 	public Integer getProductsQuantity(Long productId, QuantityStatus status) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/product").toString();
+		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
 		Map<String, String> queryParamMap = new HashMap<>();
 		queryParamMap.put("productId", String.valueOf(productId));
 		queryParamMap.put("status", status.name());
@@ -93,7 +101,7 @@ public class ProductServiceClient {
 	}
 	
 	public StockDtos getStockDetails(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/stock").toString();
+		String url = new StringBuilder(productServiceApiBaseUrl).append(STOCK).toString();
 		ExternalApi<StockDtos> externalApi = getExternalApi(StockDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		ResponseEntity<StockDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -105,7 +113,7 @@ public class ProductServiceClient {
 	}
 	
 	public Integer countStockDetails(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append("/countStock").toString();
+		String url = new StringBuilder(productServiceApiBaseUrl).append(COUNT_STOCK).toString();
 		ExternalApi<Integer> externalApi = getExternalApi(Integer.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		ResponseEntity<Integer> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {

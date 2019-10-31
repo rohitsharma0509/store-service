@@ -1,7 +1,7 @@
 package com.app.ecom.store.masterdata.service.impl;
 
-import com.app.ecom.store.masterdata.dto.SettingDto;
-import com.app.ecom.store.masterdata.dto.SettingDtos;
+import com.app.ecom.store.masterdata.dto.setting.SettingDto;
+import com.app.ecom.store.masterdata.dto.setting.SettingDtos;
 import com.app.ecom.store.masterdata.mapper.SettingMapper;
 import com.app.ecom.store.masterdata.repository.SettingRepository;
 import com.app.ecom.store.masterdata.service.SettingService;

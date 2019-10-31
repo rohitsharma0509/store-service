@@ -9,11 +9,10 @@ public interface UserService {
 
 	UserDto createUpdateUser(UserDto userDto);
 
-	UserDtos getProducts(UserSearchRequest userSearchRequest);
+	UserDtos getUsers(UserSearchRequest userSearchRequest);
 
 	Long countUsers(UserSearchRequest userSearchRequest);
 
 	void deleteUsers(IdsDto idsDto);
-
 	
 }

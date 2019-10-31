@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
-import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

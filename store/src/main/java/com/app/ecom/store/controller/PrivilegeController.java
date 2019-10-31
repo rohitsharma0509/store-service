@@ -13,8 +13,8 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
-import com.app.ecom.store.dto.PrivilegeDto;
 import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.PrivilegeValidator;
@@ -85,7 +85,9 @@ public class PrivilegeController {
 	public Response deletePrivilegeById(Model model, @PathVariable(FieldNames.ID) Long id) {
 		Response response = privilegeValidator.validatePrivilegeAssociation(Arrays.asList(id));
 		if(HttpStatus.OK.value() == response.getCode()) {
-			privilegeService.deletePrivilegeById(id);
+			IdsDto idsDto = new IdsDto();
+			idsDto.setIds(Arrays.asList(id));
+			privilegeService.deletePrivileges(idsDto);
 		}
 		return response;
 	}
@@ -95,7 +97,7 @@ public class PrivilegeController {
 	public Response deleteRoles(@RequestBody IdsDto idsDto) {
 		Response response = privilegeValidator.validatePrivilegeAssociation(idsDto.getIds());
 		if(HttpStatus.OK.value() == response.getCode()) {
-			privilegeService.deletePrivileges(idsDto.getIds());
+			privilegeService.deletePrivileges(idsDto);
 		}
 		return response;
 	}
@@ -105,7 +107,7 @@ public class PrivilegeController {
 	public Response deleteAllRoles() {
 		Response response = privilegeValidator.validatePrivilegeAssociation(null);
 		if(HttpStatus.OK.value() == response.getCode()) {
-			privilegeService.deleteAllPrivileges();
+			privilegeService.deletePrivileges(null);
 		}
 		return response;
 	}

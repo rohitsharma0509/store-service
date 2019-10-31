@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.app.ecom.store.dto.PrivilegeDto;
 import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.util.CommonUtil;

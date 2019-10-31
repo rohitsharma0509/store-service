@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.app.ecom.store.dto.ExternalApi;
 import com.app.ecom.store.dto.IdsDto;
-import com.app.ecom.store.dto.OrderDto;
+import com.app.ecom.store.dto.orderservice.OrderDto;
 import com.app.ecom.store.dto.orderservice.OrderDtos;
 import com.app.ecom.store.dto.orderservice.OrderSearchRequest;
 import org.apache.logging.log4j.LogManager;
@@ -21,14 +21,18 @@ public class OrderServiceClient {
 	
 	private static final Logger logger = LogManager.getLogger(OrderServiceClient.class);
 	
+	private static final String ORDER = "/order";
+	
+	private static final String COUNT_ORDER = "/countOrder";
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
-	@Value("${base.url.order-service-api}")
+	@Value("${base-urls.order-service-api}")
 	private String orderServiceApiBaseUrl;
 	
 	public OrderDto createUpdateOrder(OrderDto orderDto) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append("/order").toString();
+		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
 		ExternalApi<OrderDto> externalApi = getExternalApi(OrderDto.class, url, HttpMethod.PUT, null, null, orderDto);
 		ResponseEntity<OrderDto> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
@@ -40,7 +44,7 @@ public class OrderServiceClient {
 	}
 	
 	public OrderDtos getOrders(OrderSearchRequest orderSearchRequest) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append("/order").toString();
+		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
 		ExternalApi<OrderDtos> externalApi = getExternalApi(OrderDtos.class, url, HttpMethod.POST, null, null, orderSearchRequest);
 		ResponseEntity<OrderDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -52,7 +56,7 @@ public class OrderServiceClient {
 	}
 	
 	public Long countOrders(OrderSearchRequest orderSearchRequest) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append("/countOrder").toString();
+		String url = new StringBuilder(orderServiceApiBaseUrl).append(COUNT_ORDER).toString();
 		ExternalApi<Long> externalApi = getExternalApi(Long.class, url, HttpMethod.POST, null, null, orderSearchRequest);
 		ResponseEntity<Long> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -64,8 +68,8 @@ public class OrderServiceClient {
 	}
 	
 	public void deleteOrders(IdsDto idsDto) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append("/order").toString();
-		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, idsDto);
+		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
+		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		ResponseEntity<Void> responseEntity = externalApiHandler.callExternalApi(externalApi);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
 			logger.info(new StringBuilder("Orders has been deleted successfully.").toString());

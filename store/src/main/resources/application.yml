@@ -1,0 +1,21 @@
+spring:
+  datasource: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/store
+    username: root
+    password: root
+    initialization-mode: never
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate.ddl-auto: update
+server:
+  port: 9999
+
+base-urls:
+  master-data-api: http://localhost:9001/api/masterdata/v1
+  order-service-api: http://localhost:9002/api/orderservice/v1
+  product-service-api: http://localhost:9003/api/productservice/v1
+  user-service-api: http://localhost:9004/api/userservice/v1
+  address-lookup-service-api: http://localhost:9005/api/addresslookupservice/v1
+  user-token-service-api: http://localhost:9006/api/usertokenservice/v1

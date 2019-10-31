@@ -1,6 +1,6 @@
 package com.app.ecom.store.validator;
 
-import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class UserValidator implements Validator {
         if (userDto.getUsername().length() < 5 || userDto.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
-        if (userService.findByUsername(userDto.getUsername()) != null) {
+        if (userService.findUserByUsername(userDto.getUsername()) != null) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");

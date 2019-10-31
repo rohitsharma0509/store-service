@@ -1,8 +1,8 @@
 package com.app.ecom.store.masterdata.resource;
 
 import com.app.ecom.store.masterdata.constants.Endpoint;
-import com.app.ecom.store.masterdata.dto.SettingDto;
-import com.app.ecom.store.masterdata.dto.SettingDtos;
+import com.app.ecom.store.masterdata.dto.setting.SettingDto;
+import com.app.ecom.store.masterdata.dto.setting.SettingDtos;
 import com.app.ecom.store.masterdata.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

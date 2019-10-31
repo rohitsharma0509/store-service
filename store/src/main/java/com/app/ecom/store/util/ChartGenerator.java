@@ -86,7 +86,7 @@ public class ChartGenerator {
 			List<SearchCriteria> criterias = new ArrayList<>();
 			criterias.add(new SearchCriteria("dates", dates, Constants.IN));
 			
-			StringBuilder query = new StringBuilder("select date(o.order_date) date, sum(od.quantity) soldQty, sum(p.per_product_price*od.quantity) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profit from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where date(o.order_date) in (:dates) group by date(o.order_date) order by o.order_date");
+			StringBuilder query = new StringBuilder("select date(o.created_ts) date, sum(od.quantity) soldQty, sum(p.per_product_price*od.quantity) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profit from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where date(o.created_ts) in (:dates) group by date(o.created_ts) order by o.created_ts");
 			List<Tuple> tuples = queryBuilder.getTupleByQuery(query.toString(), criterias);
 			
 			Map<String, Double> salesMap = new HashMap<>();
@@ -145,7 +145,7 @@ public class ChartGenerator {
 	    List<SearchCriteria> criterias = new ArrayList<>();
         criterias.add(new SearchCriteria("year", year, Constants.EQUALS));
         Map<Integer, Double> salesMap = new HashMap<>();
-        List<Tuple> tuples = queryBuilder.getTupleByQuery("select month(o.order_date) month, sum(od.quantity) soldQty, sum(p.per_product_price*od.quantity) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profit from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where year(o.order_date)= :year group by month(o.order_date), year(o.order_date)", criterias);
+        List<Tuple> tuples = queryBuilder.getTupleByQuery("select month(o.created_ts) month, sum(od.quantity) soldQty, sum(p.per_product_price*od.quantity) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profit from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id where year(o.created_ts)= :year group by month(o.created_ts), year(o.created_ts)", criterias);
         for(Tuple tuple : tuples){ 
             salesMap.put(Integer.parseInt(String.valueOf(tuple.get("month"))), Double.parseDouble(String.valueOf(tuple.get("amountReceived"))));
         }
