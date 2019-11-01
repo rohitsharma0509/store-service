@@ -77,4 +77,9 @@ $(document).ready(function() {
 			e.preventDefault();
 		}
 	});
+	$(".removeFromCartBtn").click(function (e) {
+		var url = $(this).data('url');
+		$('#deleteForm').attr('action', url);
+		$('#deleteConfirmation').modal({show:true});
+	});
 });

@@ -7,7 +7,7 @@
 function validate(form) {
 	var addressId = $('input[name=addressId]:checked').val();
 	if(addressId == "" || addressId == null) {
-		alert("Please select your address");
+		$('#alertMessages').modal({show:true});
 		return false
 	}
 	form.submit();
@@ -114,5 +114,17 @@ function validate(form) {
 	</div>
 	</div>
  </div>
+<div class="row">
+  <div class="modal fade" id="alertMessages" role="dialog" aria-labelledby="alertMessagesLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body mx-3"><p><spring:message code="Please select your address" text="Please select your address" /></p></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="OK" text="OK" /></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
  <div id="addressModal"></div>
  </form>

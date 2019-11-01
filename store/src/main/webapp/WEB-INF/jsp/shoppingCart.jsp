@@ -1,8 +1,9 @@
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<link href="css/shoppingCart.css" rel="stylesheet">
-<script src="js/shoppingCart.js"></script>
+<link href="/css/shoppingCart.css" rel="stylesheet">
+<script src="/js/shoppingCart.js"></script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item"><a href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Shopping Cart" text="Shopping Cart" /></li>
@@ -50,7 +51,7 @@
 			        	<input type="text" name="subTotal[${loop.index}]" value="${orderDetailDto.perProductPrice*orderDetailDto.quantity}" data-field="${orderDetailDto.perProductPrice}" class="form-control input-sm" readonly />
 			        </div>
 			        <div class="col-sm-1">
-			        	<button type="button" class="btn btn-outline-danger btn-xs" onclick="callAjaxForDelete('${contextPath}/shoppingCart/${orderDetailDto.productId}')">
+			        	<button type="button" class="btn btn-outline-danger btn-xs removeFromCartBtn" data-url="<%=RequestUrls.SHOPPING_CART %>/${orderDetailDto.productId}">
 				        	<i class="fa fa-trash" aria-hidden="true"></i>
 				        </button>
 			        </div>
@@ -80,3 +81,21 @@
 	</div>
 	</div>
  </div>
+<div class="row">
+  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header"><spring:message code="Confirm Delete" text="Confirm Delete" /></div>
+        <div class="modal-body mx-3">
+          <p><spring:message code="Are you sure you want to delete?" text="Are you sure you want to delete?" /> </p>
+        </div>
+        <div class="modal-footer">
+          <form:form id="deleteForm" method="POST">
+            <button type="submit" class="btn btn-success"><spring:message code="Delete" text="Delete" /></button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
+          </form:form>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
