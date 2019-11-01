@@ -18,44 +18,6 @@ String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLast
 <script src="../js/jquery.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<script>
-  function openModal(url) {
-    $('.modal-body').load(url, function(){
-        $('#myModal').modal({show:true});
-    });
-  }
-  function callAjax(method, baseUrl) {
-    $.ajax({
-        type: method,
-        url: baseUrl,
-        contentType: "application/json",
-        dataType: "json",
-        headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(response) {
-            console.log(response);
-        }
-    });   
-  }
-  function callAjaxForDelete(baseUrl){
-    alert("Are you sure you want to delete?");
-    $.ajax({
-        type: "DELETE",
-        url: baseUrl,
-        contentType: "application/json",
-        dataType: "json",
-        headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
-        success: function(response) {
-          window.location.reload();
-        },
-        error: function(response) {
-            console.log(response);
-        }
-    });   
-  }
-</script>
 <style>
 * {
   font-size: 12px;

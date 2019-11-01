@@ -52,7 +52,6 @@
 							<c:forEach var="order" items="${page.getContent()}"
 								varStatus="loop">
 								<tr>
-									<!-- <td><a onclick="openModal('${contextPath}/orders/${order.id}')" href="#">${order.orderNumber}</a></td> -->
 									<td><a href="${contextPath}/orders/${order.id}">${order.orderNumber}</a></td>
 									<td>${order.createdTs}</td>
 									<td>${order.totalAmount}</td>

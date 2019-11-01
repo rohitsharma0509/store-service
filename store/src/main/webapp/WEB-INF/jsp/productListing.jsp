@@ -26,7 +26,7 @@
 					<h6 class="card-title">${product.brandName}</h6>
 					<h6 class="card-title">${product.perProductPrice}</h6>
 					<c:choose>
-						<c:when test="${product.quantity != null && product.quantity > 0}">
+						<c:when test="${product.availableQuantity != null && product.availableQuantity > 0}">
 							<a href="${contextPath}/checkout?id=${product.id}" class="btn btn-sm btn-transparent"><spring:message code="Buy Now" text="Buy Now" /></a>
     						<a href="${contextPath}/addToCart?id=${product.id}" class="btn btn-sm btn-transparent"><spring:message code="Add To Cart" text="Add To Cart" /></a>
     					</c:when>
