@@ -2,6 +2,7 @@ package com.app.ecom.store.dto.productservice;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,7 +37,7 @@ public class ProductDto {
 	@JsonProperty("perProductPrice")
 	private Double perProductPrice;
 
-	@JsonProperty("image")
+	@JsonIgnore
 	private MultipartFile image;
 
 	@JsonProperty("base64Image")

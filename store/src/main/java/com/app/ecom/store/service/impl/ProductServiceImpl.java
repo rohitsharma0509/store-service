@@ -13,6 +13,7 @@ import com.app.ecom.store.client.ProductServiceClient;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.OrderByClause;
 import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.dto.productservice.ProductDtos;
 import com.app.ecom.store.dto.productservice.ProductSearchRequest;
@@ -20,6 +21,7 @@ import com.app.ecom.store.dto.productservice.StockDto;
 import com.app.ecom.store.dto.productservice.StockDtos;
 import com.app.ecom.store.enums.ProductStatus;
 import com.app.ecom.store.enums.QuantityStatus;
+import com.app.ecom.store.enums.SortOrder;
 import com.app.ecom.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -62,8 +64,14 @@ public class ProductServiceImpl implements ProductService {
 			categoryIds.add(Long.parseLong(params.get(FieldNames.CATEGORY_ID)));
 		}
 		ProductSearchRequest productSearchRequest = getProductSearchRequest(null, categoryIds, params.get(FieldNames.PRODUCT_NAME), params.get(FieldNames.BRAND_NAME));
+		List<OrderByClause> orderByClauses = new ArrayList<>();
+		OrderByClause orderByClause = new OrderByClause();
+		orderByClause.setSortBy(FieldNames.CREATED_TS);
+		orderByClause.setSortOrder(SortOrder.DESC);
+		orderByClauses.add(orderByClause);
+		productSearchRequest.setOrderByClauses(orderByClauses);
 		productSearchRequest.setOffset(offset);
-		productSearchRequest.setLimit(limit);		
+		productSearchRequest.setLimit(limit);
 		ProductDtos productDtos = productServiceClient.getProducts(productSearchRequest);
 		
 		Long totalRecords = productServiceClient.countProducts(productSearchRequest);

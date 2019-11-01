@@ -94,8 +94,8 @@ public class OrderServiceImpl implements OrderService {
 		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
 		orderSearchRequest.setOffset(offset);
 		orderSearchRequest.setLimit(limit);
-		orderSearchRequest.setFromDate(null);
-		orderSearchRequest.setToDate(null);
+		orderSearchRequest.setFromDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get("fromDate"), Constants.YYYY_MM_DD)));
+		orderSearchRequest.setToDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get("toDate"), Constants.YYYY_MM_DD)));
 		orderSearchRequest.setOrderNumber(params.get("orderNumber"));
 		orderSearchRequest.setUserId(Long.parseLong(params.get("userId")));
 		OrderDtos orderDtos = orderServiceClient.getOrders(orderSearchRequest);

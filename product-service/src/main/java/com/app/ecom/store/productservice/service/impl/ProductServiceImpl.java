@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
 			query.append(" and p.product_name like :name");
 		}
 		
-		query.append(" group by p.product_id");
+		query.append(" group by p.product_id order by p.product_name");
 		if(!productSearchRequest.getIsExcel()){
 			query.append(" limit ").append(productSearchRequest.getOffset()).append(", ").append(productSearchRequest.getLimit());
 		}

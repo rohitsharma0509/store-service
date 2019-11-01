@@ -61,7 +61,9 @@ public class ProductMapper {
 		productDto.setAlertQuantity(product.getAlertQuantity());
 		productDto.setPurchasePrice(product.getPurchasePrice());
 		productDto.setPerProductPrice(product.getPerProductPrice());
-		productDto.setBase64Image(Base64.getEncoder().encodeToString(product.getImage()));
+		if(null != product.getImage()) {
+			productDto.setBase64Image(Base64.getEncoder().encodeToString(product.getImage()));
+		}
 		productDto.setCreatedBy(product.getCreatedBy());
 		productDto.setCreatedTs(product.getCreatedTs());
 		productDto.setLastModifiedBy(product.getLastModifiedBy());
@@ -146,7 +148,7 @@ public class ProductMapper {
 				count++;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return products;
 	}

@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -18,6 +19,8 @@ import javax.xml.bind.Unmarshaller;
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.jaxb.ProductsType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -28,6 +31,8 @@ import org.springframework.util.StringUtils;
 
 @Component
 public class CommonUtil {
+	
+	private static final Logger logger = LogManager.getLogger(CommonUtil.class);
 	
 	@Autowired
 	private Unmarshaller unmarshaller;
@@ -57,13 +62,22 @@ public class CommonUtil {
 	
 	public Date convertStringToDate(String inputDate, String format){
 		Date date = null;
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			date = sdf.parse(inputDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		if(!StringUtils.isEmpty(inputDate)) {			
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat(format);
+				date = sdf.parse(inputDate);
+			} catch (ParseException e) {
+				logger.error(new StringBuilder("Error while converting String to Date: ").append(e));
+			}
 		}
 		return date;
+	}
+	
+	public ZonedDateTime convertDateToZonedDateTime(Date date) {
+		if(null == date) {
+			return null;
+		}
+		return ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 	}
 	
 	public String formatDate(String date, String inputDateFormat, String outputDateFormat) {
@@ -86,32 +100,44 @@ public class CommonUtil {
 		}
 		
 		StringBuilder pagging = new StringBuilder("<ul class=\"pagination pagination-sm justify-content-end\">");
-
+		
 		if(currentPage == 1){
-			pagging.append("<li class=\"page-item disabled\"><a class=\"page-link\" href=\"#\">First</a></li>");
-			pagging.append("<li class=\"page-item disabled\"><a class=\"page-link\" href=\"#\">Previous</a></li>");
+			pagging.append(getPageItem(true, false, "#", "First"));
+			pagging.append(getPageItem(true, false, "#", "Previous"));
 		}else {
-			pagging.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+baseUrl+"?page=1&"+params+"\">First</a></li>");
-			pagging.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+baseUrl+"?page="+(currentPage-1)+"&"+params+"\">Previous</a></li>");
+			pagging.append(getPageItem(false, false, baseUrl+"?page=1&"+params, "First"));
+			pagging.append(getPageItem(false, false, baseUrl+"?page="+(currentPage-1)+"&"+params, "Previous"));
 		}
 		
 		for(int i = begin; i<= end; i++){
 			if(i==currentPage){
-				pagging.append("<li class=\"page-item active\"><a class=\"page-link\" href=\""+baseUrl+"?page="+i+"&"+params+"\">"+i+"</a></li>");
+				pagging.append(getPageItem(false, true, baseUrl+"?page="+i+"&"+params, ""+i));
 			}else {
-				pagging.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+baseUrl+"?page="+i+"&"+params+"\">"+i+"</a></li>");		
+				pagging.append(getPageItem(false, false, baseUrl+"?page="+i+"&"+params, ""+i));
 			}
 		}
 		
 		if(currentPage == totalPage){
-			pagging.append("<li class=\"page-item disabled\"><a class=\"page-link\" href=\"#\">Next</a></li>");
-			pagging.append("<li class=\"page-item disabled\"><a class=\"page-link\" href=\"#\">Last</a></li>");
+			pagging.append(getPageItem(true, false, "#", "Next"));
+			pagging.append(getPageItem(true, false, "#", "Last"));
 		}else {
-			pagging.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+baseUrl+"?page="+(currentPage + 1)+"&"+params+"\">Next</a></li>");
-			pagging.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+baseUrl+"?page="+totalPage+"&"+params+"\">Last</a></li>");
+			pagging.append(getPageItem(false, false, baseUrl+"?page="+(currentPage + 1)+"&"+params, "Next"));
+			pagging.append(getPageItem(false, false, baseUrl+"?page="+totalPage+"&"+params, "Last"));
 		}
 		pagging.append("</ul>");
 		return pagging.toString();
+	}
+	
+	private String getPageItem(boolean isDisabled, boolean isActive, String baseUrl, String name) {
+		StringBuilder item = new StringBuilder("<li class=\"page-item");
+		if(isDisabled) {
+			item.append(" disabled");
+		} else if(isActive) {
+			item.append(" active");
+		}
+		item.append("\"><a class=\"page-link\" href=\"").append(baseUrl).append("\">");
+		item.append(name).append("</a></li>");
+		return item.toString();
 	}
 	
 	public boolean isDouble(String number) {

@@ -41,6 +41,6 @@ public class FieldNames {
 	public static final String TOTAL_AMOUNT_RECEIVED = "totalAmountReceived";
 	public static final String TOTAL_SOLD_QUANTITY = "totalSoldQuantity";
 	public static final String TOTAL_PROFIT_OR_LOSS = "totalProfitOrLoss";
-	
+	public static final String CREATED_TS = "createdTs";
 	
 }

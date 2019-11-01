@@ -14,19 +14,19 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<label for="orderNumber" class="control-label text-right"><spring:message code="Order Number" text="Order Number" /></label>
-							<input type="text" name="orderNumber" id="orderNumber" class="form-control input-sm" />
+							<input type="text" name="orderNumber" id="orderNumber" value="${param.orderNumber}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label for="from"><spring:message code="From" text="From" /></label>
-							<input type="date" name="fromDate" id="fromDate" class="form-control input-sm" />
+							<input type="date" name="fromDate" id="fromDate" value="${param.fromDate}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label for="to"><spring:message code="To" text="To" /></label>
-							<input type="date" name="toDate" id="toDate" class="form-control input-sm" />
+							<input type="date" name="toDate" id="toDate" value="${param.toDate}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
