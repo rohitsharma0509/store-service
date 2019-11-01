@@ -12,18 +12,30 @@ $('form[name=addressForm]').submit(function(e) {
     });
 });
 </script>
+<%
+String action = "Add Your Address";
+%>
 <div class="row">
   <div class="modal fade" id="modalAddAddress" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold"><spring:message code="Add Your Address" text="Add Your Address" /></h4>
+          <c:choose>
+	          <c:when test="${empty addressDto.id}">
+	            <h4 class="modal-title w-100 font-weight-bold"><spring:message code="Add Your Address" text="Add Your Address" /></h4>
+	          </c:when>
+	          <c:otherwise>
+	            <h4 class="modal-title w-100 font-weight-bold"><spring:message code="Edit Your Address" text="Edit Your Address" /></h4>
+	            <% action = "Edit Your Address"; %>
+	          </c:otherwise>
+	        </c:choose>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body mx-3">
           <form:form method="POST" modelAttribute="addressDto" name="addressForm" action="addAddress">
+          <form:hidden path="id"/>
              <div class="row form-group">
                <div class="col-sm-12">
                   <spring:message code="Address Line1" text="Address Line1" var="label"/>
@@ -62,7 +74,7 @@ $('form[name=addressForm]').submit(function(e) {
              </div>
              <div class="row form-group">
                <div class="col-sm-2">
-                 <button type="submit" class="btn btn-success"><spring:message code="Add Your Address" text="Add Your Address" /></button>
+                 <button type="submit" class="btn btn-success"><spring:message code="<%=action %>" text="<%=action %>" /></button>
                </div>
                <div class="col-sm-10"></div>
              </div>

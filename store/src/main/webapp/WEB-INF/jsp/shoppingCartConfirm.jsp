@@ -43,7 +43,8 @@ function validate(form) {
 				 <div class="col-sm-12">
 					 <div class="checkbox checkbox-success">
 	             <input type="radio" name="addressId" value="${address.id}">
-	             <label for="address">${address.addressLine1}, ${address.addressLine2}, ${address.city}, ${address.state} - ${address.pincode}</label>
+	             <label for="address">${address.addressLine1}, ${address.addressLine2}, ${address.city}, ${address.state} - ${address.pincode} &nbsp;&nbsp;</label>
+	             <i class="fa fa-edit" onclick="editAddress(${address.id});" style="font-size: 13px;color: blue;"></i>
 	         </div>
 		      </div>
 			</div>
@@ -56,7 +57,7 @@ function validate(form) {
 			</c:otherwise>
 			</c:choose>
 		  <div class="row">
-         <div class="col-sm-12"><a href="#" id="addAddressBtn">Add new address</a></div>
+         <div class="col-sm-12"><a href="#" id="addAddressBtn" onclick="addAddress();">Add new address</a></div>
        </div>
 			</div>
 		</div>
