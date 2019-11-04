@@ -47,8 +47,8 @@ public class WebConfigurer {
 	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 	    mailSender.setHost("smtp.gmail.com");
 	    mailSender.setPort(465);
-	    mailSender.setUsername("rohitsharm0509@gmail.com");
-	    mailSender.setPassword("Trisha@0509");	     
+	    mailSender.setUsername("*******");
+	    mailSender.setPassword("*****");	     
 	    Properties props = mailSender.getJavaMailProperties();
 	    props.put("mail.smtp.auth", "true");
 	    props.put("mail.smtp.socketFactory.port", 465);
