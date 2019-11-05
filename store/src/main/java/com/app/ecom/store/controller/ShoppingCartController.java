@@ -47,6 +47,7 @@ public class ShoppingCartController {
 		if(optionalOrderDetailDto.isPresent()) {
 			if(availableQuantity > optionalOrderDetailDto.get().getQuantity()) {
 				optionalOrderDetailDto.get().setQuantity(optionalOrderDetailDto.get().getQuantity() + 1);
+				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice()==null? 0:shoppingCart.getTotalPrice() + productDto.getPerProductPrice());
 			}
 			optionalOrderDetailDto.get().setAvailableQuantity(availableQuantity);
 		} else {
@@ -76,7 +77,7 @@ public class ShoppingCartController {
 				}
 			}
 			if(null != orderDetailDtoToDelete){
-				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice()-orderDetailDtoToDelete.getPerProductPrice());
+				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice()-(orderDetailDtoToDelete.getPerProductPrice()*orderDetailDtoToDelete.getQuantity()));
 				shoppingCart.getOrderDetailDtos().remove(orderDetailDtoToDelete);
 				
 			}
