@@ -46,16 +46,13 @@ public class WebConfigurer {
 	public JavaMailSender getJavaMailSender() {
 	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 	    mailSender.setHost("smtp.gmail.com");
-	    mailSender.setPort(465);
-	    mailSender.setUsername("*******");
-	    mailSender.setPassword("*****");	     
+	    mailSender.setPort(587);
+	    mailSender.setUsername("xxxx@gmail.com");
+	    mailSender.setPassword("xxxxx");	     
 	    Properties props = mailSender.getJavaMailProperties();
 	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.socketFactory.port", 465);
-	    props.put("mail.smtp.socketFactory.fallback", false);
-	    props.put("mail.smtp.starttls.enable", false);
 	    props.put("mail.debug", "true");
-	    props.put("mail.smtp.ssl.enable", true);	    
+	    props.put("mail.smtp.starttls.enable", true);
 	    return mailSender;
 	}
 	

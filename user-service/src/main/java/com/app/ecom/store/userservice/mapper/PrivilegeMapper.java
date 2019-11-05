@@ -44,14 +44,18 @@ public class PrivilegeMapper {
 		privilege.setParentId(privilegeDto.getParentId());
 		return privilege;
 	}
-
+	
 	public PrivilegeDtos privilegesToPrivilegeDtos(List<Privilege> privileges) {
+		return privilegesToPrivilegeDtos(privileges, false);
+	}
+
+	public PrivilegeDtos privilegesToPrivilegeDtos(List<Privilege> privileges, boolean isRoleRequired) {
 		PrivilegeDtos privilegeDtos = new PrivilegeDtos();
 		if (CollectionUtils.isEmpty(privileges)) {
 			privilegeDtos.setPrivileges(Collections.emptyList());
 		} else {
 			List<PrivilegeDto> listOfPrivilegeDto = new ArrayList<>();
-			privileges.stream().forEach(privilege -> listOfPrivilegeDto.add(privilegeToPrivilegeDto(privilege)));
+			privileges.stream().forEach(privilege -> listOfPrivilegeDto.add(privilegeToPrivilegeDto(privilege, isRoleRequired)));
 			privilegeDtos.setPrivileges(listOfPrivilegeDto);
 		}
 		return privilegeDtos;

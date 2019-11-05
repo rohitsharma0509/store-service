@@ -144,30 +144,37 @@ $(document).ready(function(){
 	</div>
 </div>
 <div class="row">
-  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog delete-modal" role="document">
       <div class="modal-content">
-        <div class="modal-header"><spring:message code="Confirm Delete" text="Confirm Delete" /></div>
         <div class="modal-body mx-3">
-          <p><spring:message code="Are you sure you want to delete?" text="Are you sure you want to delete?" /> </p>
-        </div>
-        <div class="modal-footer">
-	        <form:form id="deleteForm">
-	          <button type="submit" class="btn btn-success"><spring:message code="Delete" text="Delete" /></button>
-	          <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
-	        </form:form>
+          <div align="center">
+			      <div><i class="fa fa-times-circle delete-icon"></i></div>
+			      <div class="delete-modal-header"><spring:message code="Are you sure?" text="Are you sure?" /></div>
+			      <div class="delete-modal-content"><spring:message code="Do you really want to delete these records? This process cannot be undone" text="Do you really want to delete these records? This process cannot be undone" />.</div>
+		      <div>
+        <form id="deleteForm">
+          <button type="submit" class="btn btn-lg btn-danger"><spring:message code="Delete" text="Delete" /></button>
+          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
+        </form>
+      </div>
+      </div>
         </div>
       </div>  
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="modal fade" id="alertMessages" role="dialog" aria-labelledby="alertMessagesLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body mx-3"></div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="OK" text="OK" /></button>
+  <div class="modal fade" id="alertMessages" role="dialog" aria-labelledby="alertMessagesLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog delete-modal" role="document">
+      <div class="modal-content ">
+        <div class="modal-body mx-3">
+          <div align="center">
+            <div><i class="fa fa-warning warning-icon"></i></div>
+            <div class="warning-modal-header"><spring:message code="Sorry" text="Sorry" />!</div>
+            <div class="warning-modal-content"></div>
+            <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="OK" text="OK" /></button>
+          </div>
         </div>
       </div>
     </div>

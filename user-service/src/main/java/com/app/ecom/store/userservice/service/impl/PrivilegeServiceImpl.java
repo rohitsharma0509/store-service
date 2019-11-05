@@ -28,19 +28,14 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	@Autowired
 	private QueryHandler<Privilege> queryHandler;
 	
-	//@Autowired
-	//private CacheManager cacheManager;
-
 	@Override
 	@Transactional
 	public PrivilegeDto addUpdatePrivilege(PrivilegeDto privilegeDto) {
 		Privilege privilege = privilegeRepository.save(privilegeMapper.privilegeDtoToPrivilege(privilegeDto));
-		//cacheManager.getCache("privilegesCache").clear();
 		return privilegeMapper.privilegeToPrivilegeDto(privilege);
 	}
 
 	@Override
-	//@Cacheable(value = "privilegesCache", key = "{ #privilegeSearchRequest.getId(), #privilegeSearchRequest.getName()}")
 	public PrivilegeDtos getPrivileges(PrivilegeSearchRequest privilegeSearchRequest) {
 		queryHandler.setType(Privilege.class);
 		QueryRequest queryRequest = new QueryRequest();
@@ -49,7 +44,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		queryRequest.setOffset(privilegeSearchRequest.getOffset());
 		queryRequest.setLimit(privilegeSearchRequest.getLimit());
 		List<Privilege> privileges = queryHandler.findByQueryRequest(queryRequest);
-		return privilegeMapper.privilegesToPrivilegeDtos(privileges);
+		return privilegeMapper.privilegesToPrivilegeDtos(privileges, true);
 	}
 	
 	@Override
@@ -70,6 +65,5 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		} else {
 			privilegeRepository.deleteByIdIn(idsDto.getIds());
 		}
-		//cacheManager.getCache("privilegesCache").clear();
 	}
 }

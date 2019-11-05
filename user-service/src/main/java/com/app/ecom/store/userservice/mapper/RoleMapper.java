@@ -50,12 +50,16 @@ public class RoleMapper {
 	}
 	
 	public RoleDtos rolesToRoleDtos(List<Role> roles) {
+		return rolesToRoleDtos(roles, false);
+	}
+	
+	public RoleDtos rolesToRoleDtos(List<Role> roles, Boolean isUserRequired) {
 		RoleDtos roleDtos = new RoleDtos();
 		if (CollectionUtils.isEmpty(roles)) {
 			roleDtos.setRoles(Collections.emptyList());
 		} else {			
 			List<RoleDto> listOfRoleDtos = new ArrayList<>();
-			roles.stream().forEach(role -> listOfRoleDtos.add(roleToRoleDto(role)));
+			roles.stream().forEach(role -> listOfRoleDtos.add(roleToRoleDto(role, isUserRequired)));
 			roleDtos.setRoles(listOfRoleDtos);
 		}
 

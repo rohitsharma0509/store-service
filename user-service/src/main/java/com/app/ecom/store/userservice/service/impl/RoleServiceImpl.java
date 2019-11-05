@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
 		queryRequest.setOffset(roleSearchRequest.getOffset());
 		queryRequest.setLimit(roleSearchRequest.getLimit());
 		List<Role> roles = queryHandler.findByQueryRequest(queryRequest);
-		return roleMapper.rolesToRoleDtos(roles);
+		return roleMapper.rolesToRoleDtos(roles, true);
 	}
 
 	@Override

@@ -35,7 +35,7 @@
 			 var selectedIds = getSelectedIds();
 			 
 			 if(selectedIds.length <= 0) {
-				 $('#alertMessages').find(".modal-body").html("<p>please select atleast 1 item!</p>");
+				 $('#alertMessages').find(".warning-modal-content").html("Please select atleast 1 item!");
 				 $('#alertMessages').modal({show:true});
 			 } else {
 				 $('#deleteConfirmation').modal({show:true});
@@ -65,13 +65,13 @@
 	        		window.parent.location.reload();
 	        	} else {
 	        		$('#deleteConfirmation').modal('hide');
-	        		$('#alertMessages').find(".modal-body").html(response.description);
+	        		$('#alertMessages').find(".warning-modal-content").html(response.description);
 	        		$('#alertMessages').modal({show:true});
 	        	}
 	        },
 	        error: function(response) {
 	        	$('#deleteConfirmation').modal('hide');
-	        	$('#alertMessages').find(".modal-body").html("<p>Something went wrong!</p>");
+	        	$('#alertMessages').find(".warning-modal-content").html("<p>Something went wrong!</p>");
 				$('#alertMessages').modal({show:true});
 	        }
 	    });

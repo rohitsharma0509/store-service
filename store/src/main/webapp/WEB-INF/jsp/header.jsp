@@ -84,6 +84,35 @@ String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLast
 .modal-dialog {
   max-width: 800px;
 }
+.delete-modal {
+  max-width: 500px;
+}
+.delete-icon {
+  font-size: 100px;
+  color:red;
+  margin: 20px;
+}
+.delete-modal-header {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+.delete-modal-content {
+  font-size: 16px;
+  margin: 20px;
+}
+.warning-icon {
+  font-size: 100px;
+  color:#ffc107;
+  margin: 20px;
+}
+.warning-modal-header {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+.warning-modal-content {
+  font-size: 16px;
+  margin: 20px;
+}
 </style>
 <div class="row">
   <div class="col-sm-12">

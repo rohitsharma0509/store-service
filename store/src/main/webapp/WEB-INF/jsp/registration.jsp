@@ -5,8 +5,7 @@
         <h2 class="form-signin-heading">Create your account</h2>
         <spring:bind path="firstName">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="firstName" path="firstName" class="form-control"
-                            placeholder="First Name"></form:input>
+                <form:input type="firstName" path="firstName" class="form-control" placeholder="First Name" autofocus="true"></form:input>
                 <form:errors path="firstName" class="help-inline"></form:errors>
             </div>
         </spring:bind>
@@ -21,8 +20,7 @@
         
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="username" class="form-control" placeholder="Username"
-                            autofocus="true"></form:input>
+                <form:input type="text" path="username" class="form-control" placeholder="Username"></form:input>
                 <form:errors path="username" class="help-inline"></form:errors>
             </div>
         </spring:bind>

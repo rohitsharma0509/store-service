@@ -11,10 +11,11 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate.ddl-auto: update
-server:
+
+server: 
   port: 9999
 
-base-urls:
+base-urls: 
   master-data-api: http://localhost:9001/api/masterdata/v1
   order-service-api: http://localhost:9002/api/orderservice/v1
   product-service-api: http://localhost:9003/api/productservice/v1
