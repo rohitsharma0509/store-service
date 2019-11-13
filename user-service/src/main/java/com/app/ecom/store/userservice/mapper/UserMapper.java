@@ -3,6 +3,7 @@ package com.app.ecom.store.userservice.mapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import com.app.ecom.store.userservice.dto.RoleDtos;
 import com.app.ecom.store.userservice.dto.UserDto;
@@ -48,7 +49,7 @@ public class UserMapper {
 		user.setLastName(userDto.getLastName());
 		user.setEmail(userDto.getEmail());
 		user.setMobile(userDto.getMobile());
-		user.setLanguage(StringUtils.isEmpty(userDto.getLanguage()) ? "en" : userDto.getLanguage());
+		user.setLanguage(StringUtils.isEmpty(userDto.getLanguage()) ? Locale.ENGLISH.getLanguage() : userDto.getLanguage());
 		if(!CollectionUtils.isEmpty(userDto.getRoles())) {
 			RoleDtos roleDtos = new RoleDtos();
 			roleDtos.setRoles(userDto.getRoles());
@@ -86,6 +87,10 @@ public class UserMapper {
 		userDto.setIsEnabled(user.getIsEnabled());
 		userDto.setUsername(user.getUsername());
 		userDto.setPassword(user.getPassword());
+		userDto.setCreatedBy(user.getCreatedBy());
+		userDto.setCreatedTs(user.getCreatedTs());
+		userDto.setLastModifiedBy(user.getLastModifiedBy());
+		userDto.setLastModifiedTs(user.getLastModifiedTs());
 		RoleDtos roleDtos = roleMapper.rolesToRoleDtos(user.getRoles());
 		userDto.setRoles(roleDtos == null ? null : roleDtos.getRoles());
 		return userDto;

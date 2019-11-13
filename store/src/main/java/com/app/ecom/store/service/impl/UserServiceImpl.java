@@ -1,14 +1,17 @@
 package com.app.ecom.store.service.impl;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import com.app.ecom.store.client.UserServiceClient;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.userservice.UserDtos;
@@ -45,17 +48,28 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserServiceClient userServiceClient;
     
+    @Autowired
+    private HttpSession httpSession;
+    
     @Override
     public UserDto createUser(UserDto userDto) {
     	if(!StringUtils.isEmpty(userDto.getPassword())) {
     		userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+    	}
+    	if(userDto.getId() == null) {    		
+    		userDto.setCreatedBy(userDto.getUsername());
+    		userDto.setCreatedTs(ZonedDateTime.now());
+    	} else {
+    		UserDto loggedInUser = (UserDto) httpSession.getAttribute(FieldNames.USER);
+    		userDto.setLastModifiedBy(loggedInUser.getUsername());
+    		userDto.setLastModifiedTs(ZonedDateTime.now());
     	}
     	return userServiceClient.createUpdateUser(userDto);
     }
     
     @Override
     public void updateUser(UserDto userDto) {
-    	userServiceClient.createUpdateUser(userDto);
+    	createUser(userDto);
     }
     
     @Override

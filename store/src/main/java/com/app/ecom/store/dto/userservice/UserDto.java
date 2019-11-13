@@ -1,6 +1,7 @@
 package com.app.ecom.store.dto.userservice;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -51,6 +52,18 @@ public class UserDto implements Serializable {
 
 	@JsonProperty("roles")
 	private List<RoleDto> roles;
+	
+	@JsonProperty("createdBy")
+	private String createdBy;
+	
+	@JsonProperty("createdTs")
+	private ZonedDateTime createdTs;
+	
+	@JsonProperty("lastModifiedBy")
+	private String lastModifiedBy;
+	
+	@JsonProperty("lastModifiedTs")
+	private ZonedDateTime lastModifiedTs;
 
 	public Long getId() {
 		return id;
@@ -147,5 +160,37 @@ public class UserDto implements Serializable {
 
 	public void setRoles(List<RoleDto> roles) {
 		this.roles = roles;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public ZonedDateTime getCreatedTs() {
+		return createdTs;
+	}
+
+	public void setCreatedTs(ZonedDateTime createdTs) {
+		this.createdTs = createdTs;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public ZonedDateTime getLastModifiedTs() {
+		return lastModifiedTs;
+	}
+
+	public void setLastModifiedTs(ZonedDateTime lastModifiedTs) {
+		this.lastModifiedTs = lastModifiedTs;
 	}
 }

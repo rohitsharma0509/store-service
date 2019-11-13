@@ -75,11 +75,16 @@ String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLast
 .has-error {
     color: red;
 }
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+  float: right;
+  margin-left: 5px;
+}
 .norecord {
-  height: 100px;
-    margin-left: 1px;
-    margin-right: 1px;
-    margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
 }
 .modal-dialog {
   max-width: 800px;

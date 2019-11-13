@@ -23,8 +23,7 @@
 	<div class="col-sm-6">
 		<table class="table">
       <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Configuration" text="Configuration" /></b></span></th></tr>
-      <tr><td><a href="#"><spring:message code="Page Setting" text="Page Setting" /></a></td></tr>
-      <tr><td><a href="#"><spring:message code="Token Setting" text="Token Setting" /></a></td></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.SETTINGS %>"><spring:message code="Manage Settings" text="Manage Settings" /></a></td></tr>
     </table>
 	</div>
 	<div class="col-sm-6">

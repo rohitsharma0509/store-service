@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
@@ -36,7 +37,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         if (null != authentication && null != authentication.getPrincipal()) {
         	String username = authentication.getName();
             UserDto userDto = userService.findUserByUsername(username);
-            httpSession.setAttribute("user", userDto);
+            httpSession.setAttribute(FieldNames.USER, userDto);
             String locale = null == userDto || StringUtils.isEmpty(userDto.getLanguage()) ? Locale.ENGLISH.getLanguage() : userDto.getLanguage();
             userService.updateLocale(request, response, locale);
         }

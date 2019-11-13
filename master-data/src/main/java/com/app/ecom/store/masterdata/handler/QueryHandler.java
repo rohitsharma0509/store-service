@@ -77,7 +77,7 @@ public class QueryHandler<T> {
 		} else if (OperationType.NOT_EQUAL == whereClause.getOperation()) {
 			return criteriaBuilder.notEqual(root.get(whereClause.getKey()), whereClause.getValue());
 		} else if (OperationType.IN == whereClause.getOperation()) {
-			return root.get(whereClause.getKey()).in(whereClause.getValue());
+			return criteriaBuilder.in(root.get(whereClause.getKey())).value(whereClause.getValue());
 		} else if (OperationType.NOT_IN == whereClause.getOperation()) {
 			return criteriaBuilder.not(root.get(whereClause.getKey()).in(whereClause.getValue()));
 		} else if (OperationType.NULL == whereClause.getOperation()) {

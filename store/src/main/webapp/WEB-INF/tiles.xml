@@ -85,6 +85,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/composeEmail.jsp" />  
     </definition>
     
+    <definition name="settings" extends="base.definition">  
+        <put-attribute name="title" value="Manage Settings" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/settings.jsp" />  
+    </definition>
+    
     <definition name="addEmailAccount" extends="base.definition">  
         <put-attribute name="title" value="Add Email Account" />  
         <put-attribute name="body" value="/WEB-INF/jsp/addEmailAccount.jsp" />  

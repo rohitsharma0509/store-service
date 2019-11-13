@@ -50,27 +50,24 @@ $(document).ready(function(){
 </div>
 <div class="row" style="height: 20px;"></div>
 <div class="row">
-	<div class="col-sm-11">
-		<a class="btn btn-sm btn-info pover" href="#" rel="moreActions" data-popover-content="#moreActionContent" data-toggle="popover" >More Actions&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true" ></i></a>
-	</div>
+  <div class="col-sm-12">
+    <c:if test="${page.getContent().size() > 0}"> 
+      <a class="btn btn-sm btn-primary-outline deleteBtn" href="#" data-flag="ALL" data-url="<%=RequestUrls.DELETE_ALL_CATEGORY %>"><spring:message code="Delete All" text="Delete All" /></a>
+      <a class="btn btn-sm btn-primary-outline deleteBtn" href="#" data-flag="MULTIPLE" data-url="<%=RequestUrls.DELETE_BULK_CATEGORY %>"><spring:message code="Delete" text="Delete" /></a>
+    </c:if>
+    <a class="btn btn-sm btn-primary-outline" href="${contextPath}<%=RequestUrls.ADD_CATEGORY %>"><spring:message code="Add Category" text="Add Category" /></a>
+  </div>
 </div>
-<div id="moreActionContent" class="d-none">
-	<ul class="list-group list-group-flush">
-	  <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_CATEGORY %>"><spring:message code="Add Category" text="Add Category" /></a></li>
-    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="MULTIPLE" data-url="<%=RequestUrls.DELETE_BULK_CATEGORY %>"><spring:message code="Delete" text="Delete" /></a></li>
-    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="ALL" data-url="<%=RequestUrls.DELETE_ALL_CATEGORY %>"><spring:message code="Delete All" text="Delete All" /></a></li>
-	</ul>
-</div>
-<div class="row" style="height: 10px;"></div>
 <c:choose>
 	<c:when test="${page.getContent().size() > 0}">
+    <div class="row" style="height: 10px;"></div>
 		<div class="row">
 			<div class="col-sm-12">
 				<table class="table content-table">
 					<tr>
 						<th><input type="checkbox" name="ids" id="all" /></th>
-						<th>Category Name</th>
-						<th>Action</th>
+						<th><spring:message code="Category Name" text="Category Name" /></th>
+						<th><spring:message code="Action" text="Action" /></th>
 					</tr>
 					<c:forEach var="category" items="${page.getContent()}" varStatus="loop">
 						<tr>
@@ -92,8 +89,9 @@ $(document).ready(function(){
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="row card norecord">
-			<div class="col-sm-12">No Records Found.</div>
+	  <hr>
+		<div class="row norecord">
+			<div class="col-sm-12"><spring:message code="No Records Found" text="No Records Found" />.</div>
 		</div>
 	</c:otherwise>
 </c:choose>
