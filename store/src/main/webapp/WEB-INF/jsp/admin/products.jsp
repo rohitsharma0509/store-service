@@ -81,8 +81,6 @@ $(document).ready(function(){
     <a class="btn btn-sm btn-primary-outline" href="${contextPath}<%=RequestUrls.ADD_PRODUCT %>"><spring:message code="Add Product" text="Add Product" /></a>
   </div>
 </div>
-<div class="row">
-	<div class="col-sm-12">
 		<c:choose>
 			<c:when test="${page.getContent().size() > 0}">
         <div class="row" style="height: 10px;"></div>
@@ -124,8 +122,8 @@ $(document).ready(function(){
 				</div>
 			</c:when>
 			<c:otherwise>
+				<hr>
 				<div class="row norecord">
-				  <hr>
 					<div class="col-sm-12">
 						<spring:message code="No Records Found" text="No Records Found" />
 					</div>
@@ -139,8 +137,6 @@ $(document).ready(function(){
 				</div>
 			</c:when>
 		</c:choose>
-	</div>
-</div>
 <div class="row">
   <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog delete-modal" role="document">

@@ -46,7 +46,7 @@ public class User {
 	@Column(name = "is_enabled", columnDefinition="tinyint(1)")
     private Boolean isEnabled;
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 	

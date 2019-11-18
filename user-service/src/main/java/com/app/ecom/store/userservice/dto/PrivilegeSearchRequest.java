@@ -1,21 +1,26 @@
 package com.app.ecom.store.userservice.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PrivilegeSearchRequest extends DefaultSearchRequest {
 
-	@JsonProperty("id")
-	private Long id;
+	@JsonProperty("ids")
+	private List<Long> ids;
 
 	@JsonProperty("name")
 	private String name;
+	
+	@JsonProperty("description")
+	private String description;
 
-	public Long getId() {
-		return id;
+	public List<Long> getIds() {
+		return ids;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
 	}
 
 	public String getName() {
@@ -24,5 +29,13 @@ public class PrivilegeSearchRequest extends DefaultSearchRequest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

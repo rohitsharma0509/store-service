@@ -1,13 +1,16 @@
 package com.app.ecom.store.masterdata.resource;
 
 import com.app.ecom.store.masterdata.constants.Endpoint;
+import com.app.ecom.store.masterdata.dto.IdsDto;
 import com.app.ecom.store.masterdata.dto.setting.SettingDto;
 import com.app.ecom.store.masterdata.dto.setting.SettingDtos;
+import com.app.ecom.store.masterdata.dto.setting.SettingSearchRequest;
 import com.app.ecom.store.masterdata.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,11 +35,21 @@ public class SettingResource {
 		}
 	}
 	
-	@GetMapping(value = Endpoint.SETTING)
-	public ResponseEntity<SettingDtos> getAllSettings() {
+	@PostMapping(value = Endpoint.SETTING)
+	public ResponseEntity<SettingDtos> getAllSettings(@RequestBody SettingSearchRequest settingSearchRequest) {
 		try {
-			SettingDtos settingDtos = settingService.getAllSettings();
+			SettingDtos settingDtos = settingService.getSettings(settingSearchRequest);
 			return new ResponseEntity<>(settingDtos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@DeleteMapping(value = Endpoint.SETTING)
+	public ResponseEntity<Void> deleteSettings(@RequestBody IdsDto idsDto) {
+		try {
+			settingService.deleteSettings(idsDto);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

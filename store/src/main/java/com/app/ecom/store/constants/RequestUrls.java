@@ -87,6 +87,7 @@ public class RequestUrls {
 	
 	public static final String SETTINGS = "/admin/settings";
 	public static final String ADD_SETTING = "/admin/addSetting";
+	public static final String DELETE_SETTING = SETTINGS+"/{id}";
 	
 	public static final String PROFIT_LOSS = "/admin/profitLoss";
 	public static final String DAILY_PROFIT_LOSS = "/admin/dailyProfitLoss";

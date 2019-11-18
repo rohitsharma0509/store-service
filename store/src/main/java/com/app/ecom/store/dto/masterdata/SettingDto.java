@@ -1,4 +1,4 @@
-package com.app.ecom.store.masterdata.dto.setting;
+package com.app.ecom.store.dto.masterdata;
 
 import java.time.ZonedDateTime;
 

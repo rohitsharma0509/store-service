@@ -11,8 +11,11 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import com.app.ecom.store.client.UserServiceClient;
+import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
+import com.app.ecom.store.dto.userservice.RoleDtos;
+import com.app.ecom.store.dto.userservice.RoleSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.userservice.UserDtos;
 import com.app.ecom.store.dto.userservice.UserSearchRequest;
@@ -63,6 +66,12 @@ public class UserServiceImpl implements UserService {
     		UserDto loggedInUser = (UserDto) httpSession.getAttribute(FieldNames.USER);
     		userDto.setLastModifiedBy(loggedInUser.getUsername());
     		userDto.setLastModifiedTs(ZonedDateTime.now());
+    	}
+    	if(CollectionUtils.isEmpty(userDto.getRoles())) {
+    		RoleSearchRequest roleSearchRequest = new RoleSearchRequest();
+    		roleSearchRequest.setRoleName(Constants.DEFAULT_GUEST_ROLE);
+    		RoleDtos roleDtos = userServiceClient.getRoles(roleSearchRequest);
+    		userDto.setRoles(null == roleDtos ? null : roleDtos.getRoles());
     	}
     	return userServiceClient.createUpdateUser(userDto);
     }

@@ -83,13 +83,13 @@ public class PrivilegeMapper {
 	}
 
 	public List<WhereClause> privilegeSearchRequestToWhereClauses(PrivilegeSearchRequest privilegeSearchRequest) {
-		return getWhereClauses(privilegeSearchRequest.getId(), privilegeSearchRequest.getName());
+		return getWhereClauses(privilegeSearchRequest.getIds(), privilegeSearchRequest.getName());
 	}
 
-	private List<WhereClause> getWhereClauses(Long id, String name) {
+	private List<WhereClause> getWhereClauses(List<Long> ids, String name) {
 		List<WhereClause> whereClauses = new ArrayList<>();
-		if (id != null) {
-			WhereClause whereClause = new WhereClause("id", String.valueOf(id), OperationType.EQUALS);
+		if (!CollectionUtils.isEmpty(ids)) {
+			WhereClause whereClause = new WhereClause("id", (ids.size()>1 ? ids : ids.get(0)), (ids.size() > 1 ? OperationType.IN : OperationType.EQUALS));
 			whereClauses.add(whereClause);
 		} else {
 			if (!StringUtils.isEmpty(name)) {

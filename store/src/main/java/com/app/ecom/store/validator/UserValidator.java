@@ -1,7 +1,9 @@
 package com.app.ecom.store.validator;
 
 import com.app.ecom.store.dto.userservice.UserDto;
+import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.UserService;
+import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,6 +15,9 @@ public class UserValidator implements Validator {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private CommonUtil commonUtil;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -22,29 +27,29 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         UserDto userDto = (UserDto) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mobile", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
         if (userDto.getUsername().length() < 5 || userDto.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+        	errors.rejectValue("username", commonUtil.getMessage(ErrorCode.ERR000004.getCode()));
         }
         if (userService.findUserByUsername(userDto.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+        	errors.rejectValue("username", commonUtil.getMessage(ErrorCode.ERR000005.getCode()));
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (userDto.getPassword().length() < 8 || userDto.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+        	errors.rejectValue("password", commonUtil.getMessage(ErrorCode.ERR000006.getCode()));
         }
         if (!userDto.getPasswordConfirm().equals(userDto.getPassword())) {
-            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+        	errors.rejectValue("passwordConfirm", commonUtil.getMessage(ErrorCode.ERR000007.getCode()));
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
         if (!userDto.getEmail().matches("[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")) {
-            errors.rejectValue("email", "invalid.userForm.email");
+        	errors.rejectValue("email", commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mobile", "NotEmpty");
         if (userDto.getMobile().length() < 10) {
-            errors.rejectValue("mobile", "invalid.userForm.mobile");
+        	errors.rejectValue("mobile", commonUtil.getMessage(ErrorCode.ERR000014.getCode()));
         }
     }
 }

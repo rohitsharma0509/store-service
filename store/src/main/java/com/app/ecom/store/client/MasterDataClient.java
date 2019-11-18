@@ -7,6 +7,9 @@ import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDto;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDtos;
 import com.app.ecom.store.dto.masterdata.ProductCategorySearchRequest;
+import com.app.ecom.store.dto.masterdata.SettingDto;
+import com.app.ecom.store.dto.masterdata.SettingDtos;
+import com.app.ecom.store.dto.masterdata.SettingSearchRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class MasterDataClient {
 	private static final String CATEGORY = "/category";
 	
 	private static final String COUNT_CATEGORY = "/countCategory";
+	
+	private static final String SETTING = "/setting";
 	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
@@ -77,6 +82,41 @@ public class MasterDataClient {
 			logger.error(new StringBuilder("Call to DElETE API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
 		}
 	}
+	
+	public SettingDto addUpdateSetting(SettingDto settingDto) {
+		String url = new StringBuilder(masterDataApiBaseUrl).append(SETTING).toString();
+		ExternalApi<SettingDto> externalApi = getExternalApi(SettingDto.class, url, HttpMethod.PUT, null, null, settingDto);
+		ResponseEntity<SettingDto> responseEntity = externalApiHandler.callExternalApi(externalApi);
+		if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
+			return responseEntity.getBody();
+		} else {
+			logger.error(new StringBuilder("Call to PUT API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
+			return null;
+		}
+	}
+	
+	public SettingDtos getSettings(SettingSearchRequest settingSearchRequest) {
+		String url = new StringBuilder(masterDataApiBaseUrl).append(SETTING).toString();
+		ExternalApi<SettingDtos> externalApi = getExternalApi(SettingDtos.class, url, HttpMethod.POST, null, null, settingSearchRequest);
+		ResponseEntity<SettingDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
+		if(responseEntity.getStatusCode() == HttpStatus.OK) {
+			return responseEntity.getBody();
+		} else {
+			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
+			return null;
+		}
+	}
+	
+	public void deleteSettings(IdsDto idsDto) {
+		String url = new StringBuilder(masterDataApiBaseUrl).append(SETTING).toString();
+		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
+		ResponseEntity<Void> responseEntity = externalApiHandler.callExternalApi(externalApi);
+		if(responseEntity.getStatusCode() == HttpStatus.OK) {
+			logger.info(new StringBuilder("Settings has been deleted successfully.").toString());
+		} else {
+			logger.error(new StringBuilder("Call to DElETE API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
+		}
+	}
 		
 	private <T> ExternalApi<T> getExternalApi(Class<T> type, String url, HttpMethod method, Map<String, String> headers, Map<String, String> parameterMap, Object body) {
 		ExternalApi<T> externalApi = new ExternalApi<>();
@@ -88,5 +128,4 @@ public class MasterDataClient {
 		externalApi.setBody(body);
 		return externalApi;
 	}
-
 }
