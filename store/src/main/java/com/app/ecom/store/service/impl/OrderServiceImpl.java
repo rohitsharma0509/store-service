@@ -2,6 +2,7 @@ package com.app.ecom.store.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -101,10 +102,10 @@ public class OrderServiceImpl implements OrderService {
 		OrderDtos orderDtos = orderServiceClient.getOrders(orderSearchRequest);
 		Long totalRecords = orderServiceClient.countOrders(orderSearchRequest);
 		CustomPage<OrderDto> page = new CustomPage<>();
-		page.setContent(orderDtos.getOrders());
+		page.setContent(orderDtos == null ? Collections.emptyList() : orderDtos.getOrders());
 		page.setPageNumber(pageable.getPageNumber() - 1);
 		page.setSize(pageable.getPageSize());
-		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
+		page.setTotalPages(totalRecords==null ? 0 : (int)Math.ceil((double)totalRecords/pageable.getPageSize()));
 		return page;
 	}
 	

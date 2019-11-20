@@ -1,4 +1,4 @@
-package com.app.ecom.store.events;
+package com.app.ecom.store.events.listeners;
 
 import java.util.ArrayList;
 import java.util.List;

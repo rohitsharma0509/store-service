@@ -1,6 +1,7 @@
 package com.app.ecom.store.util;
 
 import java.io.ByteArrayInputStream;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.jaxb.ProductsType;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -84,6 +87,13 @@ public class CommonUtil {
 		SimpleDateFormat outputFormat = new SimpleDateFormat(outputDateFormat);
 		Date utilDate = convertStringToDate(date, inputDateFormat);
 		return outputFormat.format(utilDate);
+	}
+	
+	public String getStackTraceAsString(Exception exception) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		exception.printStackTrace(pw);
+		return sw.toString();
 	}
 	
 	public String getPagging(String baseUrl, int currentPage, int totalPage, Map<String, String> parameters) {
@@ -219,5 +229,16 @@ public class CommonUtil {
 	
 	public String getMessage(String errorCode) {
 		return enviroment.getProperty(errorCode);
+	}
+	
+	public <T> ExternalApiRequest<T> getExternalApiRequest(Class<T> type, String url, HttpMethod method, Map<String, String> headers, Map<String, String> parameterMap, Object body) {
+		ExternalApiRequest<T> externalApiRequest = new ExternalApiRequest<>();
+		externalApiRequest.setType(type);
+		externalApiRequest.setUrl(url);
+		externalApiRequest.setMethod(method);
+		externalApiRequest.setHeaders(headers);
+		externalApiRequest.setParameterMap(parameterMap);
+		externalApiRequest.setBody(body);
+		return externalApiRequest;
 	}
 }

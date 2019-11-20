@@ -1,6 +1,7 @@
-package com.app.ecom.store.events;
+package com.app.ecom.store.events.listeners;
 
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.events.ChangePasswordEvent;
 import com.app.ecom.store.service.UserTokenService;
 import com.app.ecom.store.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;

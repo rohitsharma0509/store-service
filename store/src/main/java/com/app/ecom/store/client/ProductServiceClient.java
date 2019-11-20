@@ -3,86 +3,58 @@ package com.app.ecom.store.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.app.ecom.store.dto.ExternalApi;
+import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.dto.productservice.ProductDtos;
 import com.app.ecom.store.dto.productservice.ProductSearchRequest;
 import com.app.ecom.store.dto.productservice.StockDtos;
 import com.app.ecom.store.enums.QuantityStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductServiceClient {
 	
-	private static final Logger logger = LogManager.getLogger(ProductServiceClient.class);
-	
 	private static final String PRODUCT = "/product";
-	
 	private static final String COUNT_PRODUCT = "/countProduct";
-	
 	private static final String STOCK = "/stock";
-	
 	private static final String COUNT_STOCK = "/countStock";
 	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
+	
+	@Autowired
+	private CommonUtil commonUtil;
 	
 	@Value("${base-urls.product-service-api}")
 	private String productServiceApiBaseUrl;
 	
 	public ProductDto addUpdateProduct(ProductDto productDto) {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
-		ExternalApi<ProductDto> externalApi = getExternalApi(ProductDto.class, url, HttpMethod.PUT, null, null, productDto);
-		ResponseEntity<ProductDto> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to PUT API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<ProductDto> externalApi = commonUtil.getExternalApiRequest(ProductDto.class, url, HttpMethod.PUT, null, null, productDto);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 
 	public ProductDtos getProducts(ProductSearchRequest productSearchRequest) {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
-		ExternalApi<ProductDtos> externalApi = getExternalApi(ProductDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
-		ResponseEntity<ProductDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<ProductDtos> externalApi = commonUtil.getExternalApiRequest(ProductDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countProducts(ProductSearchRequest productSearchRequest) {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(COUNT_PRODUCT).toString();
-		ExternalApi<Long> externalApi = getExternalApi(Long.class, url, HttpMethod.POST, null, null, productSearchRequest);
-		ResponseEntity<Long> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, productSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteProducts(IdsDto idsDto) {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
-		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
-		ResponseEntity<Void> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			logger.info(new StringBuilder("Orders has been deleted successfully.").toString());
-		} else {
-			logger.error(new StringBuilder("Call to DElETE API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-		}
+		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
+		externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Integer getProductsQuantity(Long productId, QuantityStatus status) {
@@ -90,49 +62,19 @@ public class ProductServiceClient {
 		Map<String, String> queryParamMap = new HashMap<>();
 		queryParamMap.put("productId", String.valueOf(productId));
 		queryParamMap.put("status", status.name());
-		ExternalApi<Integer> externalApi = getExternalApi(Integer.class, url, HttpMethod.GET, null, queryParamMap, null);
-		ResponseEntity<Integer> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<Integer> externalApi = commonUtil.getExternalApiRequest(Integer.class, url, HttpMethod.GET, null, queryParamMap, null);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public StockDtos getStockDetails(ProductSearchRequest productSearchRequest) {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(STOCK).toString();
-		ExternalApi<StockDtos> externalApi = getExternalApi(StockDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
-		ResponseEntity<StockDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<StockDtos> externalApi = commonUtil.getExternalApiRequest(StockDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Integer countStockDetails(ProductSearchRequest productSearchRequest) {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(COUNT_STOCK).toString();
-		ExternalApi<Integer> externalApi = getExternalApi(Integer.class, url, HttpMethod.POST, null, null, productSearchRequest);
-		ResponseEntity<Integer> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<Integer> externalApi = commonUtil.getExternalApiRequest(Integer.class, url, HttpMethod.POST, null, null, productSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
-	
-	private <T> ExternalApi<T> getExternalApi(Class<T> type, String url, HttpMethod method, Map<String, String> headers, Map<String, String> parameterMap, Object body) {
-		ExternalApi<T> externalApi = new ExternalApi<>();
-		externalApi.setType(type);
-		externalApi.setUrl(url);
-		externalApi.setMethod(method);
-		externalApi.setHeaders(headers);
-		externalApi.setParameterMap(parameterMap);
-		externalApi.setBody(body);
-		return externalApi;
-	}
-
 }

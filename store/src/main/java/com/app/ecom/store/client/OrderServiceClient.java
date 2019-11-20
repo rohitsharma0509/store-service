@@ -1,91 +1,52 @@
 package com.app.ecom.store.client;
 
-import java.util.Map;
-
-import com.app.ecom.store.dto.ExternalApi;
+import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.orderservice.OrderDto;
 import com.app.ecom.store.dto.orderservice.OrderDtos;
 import com.app.ecom.store.dto.orderservice.OrderSearchRequest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderServiceClient {
 	
-	private static final Logger logger = LogManager.getLogger(OrderServiceClient.class);
-	
 	private static final String ORDER = "/order";
-	
 	private static final String COUNT_ORDER = "/countOrder";
 	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
+	
+	@Autowired
+	private CommonUtil commonUtil;
 	
 	@Value("${base-urls.order-service-api}")
 	private String orderServiceApiBaseUrl;
 	
 	public OrderDto createUpdateOrder(OrderDto orderDto) {
 		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
-		ExternalApi<OrderDto> externalApi = getExternalApi(OrderDto.class, url, HttpMethod.PUT, null, null, orderDto);
-		ResponseEntity<OrderDto> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to PUT API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<OrderDto> externalApi = commonUtil.getExternalApiRequest(OrderDto.class, url, HttpMethod.PUT, null, null, orderDto);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public OrderDtos getOrders(OrderSearchRequest orderSearchRequest) {
 		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
-		ExternalApi<OrderDtos> externalApi = getExternalApi(OrderDtos.class, url, HttpMethod.POST, null, null, orderSearchRequest);
-		ResponseEntity<OrderDtos> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<OrderDtos> externalApi = commonUtil.getExternalApiRequest(OrderDtos.class, url, HttpMethod.POST, null, null, orderSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countOrders(OrderSearchRequest orderSearchRequest) {
 		String url = new StringBuilder(orderServiceApiBaseUrl).append(COUNT_ORDER).toString();
-		ExternalApi<Long> externalApi = getExternalApi(Long.class, url, HttpMethod.POST, null, null, orderSearchRequest);
-		ResponseEntity<Long> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			return responseEntity.getBody();
-		} else {
-			logger.error(new StringBuilder("Call to POST API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-			return null;
-		}
+		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, orderSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteOrders(IdsDto idsDto) {
 		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
-		ExternalApi<Void> externalApi = getExternalApi(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
-		ResponseEntity<Void> responseEntity = externalApiHandler.callExternalApi(externalApi);
-		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			logger.info(new StringBuilder("Orders has been deleted successfully.").toString());
-		} else {
-			logger.error(new StringBuilder("Call to DElETE API ").append(url).append(" failed with status: ").append(responseEntity.getStatusCode()));
-		}
-	}
-		
-	private <T> ExternalApi<T> getExternalApi(Class<T> type, String url, HttpMethod method, Map<String, String> headers, Map<String, String> parameterMap, Object body) {
-		ExternalApi<T> externalApi = new ExternalApi<>();
-		externalApi.setType(type);
-		externalApi.setUrl(url);
-		externalApi.setMethod(method);
-		externalApi.setHeaders(headers);
-		externalApi.setParameterMap(parameterMap);
-		externalApi.setBody(body);
-		return externalApi;
+		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
+		externalApiHandler.callExternalApi(externalApi);
 	}
 }

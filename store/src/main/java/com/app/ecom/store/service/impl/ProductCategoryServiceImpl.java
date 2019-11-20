@@ -24,7 +24,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Autowired
 	private MasterDataClient masterDataClient;
 	
-	@Autowired
+	@Override
 	public List<ProductCategoryDto> getAllProductCategories() {
 		ProductCategoryDtos productCategoryDtos = masterDataClient.getProductCategories(new ProductCategorySearchRequest());
 		if(null != productCategoryDtos && !CollectionUtils.isEmpty(productCategoryDtos.getProductCategories())) {
@@ -34,6 +34,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		}
 	}
 	
+	@Override
 	public ProductCategoryDto getProductCategoryByIdOrName(Long id, String name) {
 		ProductCategorySearchRequest productCategorySearchRequest = new ProductCategorySearchRequest();
 		productCategorySearchRequest.setId(id);
@@ -67,10 +68,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		productCategoryDto.setName(params.get("name"));
 		Long totalRecords = masterDataClient.countProductCategories(productCategoryDto);
 		CustomPage<ProductCategoryDto> page = new CustomPage<>();
-		page.setContent(productCategoryDtos.getProductCategories());
+		page.setContent(productCategoryDtos == null ? Collections.emptyList() : productCategoryDtos.getProductCategories());
 		page.setPageNumber(pageable.getPageNumber() - 1);
 		page.setSize(pageable.getPageSize());
-		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
+		page.setTotalPages(totalRecords == null ? 0 : (int)Math.ceil((double)totalRecords/pageable.getPageSize()));
 		return page;
 	}
 

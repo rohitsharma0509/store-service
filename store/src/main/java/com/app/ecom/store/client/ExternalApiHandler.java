@@ -3,7 +3,8 @@ package com.app.ecom.store.client;
 import java.net.URI;
 import java.util.Map.Entry;
 
-import com.app.ecom.store.dto.ExternalApi;
+import com.app.ecom.store.dto.ExternalApiRequest;
+import com.app.ecom.store.util.CommonUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -13,12 +14,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -38,29 +41,50 @@ public class ExternalApiHandler {
 
     @Autowired
     private ObjectMapper objectMapper;
+    
+    @Autowired
+    private CommonUtil commonUtil;
 
     /**
      * Public method to invoke external API for a given ExternalApi object.Prepares request and invokes method for API call based on the values passed in the object. 
-     * @param externalApi ExternalApi request wrapper object
-     * @return ResponseEntity API response
+     * @param externalApiRequest ExternalApi request wrapper object
+     * @return T API response
      */
-    public <T> ResponseEntity<T> callExternalApi(ExternalApi<T> externalApi) {
+    public <T> T callExternalApi(ExternalApiRequest<T> externalApiRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        if(!CollectionUtils.isEmpty(externalApi.getHeaders())) {
-        	for(Entry<String, String> entry: externalApi.getHeaders().entrySet()) {
+        if(!CollectionUtils.isEmpty(externalApiRequest.getHeaders())) {
+        	for(Entry<String, String> entry: externalApiRequest.getHeaders().entrySet()) {
         		headers.set(entry.getKey(), entry.getValue());    	
 	        }
         }
         MultiValueMap<String, String> params = null;
-        if (!CollectionUtils.isEmpty(externalApi.getParameterMap())) {
+        if (!CollectionUtils.isEmpty(externalApiRequest.getParameterMap())) {
             params = new LinkedMultiValueMap<>();
-            for (Entry<String, String> entry : externalApi.getParameterMap().entrySet()) {
+            for (Entry<String, String> entry : externalApiRequest.getParameterMap().entrySet()) {
                 params.add(entry.getKey(), entry.getValue());
             }
         }
-        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(externalApi.getUrl()).queryParams(params).build();
-        return callExternalApi(uriComponents.toUri(), headers, externalApi.getMethod(), externalApi.getType(), externalApi.getBody());
+        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(externalApiRequest.getUrl()).queryParams(params).build();
+        try {
+        	LOGGER.info(new StringBuilder(externalApiRequest.getMethod().name()).append(" ").append(uriComponents.toUri()));
+        	ResponseEntity<T> responseEntity = callExternalApi(uriComponents.toUri(), headers, externalApiRequest.getMethod(), externalApiRequest.getType(), externalApiRequest.getBody());
+        	if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.CREATED) {
+        		LOGGER.info(new StringBuilder("API call success with status code: ").append(responseEntity.getStatusCode()).toString());
+        		return responseEntity.getBody();
+        	} else {
+        		LOGGER.error(new StringBuilder("API call has been failed with status code: ").append(responseEntity.getStatusCode()).toString());
+        	}
+        } catch(ResourceAccessException e) {
+        	StringBuilder msg = new StringBuilder("API call failed due to service is not accessible.\n");
+        	msg.append(commonUtil.getStackTraceAsString(e));
+        	LOGGER.error(msg.toString());
+        } catch (Exception e) {
+        	StringBuilder msg = new StringBuilder("API call failed due to : ");
+        	msg.append(commonUtil.getStackTraceAsString(e));
+        	LOGGER.error(msg.toString());
+        }
+        return null;
     }
     /**
      * @param uri URL to be invoked
@@ -71,21 +95,16 @@ public class ExternalApiHandler {
      * @return ResponseEntity API response Object API response mapped as per the type parameter
      */
     private <T> ResponseEntity<T> callExternalApi(URI uri, HttpHeaders headers, HttpMethod method, Class<T> type, Object postObject) {
-        ResponseEntity<T> responseEntity;
         HttpEntity<String> entity = null;
         if (null != postObject) {
             try {
                 entity = new HttpEntity<>(objectMapper.writeValueAsString(postObject), headers);
             } catch (JsonProcessingException exception) {
-                LOGGER.error("Exception while hitting external API: {}", exception);
+                LOGGER.error("Exception while parsing request body: {}", exception);
             }
         } else {
             entity = new HttpEntity<>(headers);
         }
-        LOGGER.info("URL : " + uri);
-        LOGGER.info("entity : " + entity);
-        responseEntity = restTemplate.exchange(uri, method, entity, type);
-        LOGGER.info("responseEntity : " + responseEntity.getStatusCode());
-        return responseEntity;
+        return restTemplate.exchange(uri, method, entity, type);
     }
 }

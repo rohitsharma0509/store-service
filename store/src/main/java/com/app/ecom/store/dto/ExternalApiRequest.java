@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpMethod;
 
-public class ExternalApi<T> {
+public class ExternalApiRequest<T> {
 
 	private Map<String, String> headers;
 

@@ -1,4 +1,4 @@
-package com.app.ecom.store.events;
+package com.app.ecom.store.events.listeners;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;

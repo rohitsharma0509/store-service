@@ -22,6 +22,8 @@ import javax.persistence.Tuple;
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.SearchCriteria;
 import com.app.ecom.store.querybuilder.QueryBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -41,6 +43,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ChartGenerator {
+	
+	private static final Logger LOGGER = LogManager.getLogger(ChartGenerator.class);
 	
 	@Autowired
 	private QueryBuilder queryBuilder;
@@ -68,7 +72,7 @@ public class ChartGenerator {
 			BufferedImage bufferedImage = chart.createBufferedImage(500, 500);
 			ImageIO.write(bufferedImage, "png", buffer);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Exception while generating piechart: ", e);
 		}
 		return buffer.toByteArray();
 	}
@@ -111,7 +115,7 @@ public class ChartGenerator {
 			BufferedImage bufferedImage = chart.createBufferedImage(500, 500);
 			ImageIO.write(bufferedImage, "png", buffer);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Exception while generating linechart: ", e);
 		}
 		return buffer.toByteArray();
 	}
@@ -136,7 +140,7 @@ public class ChartGenerator {
 			BufferedImage bufferedImage = chart.createBufferedImage(500, 500);
 			ImageIO.write(bufferedImage, "png", buffer);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Exception while generating barchart: ", e);
 		}
 		return buffer.toByteArray();
 	}
@@ -204,7 +208,7 @@ public class ChartGenerator {
 	            BufferedImage bufferedImage = chart.createBufferedImage(1200, 500);
 	            ImageIO.write(bufferedImage, "png", buffer);
 	        } catch (IOException e) {
-	            e.printStackTrace();
+	        	LOGGER.error("Exception while generating categorychart: ", e);
 	        }
 	        return buffer.toByteArray();
 	}
