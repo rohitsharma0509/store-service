@@ -123,8 +123,17 @@ String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLast
   <div class="col-sm-12">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <!-- <a class="navbar-brand" href="#"><img src="../images/logo.jpg" alt="Store" style="width:40px;"></a> -->
+        <ul class="navbar-nav">
+           <li class="nav-item"><a class="nav-link" href="${contextPath}/home"><spring:message code="Dashboard" text="Dashboard" /></a></li>
+           <li class="nav-item"><a class="nav-link" href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
+           <li class="nav-item"><a class="nav-link" href="${contextPath}/shoppingCart"><spring:message code="Shopping Cart" text="Shopping Cart" /></a>
+           <security:authorize access="hasAuthority('ADMIN')">
+             <li class="nav-item"><a class="nav-link" href="${contextPath}/stock"><spring:message code="Stock" text="Stock" /></a></li>
+           </security:authorize>
+          <li class="nav-item"><a class="nav-link" href="${contextPath}/orders"><spring:message code="Orders" text="Orders" /></a></li>
+        </ul>
         <div id="navbarNavDropdown" class="navbar-collapse collapse justify-content-end">
-            <ul class="navbar-nav">
+				    <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="side-dropdown-menus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=name %></a>
                     <div class="dropdown-menu" aria-labelledby="side-dropdown-menus">
