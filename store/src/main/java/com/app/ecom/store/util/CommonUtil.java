@@ -1,6 +1,5 @@
 package com.app.ecom.store.util;
 
-import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.ParseException;
@@ -13,14 +12,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.Response;
-import com.app.ecom.store.dto.jaxb.ProductsType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +30,6 @@ import org.springframework.util.StringUtils;
 public class CommonUtil {
 	
 	private static final Logger logger = LogManager.getLogger(CommonUtil.class);
-	
-	@Autowired
-	private Unmarshaller unmarshaller;
-	
-	@Autowired
-	private Marshaller marshaller;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -178,22 +166,6 @@ public class CommonUtil {
 		} else {
 			return str.split(delimeter);
 		}
-	}
-	
-	public String convertProductsTypeToXml(ProductsType productsType) {
-		StringWriter xml = null;
-
-		try {
-			xml = new StringWriter();
-			marshaller.marshal(productsType, xml);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return xml.toString();
-	}
-
-	public ProductsType convertXmlToProductsType(String response) throws JAXBException {
-		return (ProductsType) unmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes()));
 	}
 	
 	public String getValue(String value) {

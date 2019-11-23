@@ -5,8 +5,12 @@ import com.app.ecom.store.productservice.dto.IdsDto;
 import com.app.ecom.store.productservice.dto.ProductDto;
 import com.app.ecom.store.productservice.dto.ProductDtos;
 import com.app.ecom.store.productservice.dto.ProductSearchRequest;
+import com.app.ecom.store.productservice.enums.FileType;
 import com.app.ecom.store.productservice.enums.QuantityStatus;
 import com.app.ecom.store.productservice.service.ProductService;
+import com.app.ecom.store.productservice.util.CommonUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +21,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class ProductResource {
 	
+	private static final Logger logger = LogManager.getLogger(ProductResource.class);
+	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private CommonUtil commonUtil;
 	
 	@PutMapping(value = Endpoint.PRODUCT)
 	public ResponseEntity<ProductDto> createUpdateProduct(@RequestBody ProductDto productDto) {
@@ -30,6 +40,18 @@ public class ProductResource {
 			ProductDto createdProductDto = productService.createUpdateProduct(productDto);
 			return new ResponseEntity<>(createdProductDto, productDto.getId() == null ? HttpStatus.CREATED : HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while add/upadte product : ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(value = Endpoint.IMPORT_PRODUCT)
+	public ResponseEntity<Void> importProducts(@RequestParam("file") MultipartFile multiPartFile, @RequestParam(required= true) FileType fileType) {
+		try {
+			productService.importProducts(multiPartFile, fileType);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while importing products : ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -40,7 +62,7 @@ public class ProductResource {
 			ProductDtos productDtos = productService.getProducts(productSearchRequest);
 			return new ResponseEntity<>(productDtos, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(new StringBuilder("Exception while getting products : ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -51,7 +73,7 @@ public class ProductResource {
 			Long noOfProducts = productService.countProducts(productSearchRequest);
 			return new ResponseEntity<>(noOfProducts, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(new StringBuilder("Exception while counting products : ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -62,7 +84,7 @@ public class ProductResource {
 			Integer quantity = productService.getProductQuantity(productId, status);
 			return new ResponseEntity<>(quantity, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(new StringBuilder("Exception while getting product quntity : ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -73,6 +95,7 @@ public class ProductResource {
 			productService.deleteProducts(idsDto);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while deleting products : ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

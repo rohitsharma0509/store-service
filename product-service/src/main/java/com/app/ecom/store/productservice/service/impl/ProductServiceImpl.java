@@ -12,6 +12,8 @@ import com.app.ecom.store.productservice.dto.ProductSearchRequest;
 import com.app.ecom.store.productservice.dto.QueryRequest;
 import com.app.ecom.store.productservice.dto.StockDto;
 import com.app.ecom.store.productservice.dto.StockDtos;
+import com.app.ecom.store.productservice.dto.jaxb.ProductsType;
+import com.app.ecom.store.productservice.enums.FileType;
 import com.app.ecom.store.productservice.enums.ProductStatus;
 import com.app.ecom.store.productservice.enums.QuantityStatus;
 import com.app.ecom.store.productservice.handler.QueryHandler;
@@ -19,12 +21,14 @@ import com.app.ecom.store.productservice.mapper.ProductMapper;
 import com.app.ecom.store.productservice.model.Product;
 import com.app.ecom.store.productservice.repository.ProductRepository;
 import com.app.ecom.store.productservice.service.ProductService;
+import com.app.ecom.store.productservice.util.CommonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -39,6 +43,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private QueryHandler<Product> queryHandler;
+	
+	@Autowired
+	private CommonUtil commonUtil;
 
 	@Override
 	public ProductDto createUpdateProduct(ProductDto productDto) {
@@ -157,5 +164,22 @@ public class ProductServiceImpl implements ProductService {
 		}
 		logger.debug("Retrieving Stock details: Count Query: "+countQuery);
 		return queryHandler.countByQuery(countQuery.toString(), productMapper.productSearchRequestToWhereClauses(productSearchRequest));
+	}
+
+	@Override
+	public void importProducts(MultipartFile multiPartFile, FileType fileType) {
+		List<Product> products = null;
+		try {
+			if (FileType.XML == fileType) {
+				String xml = new String(multiPartFile.getBytes());
+				ProductsType productsType = commonUtil.convertXmlToProductsType(xml);
+				products = productMapper.convertProductsTypeToProducts(productsType);
+			} else if (FileType.CSV == fileType) {
+				products = productMapper.convertCsvFileToProducts(multiPartFile.getInputStream());
+			}
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while importing products: ").append(commonUtil.getStackTraceAsString(e)));
+		}
+		productRepository.saveAll(products);
 	}
 }

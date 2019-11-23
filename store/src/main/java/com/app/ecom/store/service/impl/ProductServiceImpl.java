@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public ProductDto getProductById(Long id) {
-		ProductSearchRequest productSearchRequest = getProductSearchRequest(Arrays.asList(id), null, null, null);
+		ProductSearchRequest productSearchRequest = getProductSearchRequest(Arrays.asList(id), null, null);
 		ProductDtos productDtos = productServiceClient.getProducts(productSearchRequest);
 		if(null != productDtos && !CollectionUtils.isEmpty(productDtos.getProducts())) {
 			Optional<ProductDto> optional = productDtos.getProducts().stream().filter(Objects::nonNull).findFirst();
@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
 		if(!StringUtils.isEmpty(params.get(FieldNames.CATEGORY_ID))) {
 			categoryIds.add(Long.parseLong(params.get(FieldNames.CATEGORY_ID)));
 		}
-		ProductSearchRequest productSearchRequest = getProductSearchRequest(null, categoryIds, params.get(FieldNames.PRODUCT_NAME), params.get(FieldNames.BRAND_NAME));
+		ProductSearchRequest productSearchRequest = getProductSearchRequest(null, categoryIds, params);
 		List<OrderByClause> orderByClauses = new ArrayList<>();
 		OrderByClause orderByClause = new OrderByClause();
 		orderByClause.setSortBy(FieldNames.CREATED_TS);
@@ -107,18 +107,20 @@ public class ProductServiceImpl implements ProductService {
 	public CustomPage<StockDto> getStockDetails(Pageable pageable, Map<String, String> params, Boolean isExcel) {
 		CustomPage<StockDto> page = new CustomPage<>();
 		List<Long> categoryIds = new ArrayList<>();
-		if(!StringUtils.isEmpty(params.get("categoryId"))) {
-			categoryIds = Arrays.asList(Long.parseLong(params.get("categoryId")));
+		if(null != params && !StringUtils.isEmpty(params.get(FieldNames.CATEGORY_ID))) {
+			categoryIds = Arrays.asList(Long.parseLong(params.get(FieldNames.CATEGORY_ID)));
 		}
-		ProductSearchRequest productSearchRequest = getProductSearchRequest(null, categoryIds, params.get("productName"), params.get("brandName"));
-		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
+		ProductSearchRequest productSearchRequest = getProductSearchRequest(null, categoryIds, params);
 		productSearchRequest.setIsExcel(isExcel);
-		productSearchRequest.setOffset(offset);
-		productSearchRequest.setLimit(limit);
+		if(null != pageable) {			
+			int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
+			int limit = offset + pageable.getPageSize();
+			productSearchRequest.setOffset(offset);
+			productSearchRequest.setLimit(limit);
+		}
 		
 		StockDtos stockDtos = productServiceClient.getStockDetails(productSearchRequest);
-		if(!isExcel){
+		if(!isExcel && null != pageable){
 			Integer totalRecords = productServiceClient.countStockDetails(productSearchRequest);
 			page.setPageNumber(pageable.getPageNumber() - 1);
 			page.setSize(pageable.getPageSize());
@@ -143,22 +145,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	@Transactional
 	public void importProducts(MultipartFile multiPartFile, String fileType){
-		/*List<Product> products = null;
-		try {
-			if("xml".equalsIgnoreCase(fileType)){
-				String xml = new String(multiPartFile.getBytes());
-				ProductsType productsType = commonUtil.convertXmlToProductsType(xml);
-				System.out.println(commonUtil.convertProductsTypeToXml(productsType));
-				products = productMapper.convertProductsTypeToProducts(productsType);
-			} else if("csv".equalsIgnoreCase(fileType)){
-				products = productMapper.convertCsvFileToProducts(multiPartFile.getInputStream());
-			}
-		} catch(Exception e){
-			e.printStackTrace();
-		}
-		productRepository.saveAll(products);*/
+		productServiceClient.importProducts(multiPartFile, fileType);
 	}
 	
 	@Override
@@ -173,20 +161,20 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public Long countByCategoryIdIn(List<Long> categoryIds) {
-		return productServiceClient.countProducts(getProductSearchRequest(null, categoryIds, null, null));
+		return productServiceClient.countProducts(getProductSearchRequest(null, categoryIds, null));
 	}
 	
 	@Override
 	public Long countByCategoryId(Long categoryId) {
-		return productServiceClient.countProducts(getProductSearchRequest(null, Arrays.asList(categoryId), null, null));
+		return productServiceClient.countProducts(getProductSearchRequest(null, Arrays.asList(categoryId), null));
 	}
 	
-	private ProductSearchRequest getProductSearchRequest(List<Long> productIds, List<Long> categoryIds, String productName, String brandName) {
+	private ProductSearchRequest getProductSearchRequest(List<Long> productIds, List<Long> categoryIds, Map<String, String> params) {
 		ProductSearchRequest productSearchRequest = new ProductSearchRequest();
 		productSearchRequest.setProductIds(productIds);
 		productSearchRequest.setCategoryIds(categoryIds);
-		productSearchRequest.setProductName(productName);
-		productSearchRequest.setBrandName(brandName);
+		productSearchRequest.setProductName(params == null ? null : params.get(FieldNames.PRODUCT_NAME));
+		productSearchRequest.setBrandName(params == null ? null : params.get(FieldNames.BRAND_NAME));
 		return productSearchRequest;
 	}
 }

@@ -11,16 +11,22 @@ import com.app.ecom.store.dto.productservice.ProductSearchRequest;
 import com.app.ecom.store.dto.productservice.StockDtos;
 import com.app.ecom.store.enums.QuantityStatus;
 import com.app.ecom.store.util.CommonUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ProductServiceClient {
 	
+	private static final Logger logger = LogManager.getLogger(ProductServiceClient.class);
+	
 	private static final String PRODUCT = "/product";
 	private static final String COUNT_PRODUCT = "/countProduct";
+	private static final String IMPORT_PRODUCT = "/importProduct";
 	private static final String STOCK = "/stock";
 	private static final String COUNT_STOCK = "/countStock";
 	
@@ -37,6 +43,19 @@ public class ProductServiceClient {
 		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
 		ExternalApiRequest<ProductDto> externalApi = commonUtil.getExternalApiRequest(ProductDto.class, url, HttpMethod.PUT, null, null, productDto);
 		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public void importProducts(MultipartFile multiPartFile, String fileType) {
+		String url = new StringBuilder(productServiceApiBaseUrl).append(IMPORT_PRODUCT).toString();
+		Map<String, String> queryParamMap = new HashMap<>();
+		try {
+			queryParamMap.put("file", new String(multiPartFile.getBytes()));
+		} catch(Exception e) {
+			logger.error(new StringBuilder("Exception while converting file to String: ").append(commonUtil.getStackTraceAsString(e)));
+		}
+		queryParamMap.put("fileType", fileType);
+		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.PUT, null, queryParamMap, null);
+		externalApiHandler.callExternalApi(externalApi);
 	}
 
 	public ProductDtos getProducts(ProductSearchRequest productSearchRequest) {

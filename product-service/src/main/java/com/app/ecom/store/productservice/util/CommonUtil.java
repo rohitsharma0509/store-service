@@ -1,5 +1,8 @@
 package com.app.ecom.store.productservice.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -7,11 +10,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
+import com.app.ecom.store.productservice.dto.jaxb.ProductsType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
 public class CommonUtil {
+	
+	private static final Logger logger = LogManager.getLogger(CommonUtil.class);
+	
+	@Autowired
+	private Unmarshaller unmarshaller;
+	
+	@Autowired
+	private Marshaller marshaller;
 	
 	public String convertLocalDateTimeToString(LocalDateTime localDateTime, String format) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
@@ -38,5 +57,28 @@ public class CommonUtil {
 	        number = number + postfix;
 	    }
 	    return number;
+	}
+	
+	public String getStackTraceAsString(Exception exception) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		exception.printStackTrace(pw);
+		return sw.toString();
+	}
+	
+	public String convertProductsTypeToXml(ProductsType productsType) {
+		StringWriter xml = null;
+
+		try {
+			xml = new StringWriter();
+			marshaller.marshal(productsType, xml);
+		} catch (JAXBException e) {
+			logger.error(new StringBuilder("Exception while marshaling: ").append(getStackTraceAsString(e)));
+		}
+		return xml.toString();
+	}
+
+	public ProductsType convertXmlToProductsType(String response) throws JAXBException {
+		return (ProductsType) unmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes()));
 	}
 }
