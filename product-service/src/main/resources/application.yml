@@ -16,3 +16,10 @@ server:
   servlet: 
     context-path: /api/productservice/v1
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+ribbon:
+  eureka:
+    enabled: true

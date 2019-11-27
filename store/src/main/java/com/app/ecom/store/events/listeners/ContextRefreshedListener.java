@@ -10,6 +10,8 @@ import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent> {
+	
+	private static final Logger logger = LogManager.getLogger(ContextRefreshedListener.class);
 	
 	boolean isDone = false;
 	
@@ -31,22 +35,26 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		if(!isDone) {
-			UserDto user = userService.findUserByUsername("rohits");
-			if (null == user) {
-				saveRole(Constants.DEFAULT_GUEST_ROLE, Constants.DEFAULT_GUEST_PRIVILEGE, Constants.DEFAULT_GUEST_PRIVILEGE_DESC);
-				UserDto userDto = new UserDto();
-				userDto.setFirstName("Rohit");
-				userDto.setLastName("Sharma");
-				userDto.setUsername("rohits");
-				userDto.setPassword("Admin@123");
-				userDto.setIsEnabled(true);
-				userDto.setEmail("rohitsharm0509@gmail.com");
-				userDto.setMobile("8860254047");
-				userDto.setRoles(getAdminRole());
-				userService.createUser(userDto);
-				isDone = true;
+		try {
+			if (!isDone) {
+				UserDto user = userService.findUserByUsername("rohits");
+				if (null == user) {
+					saveRole(Constants.DEFAULT_GUEST_ROLE, Constants.DEFAULT_GUEST_PRIVILEGE, Constants.DEFAULT_GUEST_PRIVILEGE_DESC);
+					UserDto userDto = new UserDto();
+					userDto.setFirstName("Rohit");
+					userDto.setLastName("Sharma");
+					userDto.setUsername("rohits");
+					userDto.setPassword("Admin@123");
+					userDto.setIsEnabled(true);
+					userDto.setEmail("rohitsharm0509@gmail.com");
+					userDto.setMobile("8860254047");
+					userDto.setRoles(getAdminRole());
+					userService.createUser(userDto);
+					isDone = true;
+				}
 			}
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while pushing default users and roles: ").append(e.getMessage()));
 		}
 	}
 
