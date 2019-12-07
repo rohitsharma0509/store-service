@@ -16,23 +16,26 @@ public class UserTokenServiceClient {
 	
 	private static final String TOKEN = "/token";
 	
+	@Value("${application.order-service.name}")
+	private String serviceName;
+	
+	@Value("${application.order-service.context-path}")
+	private String contextPath;
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
 	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Value("${base-urls.user-token-service-api}")
-	private String userTokenServiceApiBaseUrl;
-	
 	public UserTokenDto createToken(UserTokenDto userTokenDto) {
-		String url = new StringBuilder(userTokenServiceApiBaseUrl).append(TOKEN).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TOKEN);
 		ExternalApiRequest<UserTokenDto> externalApi = commonUtil.getExternalApiRequest(UserTokenDto.class, url, HttpMethod.PUT, null, null, userTokenDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public UserTokenDto getToken(String token) {
-		String url = new StringBuilder(userTokenServiceApiBaseUrl).append(TOKEN).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TOKEN);
 		Map<String, String> queryParamMap = new HashMap<>();
 		queryParamMap.put("token", token);
 		ExternalApiRequest<UserTokenDto> externalApi = commonUtil.getExternalApiRequest(UserTokenDto.class, url, HttpMethod.GET, null, queryParamMap, null);

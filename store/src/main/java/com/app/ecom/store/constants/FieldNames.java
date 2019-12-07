@@ -36,6 +36,7 @@ public class FieldNames {
 	public static final String ERROR = "error";
 	public static final String SHOPPING_CART = "shoppingCart";
 	public static final String USER = "user";
+	public static final String USERNAME = "username";
 	
 	public static final String TOTAL_ORDERS = "totalOrders";
 	public static final String TOTAL_AMOUNT_RECEIVED = "totalAmountReceived";

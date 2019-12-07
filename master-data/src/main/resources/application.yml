@@ -21,12 +21,12 @@ spring:
 server:
   port: 9001
   servlet: 
-    context-path: /api/masterdata/v1
+    context-path: /api/masterdataservice/v1
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${service-registry.uri:http://127.0.0.1:8761}/eureka
 ribbon:
   eureka:
     enabled: true

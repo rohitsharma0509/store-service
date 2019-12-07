@@ -1,5 +1,6 @@
 package com.app.ecom.store.validator;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.UserService;
@@ -29,13 +30,13 @@ public class UserValidator implements Validator {
         UserDto userDto = (UserDto) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.USERNAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mobile", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
         if (userDto.getUsername().length() < 5 || userDto.getUsername().length() > 32) {
-        	errors.rejectValue("username", commonUtil.getMessage(ErrorCode.ERR000004.getCode()));
+        	errors.rejectValue(FieldNames.USERNAME, commonUtil.getMessage(ErrorCode.ERR000004.getCode()));
         }
         if (userService.findUserByUsername(userDto.getUsername()) != null) {
-        	errors.rejectValue("username", commonUtil.getMessage(ErrorCode.ERR000005.getCode()));
+        	errors.rejectValue(FieldNames.USERNAME, commonUtil.getMessage(ErrorCode.ERR000005.getCode()));
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (userDto.getPassword().length() < 8 || userDto.getPassword().length() > 32) {

@@ -6,6 +6,9 @@ import com.app.ecom.store.userservice.dto.RoleDto;
 import com.app.ecom.store.userservice.dto.RoleDtos;
 import com.app.ecom.store.userservice.dto.RoleSearchRequest;
 import com.app.ecom.store.userservice.service.RoleService;
+import com.app.ecom.store.userservice.util.CommonUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RoleResource {
 	
+	private static final Logger logger = LogManager.getLogger(RoleResource.class);
+	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private CommonUtil commonUtil;
 	
 	@PutMapping(value = Endpoint.ROLE)
 	public ResponseEntity<RoleDto> addUpdateRole(@RequestBody RoleDto roleDto) {
@@ -27,6 +35,7 @@ public class RoleResource {
 			RoleDto createdRoleDto = roleService.addUpdateRole(roleDto);
 			return new ResponseEntity<>(createdRoleDto, roleDto.getId() == null ? HttpStatus.CREATED : HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while adding role: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -37,6 +46,7 @@ public class RoleResource {
 			RoleDtos roleDtos = roleService.getRoles(roleSearchRequest);
 			return new ResponseEntity<>(roleDtos, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while getting roles: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -47,6 +57,7 @@ public class RoleResource {
 			Long noOfRoles = roleService.countRoles(roleSearchRequest);
 			return new ResponseEntity<>(noOfRoles, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while counting role: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -57,6 +68,7 @@ public class RoleResource {
 			roleService.deleteRoles(idsDto);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while deleting role: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

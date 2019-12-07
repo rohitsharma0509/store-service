@@ -17,35 +17,38 @@ public class OrderServiceClient {
 	private static final String ORDER = "/order";
 	private static final String COUNT_ORDER = "/countOrder";
 	
+	@Value("${application.order-service.name}")
+	private String serviceName;
+	
+	@Value("${application.order-service.context-path}")
+	private String contextPath;
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
 	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Value("${base-urls.order-service-api}")
-	private String orderServiceApiBaseUrl;
-	
 	public OrderDto createUpdateOrder(OrderDto orderDto) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ORDER);
 		ExternalApiRequest<OrderDto> externalApi = commonUtil.getExternalApiRequest(OrderDto.class, url, HttpMethod.PUT, null, null, orderDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public OrderDtos getOrders(OrderSearchRequest orderSearchRequest) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ORDER);
 		ExternalApiRequest<OrderDtos> externalApi = commonUtil.getExternalApiRequest(OrderDtos.class, url, HttpMethod.POST, null, null, orderSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countOrders(OrderSearchRequest orderSearchRequest) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append(COUNT_ORDER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_ORDER);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, orderSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteOrders(IdsDto idsDto) {
-		String url = new StringBuilder(orderServiceApiBaseUrl).append(ORDER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ORDER);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}

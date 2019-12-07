@@ -27,83 +27,86 @@ public class UserServiceClient {
 	private static final String PRIVILEGE = "/privilege";
 	private static final String COUNT_PRIVILEGE = "/countPrivilege";
 	
+	@Value("${application.user-service.name}")
+	private String serviceName;
+	
+	@Value("${application.user-service.context-path}")
+	private String contextPath;
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
 	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Value("${base-urls.user-service-api}")
-	private String userServiceApiBaseUrl;
-	
 	public UserDto createUpdateUser(UserDto userDto) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(USER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
 		ExternalApiRequest<UserDto> externalApi = commonUtil.getExternalApiRequest(UserDto.class, url, HttpMethod.PUT, null, null, userDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public UserDtos getUsers(UserSearchRequest userSearchRequest) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(USER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
 		ExternalApiRequest<UserDtos> externalApi = commonUtil.getExternalApiRequest(UserDtos.class, url, HttpMethod.POST, null, null, userSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countUsers(UserSearchRequest userSearchRequest) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(COUNT_USER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_USER);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, userSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteUsers(IdsDto idsDto) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(USER).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public RoleDto createUpdateRole(RoleDto roleDto) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(ROLE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ROLE);
 		ExternalApiRequest<RoleDto> externalApi = commonUtil.getExternalApiRequest(RoleDto.class, url, HttpMethod.PUT, null, null, roleDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public RoleDtos getRoles(RoleSearchRequest roleSearchRequest) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(ROLE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ROLE);
 		ExternalApiRequest<RoleDtos> externalApi = commonUtil.getExternalApiRequest(RoleDtos.class, url, HttpMethod.POST, null, null, roleSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countRoles(RoleSearchRequest roleSearchRequest) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(COUNT_ROLE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_ROLE);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, roleSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteRoles(IdsDto idsDto) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(ROLE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ROLE);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public PrivilegeDto createUpdatePrivilege(PrivilegeDto privilegeDto) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(PRIVILEGE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRIVILEGE);
 		ExternalApiRequest<PrivilegeDto> externalApi = commonUtil.getExternalApiRequest(PrivilegeDto.class, url, HttpMethod.PUT, null, null, privilegeDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public PrivilegeDtos getPrivileges(PrivilegeSearchRequest privilegeSearchRequest) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(PRIVILEGE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRIVILEGE);
 		ExternalApiRequest<PrivilegeDtos> externalApi = commonUtil.getExternalApiRequest(PrivilegeDtos.class, url, HttpMethod.POST, null, null, privilegeSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countPrivileges(PrivilegeSearchRequest privilegeSearchRequest) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(COUNT_PRIVILEGE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_PRIVILEGE);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, privilegeSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deletePrivileges(IdsDto idsDto) {
-		String url = new StringBuilder(userServiceApiBaseUrl).append(PRIVILEGE).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRIVILEGE);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}

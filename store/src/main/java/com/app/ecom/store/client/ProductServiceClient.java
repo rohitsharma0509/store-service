@@ -30,23 +30,26 @@ public class ProductServiceClient {
 	private static final String STOCK = "/stock";
 	private static final String COUNT_STOCK = "/countStock";
 	
+	@Value("${application.product-service.name}")
+	private String serviceName;
+	
+	@Value("${application.product-service.context-path}")
+	private String contextPath;
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
 	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Value("${base-urls.product-service-api}")
-	private String productServiceApiBaseUrl;
-	
 	public ProductDto addUpdateProduct(ProductDto productDto) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRODUCT);
 		ExternalApiRequest<ProductDto> externalApi = commonUtil.getExternalApiRequest(ProductDto.class, url, HttpMethod.PUT, null, null, productDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void importProducts(MultipartFile multiPartFile, String fileType) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(IMPORT_PRODUCT).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, IMPORT_PRODUCT);
 		Map<String, String> queryParamMap = new HashMap<>();
 		try {
 			queryParamMap.put("file", new String(multiPartFile.getBytes()));
@@ -59,25 +62,25 @@ public class ProductServiceClient {
 	}
 
 	public ProductDtos getProducts(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRODUCT);
 		ExternalApiRequest<ProductDtos> externalApi = commonUtil.getExternalApiRequest(ProductDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countProducts(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(COUNT_PRODUCT).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_PRODUCT);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteProducts(IdsDto idsDto) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRODUCT);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Integer getProductsQuantity(Long productId, QuantityStatus status) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(PRODUCT).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRODUCT);
 		Map<String, String> queryParamMap = new HashMap<>();
 		queryParamMap.put("productId", String.valueOf(productId));
 		queryParamMap.put("status", status.name());
@@ -86,13 +89,13 @@ public class ProductServiceClient {
 	}
 	
 	public StockDtos getStockDetails(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(STOCK).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, STOCK);
 		ExternalApiRequest<StockDtos> externalApi = commonUtil.getExternalApiRequest(StockDtos.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Integer countStockDetails(ProductSearchRequest productSearchRequest) {
-		String url = new StringBuilder(productServiceApiBaseUrl).append(COUNT_STOCK).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_STOCK);
 		ExternalApiRequest<Integer> externalApi = commonUtil.getExternalApiRequest(Integer.class, url, HttpMethod.POST, null, null, productSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}

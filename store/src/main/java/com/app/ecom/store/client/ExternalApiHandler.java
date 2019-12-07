@@ -44,6 +44,12 @@ public class ExternalApiHandler {
     
     @Autowired
     private CommonUtil commonUtil;
+    
+    public String getExternalServiceUri(String serviceName, String contextPath, String requestUrl) {
+    	StringBuilder uri = new StringBuilder("http://");
+		uri.append(serviceName).append(contextPath).append(requestUrl);
+		return uri.toString();
+    }
 
     /**
      * Public method to invoke external API for a given ExternalApi object.Prepares request and invokes method for API call based on the values passed in the object. 
@@ -86,6 +92,7 @@ public class ExternalApiHandler {
         }
         return null;
     }
+    
     /**
      * @param uri URL to be invoked
      * @param headers request headers

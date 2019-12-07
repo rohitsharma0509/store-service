@@ -17,35 +17,38 @@ public class AddressLookupServiceClient {
 	private static final String ADDRESS = "/address";
 	private static final String COUNT_ADDRESS = "/countAddress";
 	
+	@Value("${application.address-lookup-service.name}")
+	private String serviceName;
+	
+	@Value("${application.address-lookup-service.context-path}")
+	private String contextPath;
+	
 	@Autowired
 	private ExternalApiHandler externalApiHandler;
 	
 	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Value("${base-urls.address-lookup-service-api}")
-	private String addressLookupServiceApiBaseUrl;
-	
 	public AddressDto createUpdateAddress(AddressDto addressDto) {
-		String url = new StringBuilder(addressLookupServiceApiBaseUrl).append(ADDRESS).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
 		ExternalApiRequest<AddressDto> externalApi = commonUtil.getExternalApiRequest(AddressDto.class, url, HttpMethod.PUT, null, null, addressDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public AddressDtos getAddresses(AddressSearchRequest addressSearchRequest) {
-		String url = new StringBuilder(addressLookupServiceApiBaseUrl).append(ADDRESS).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
 		ExternalApiRequest<AddressDtos> externalApi = commonUtil.getExternalApiRequest(AddressDtos.class, url, HttpMethod.POST, null, null, addressSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public Long countAddresses(AddressSearchRequest addressSearchRequest) {
-		String url = new StringBuilder(addressLookupServiceApiBaseUrl).append(COUNT_ADDRESS).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_ADDRESS);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, addressSearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public void deleteAddresses(IdsDto idsDto) {
-		String url = new StringBuilder(addressLookupServiceApiBaseUrl).append(ADDRESS).toString();
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}
