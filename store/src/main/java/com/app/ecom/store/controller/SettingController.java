@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
@@ -49,7 +50,7 @@ public class SettingController {
 	    fieldTypes.add(new FieldType("text", "Text"));
 	    fieldTypes.add(new FieldType("textarea", "Text Area"));
 	    model.addAttribute("fieldTypes", fieldTypes);
-        return "settings";
+        return View.SETTINGS;
     }
     
     @GetMapping(value = RequestUrls.ADD_SETTING)
@@ -60,15 +61,15 @@ public class SettingController {
 		}else {
 			settingDto = new SettingDto();
 		}
-		model.addAttribute("settingDto", settingDto);
-		return "addSetting";
+		model.addAttribute(FieldNames.SETTING_DTO, settingDto);
+		return View.ADD_SETTING;
 	}
     
     @PostMapping(value = RequestUrls.SETTINGS)
 	public String addCategory(Model model, @Valid SettingDto settingDto, BindingResult bindingResult) {
 		settingValidator.validate(settingDto, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "addSetting";
+			return View.ADD_SETTING;
 		}
 		
 		settingService.addSetting(settingDto);

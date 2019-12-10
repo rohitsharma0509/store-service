@@ -1,3 +1,5 @@
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.Constants"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -12,8 +14,8 @@
 				<div class="card-body main-center">
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="category" class="control-label text-right"><spring:message code="Category" text="Category" /> </label>
-							<select id="categoryId" name="categoryId" class="form-control input-sm">
+							<label for="<%=FieldNames.CATEGORY_ID %>" class="control-label text-right"><spring:message code="Category" text="Category" /> </label>
+							<select id="<%=FieldNames.CATEGORY_ID %>" name="<%=FieldNames.CATEGORY_ID %>" class="form-control input-sm">
 							 	<option value="-1"><spring:message code="Select Category" text="Select Category" /></option>
 					        	<c:forEach var="category" items="${categories}">
 					        		<c:choose>
@@ -30,14 +32,14 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="brandName"><spring:message code="Brand Name" text="Brand Name" /></label>
-							<input type="text" id="brandName" name="brandName" value="${param.brandName}" class="form-control input-sm" />
+							<label for="<%=FieldNames.BRAND_NAME %>"><spring:message code="Brand Name" text="Brand Name" /></label>
+							<input type="text" id="<%=FieldNames.BRAND_NAME %>" name="<%=FieldNames.BRAND_NAME %>" value="${param.brandName}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="productName"><spring:message code="Product Name" text="Product Name" /></label>
-							<input type="text" id="productName" name="productName" value="${param.productName}" class="form-control input-sm" />
+							<label for="<%=FieldNames.PRODUCT_NAME %>"><spring:message code="Product Name" text="Product Name" /></label>
+							<input type="text" id="<%=FieldNames.PRODUCT_NAME %>" name="<%=FieldNames.PRODUCT_NAME %>" value="${param.productName}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
@@ -75,7 +77,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-1"><a class="btn btn-info btn-sm" href="${contextPath}/excel?reportName=<%=Constants.STOCK%>"><spring:message code="Export as Excel" text="Export as Excel" /></a></div>
+					<div class="col-sm-1"><a class="btn btn-info btn-sm" href="${contextPath}<%=RequestUrls.EXCEL %>?<%=FieldNames.REPORT_NAME %>=<%=Constants.STOCK%>"><spring:message code="Export as Excel" text="Export as Excel" /></a></div>
 					<c:choose>
 						<c:when test="${page.getTotalPages() > 1}">
 							<div class="col-sm-11">${pagging}</div>

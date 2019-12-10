@@ -19,7 +19,7 @@ spring:
           region:
             factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
 server:
-  port: 9001
+  port: 9007
   servlet: 
     context-path: /api/masterdataservice/v1
 

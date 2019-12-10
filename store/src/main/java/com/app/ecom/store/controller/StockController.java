@@ -3,7 +3,9 @@ package com.app.ecom.store.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.productservice.StockDto;
 import com.app.ecom.store.service.ProductCategoryService;
@@ -36,13 +38,13 @@ public class StockController {
 			@RequestParam(required = false) String productName,
 			@PageableDefault(page = 1, size = 10) Pageable pageable) {
 		Map<String, String> params = new HashMap<>();
-		params.put("categoryId", categoryId);
-		params.put("brandName", brandName);
-		params.put("productName", productName);
+		params.put(FieldNames.CATEGORY_ID, categoryId);
+		params.put(FieldNames.BRAND_NAME, brandName);
+		params.put(FieldNames.PRODUCT_NAME, productName);
 		CustomPage<StockDto> page = productService.getStockDetails(pageable, params);
-		model.addAttribute("page", page);
-		model.addAttribute("categories", productCategoryService.getAllProductCategories());
-		model.addAttribute("pagging", commonUtil.getPagging("stock", page.getPageNumber()+1, page.getTotalPages(), params));
-		return "stock";
+		model.addAttribute(FieldNames.PAGE, page);
+		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
+		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.STOCK, page.getPageNumber()+1, page.getTotalPages(), params));
+		return View.STOCK;
 	}
 }

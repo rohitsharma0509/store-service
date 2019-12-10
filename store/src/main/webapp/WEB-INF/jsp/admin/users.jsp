@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -20,7 +21,7 @@ $(document).ready(function(){
 });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Users" text="Users" /></li>
   <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
@@ -32,18 +33,18 @@ $(document).ready(function(){
 				<div class="card-body main-center">
 					<div class="row">
 						<div class="col-sm-2">
-							<label for="name"><spring:message code="Name" text="Name" /></label>
-							<input type="text" id="name" name="name" value="${param.name}" class="form-control input-sm" />
+							<label for="<%=FieldNames.NAME %>"><spring:message code="Name" text="Name" /></label>
+							<input type="text" id="<%=FieldNames.NAME %>" name="<%=FieldNames.NAME %>" value="${param.name}" class="form-control input-sm" />
 						</div>
 						<div class="col-sm-1"></div>
 						<div class="col-sm-2">
-							<label for="email"><spring:message code="Email" text="Email" /></label> 
-							<input type="text" id="email" name="email" value="${param.email}" class="form-control input-sm" />
+							<label for="<%=FieldNames.EMAIL %>"><spring:message code="Email" text="Email" /></label> 
+							<input type="text" id="<%=FieldNames.EMAIL %>" name="<%=FieldNames.EMAIL %>" value="${param.email}" class="form-control input-sm" />
 						</div>
 						<div class="col-sm-1"></div>
 						<div class="col-sm-2">
-              <label for="name"><spring:message code="Mobile" text="Mobile" /></label>
-              <input type="text" id="mobile" name="mobile" value="${param.mobile}" class="form-control input-sm" />
+              <label for="<%=FieldNames.MOBILE %>"><spring:message code="Mobile" text="Mobile" /></label>
+              <input type="text" id="<%=FieldNames.MOBILE %>" name="<%=FieldNames.MOBILE %>" value="${param.mobile}" class="form-control input-sm" />
             </div>
 						<div class="col-sm-4"></div>
 					</div>
@@ -81,7 +82,7 @@ $(document).ready(function(){
 							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.EDIT_USER %>?id=${user.id}"><spring:message code="Edit" text="Edit" /></a></li>
+                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.EDIT_USER %>?<%=FieldNames.ID %>=${user.id}"><spring:message code="Edit" text="Edit" /></a></li>
                   </ul>
                 </div>
 							</td>

@@ -35,7 +35,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 	
 	public void removeShoppingCart(){
-		session.removeAttribute("shoppingCart");
+		session.removeAttribute(FieldNames.SHOPPING_CART);
 		logger.info("Product has been removed from shopping cart.");
 	}
 }

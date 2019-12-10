@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <style>
 body {
@@ -36,12 +37,12 @@ body {
 </style>
 <body>
 <div class="error-main">
-	<h1>Oops!</h1>
+	<h1><spring:message code="Oops" text="Oops" />!</h1>
 	<div class="error-heading">${code}</div>
 	<p style="text-align: center;">${message}</p>
 	<div class="error-actions">
 		<a href="${contextPath}/home" class="btn btn-success btn-lg">
-			<i class="fa fa-home" aria-hidden="true"></i> Take Me Home 
+			<i class="fa fa-home" aria-hidden="true"></i><spring:message code="Take Me Home" text="Take Me Home" />
 		</a>
 	</div>
 </div>

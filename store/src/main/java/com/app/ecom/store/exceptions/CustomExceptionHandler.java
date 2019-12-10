@@ -1,5 +1,6 @@
 package com.app.ecom.store.exceptions;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +24,7 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public String processException(Model model, Exception exception) {
 		logger.error(new StringBuilder("Exception while processing your request: ").append(exception.getMessage()));
-		model.addAttribute("message", environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));		
+		model.addAttribute(FieldNames.MESSAGE, environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));		
 		return "redirect:"+RequestUrls.FAILURE+"/"+HttpStatus.INTERNAL_SERVER_ERROR.value();
 	}
 }

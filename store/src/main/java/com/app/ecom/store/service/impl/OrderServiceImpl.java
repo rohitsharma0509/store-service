@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import com.app.ecom.store.client.OrderServiceClient;
 import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
@@ -33,6 +34,8 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,8 @@ import org.springframework.util.CollectionUtils;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+	
+	private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 	
 	@Autowired
 	private CommonUtil commonUtil;
@@ -95,10 +100,10 @@ public class OrderServiceImpl implements OrderService {
 		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
 		orderSearchRequest.setOffset(offset);
 		orderSearchRequest.setLimit(limit);
-		orderSearchRequest.setFromDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get("fromDate"), Constants.YYYY_MM_DD)));
-		orderSearchRequest.setToDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get("toDate"), Constants.YYYY_MM_DD)));
-		orderSearchRequest.setOrderNumber(params.get("orderNumber"));
-		orderSearchRequest.setUserId(Long.parseLong(params.get("userId")));
+		orderSearchRequest.setFromDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get(FieldNames.FROM_DATE), Constants.YYYY_MM_DD)));
+		orderSearchRequest.setToDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get(FieldNames.TO_DATE), Constants.YYYY_MM_DD)));
+		orderSearchRequest.setOrderNumber(params.get(FieldNames.ORDER_NUMBER));
+		orderSearchRequest.setUserId(Long.parseLong(params.get(FieldNames.USER_ID)));
 		OrderDtos orderDtos = orderServiceClient.getOrders(orderSearchRequest);
 		Long totalRecords = orderServiceClient.countOrders(orderSearchRequest);
 		CustomPage<OrderDto> page = new CustomPage<>();
@@ -297,7 +302,7 @@ public class OrderServiceImpl implements OrderService {
 			document.add(table);
 			document.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Exception while generating pdf.", e);
 		}
 		return baos;
 	}

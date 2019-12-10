@@ -1,3 +1,5 @@
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.Constants"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -13,20 +15,20 @@
 				<div class="card-body main-center">
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="orderNumber" class="control-label text-right"><spring:message code="Order Number" text="Order Number" /></label>
-							<input type="text" name="orderNumber" id="orderNumber" value="${param.orderNumber}" class="form-control input-sm" />
+							<label for="<%=FieldNames.ORDER_NUMBER %>" class="control-label text-right"><spring:message code="Order Number" text="Order Number" /></label>
+							<input type="text" name="<%=FieldNames.ORDER_NUMBER %>" id="<%=FieldNames.ORDER_NUMBER %>" value="${param.orderNumber}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="from"><spring:message code="From" text="From" /></label>
-							<input type="date" name="fromDate" id="fromDate" value="${param.fromDate}" class="form-control input-sm" />
+							<label for="<%=FieldNames.FROM_DATE %>"><spring:message code="From" text="From" /></label>
+							<input type="date" name="<%=FieldNames.FROM_DATE %>" id="<%=FieldNames.FROM_DATE %>" value="${param.fromDate}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="to"><spring:message code="To" text="To" /></label>
-							<input type="date" name="toDate" id="toDate" value="${param.toDate}" class="form-control input-sm" />
+							<label for="<%=FieldNames.TO_DATE %>"><spring:message code="To" text="To" /></label>
+							<input type="date" name="<%=FieldNames.TO_DATE %>" id="<%=FieldNames.TO_DATE %>" value="${param.toDate}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
@@ -61,7 +63,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-1"><a class="btn btn-info btn-sm" href="${contextPath}/excel?reportName=<%=Constants.ORDERS%>"><spring:message code="Export as Excel" text="Export as Excel" /></a></div>
+					<div class="col-sm-1"><a class="btn btn-info btn-sm" href="${contextPath}<%=RequestUrls.EXCEL %>?<%=FieldNames.REPORT_NAME %>=<%=Constants.ORDERS%>"><spring:message code="Export as Excel" text="Export as Excel" /></a></div>
 					<c:choose>
 						<c:when test="${page.getTotalPages() > 1}">
 							<div class="col-sm-11">${pagging}</div>
@@ -71,22 +73,5 @@
 			</c:when>
 			<c:otherwise><spring:message code="No Records Found" text="No Records Found" />.</c:otherwise>
 		</c:choose>
-	</div>
-</div>
-<div class="row">
-	<div class="modal fade" id="myModal" role="dialog">
-	    <div class="modal-dialog">
-	        <!-- Modal content-->
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h4 class="modal-title">Order details</h4>
-	                <button type="button" class="close" data-dismiss="modal">&times;</button>
-	            </div>
-	            <div class="modal-body"></div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	            </div>
-	        </div>
-	    </div>
 	</div>
 </div>

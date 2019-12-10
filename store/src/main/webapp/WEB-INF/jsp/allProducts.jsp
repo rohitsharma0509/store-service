@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -59,7 +60,7 @@ $(document).ready(function(){
 </script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item active"><spring:message code="All Products" text="All Products" /></li>
-  <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
+  <li class="ml-auto"><span id="hideShowDiv"><a href="#"><spring:message code="Hide Filters" text="Hide Filters" /></a></span></li>
 </ol>
 <div class="row" style="height: 10px;"></div>
 <div class="row" id="filters">
@@ -69,12 +70,12 @@ $(document).ready(function(){
 			<div class="card-body main-center">
 			<div class="row">
 				<div class="col-sm-2">
-					<label for="category" class="control-label text-right"><spring:message code="Category" text="Category" /> </label>
-					<select id="categoryId" name="categoryId" class="form-control input-sm">
+					<label for="<%=FieldNames.CATEGORY_ID %>" class="control-label text-right"><spring:message code="Category" text="Category" /> </label>
+					<select id="<%=FieldNames.CATEGORY_ID %>" name="<%=FieldNames.CATEGORY_ID %>" class="form-control input-sm">
 					 	<option value="-1"><spring:message code="Select Category" text="Select Category" /></option>
 			        	<c:forEach var="category" items="${categories}">
 			        		<c:choose>
-							<c:when test="${param.categoryId == category.id}">
+							    <c:when test="${param.categoryId == category.id}">
 		    	    			<option selected value="${category.id}">${category.name}</option>
 		    	    		</c:when>
 		    	    		<c:otherwise>
@@ -86,18 +87,18 @@ $(document).ready(function(){
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-2">
-					<label for="brandName"><spring:message code="Brand Name" text="Brand Name" /></label>
-					<input type="text" id="brandName" name="brandName" value="${param.brandName}" class="form-control input-sm" />
+					<label for="<%=FieldNames.BRAND_NAME %>"><spring:message code="Brand Name" text="Brand Name" /></label>
+					<input type="text" id="<%=FieldNames.BRAND_NAME %>" name="<%=FieldNames.BRAND_NAME %>" value="${param.brandName}" class="form-control input-sm" />
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-2">
-					<label for="productName"><spring:message code="Product Name" text="Product Name" /></label>
-					<input type="text" id="productName" name="productName" value="${param.productName}" class="form-control input-sm" />
+					<label for="<%=FieldNames.PRODUCT_NAME %>"><spring:message code="Product Name" text="Product Name" /></label>
+					<input type="text" id="<%=FieldNames.PRODUCT_NAME %>" name="<%=FieldNames.PRODUCT_NAME %>" value="${param.productName}" class="form-control input-sm" />
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-2">
-					<label for="productName"><spring:message code="Price" text="Price" /></label>
-					<input type="text" id="price" name="price" value="${param.price}" class="form-control input-sm" />
+					<label for="<%=FieldNames.PRICE %>"><spring:message code="Price" text="Price" /></label>
+					<input type="text" id="<%=FieldNames.PRICE %>" name="<%=FieldNames.PRICE %>" value="${param.price}" class="form-control input-sm" />
 				</div>
 				<div class="col-sm-1"></div>
 			</div>

@@ -3,6 +3,7 @@ package com.app.ecom.store.validator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.userservice.RoleDto;
 import com.app.ecom.store.enums.ErrorCode;
@@ -32,13 +33,13 @@ public class RoleValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		RoleDto roleDto = (RoleDto) o;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
 		List<RoleDto> roleDtos = roleService.getAllRoles();
 		
 		for(RoleDto role : roleDtos) {
 			if(!role.getName().equalsIgnoreCase(roleDto.getOldName()) && role.getName().equalsIgnoreCase(roleDto.getName())) {
-				errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000015.getCode()));
+				errors.rejectValue(FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000015.getCode()));
 			}
 		}
 	}

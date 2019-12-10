@@ -27,7 +27,7 @@ public class ComboGenerator {
 		StringBuilder str = new StringBuilder("<select id=\"month\" name=\"month\" class=\"form-control input-sm\">");
 		str.append("<option value=\"-1\">Select Month</option>");
 		for(Month month : Month.values()){
-			if(null != selected && selected.equals(month.getValue())){
+			if(null != selected && selected.equals(String.valueOf(month.getValue()))){
 				str.append("<option selected value=\""+month.getValue()+"\">"+month.getDisplayName(TextStyle.FULL, Locale.getDefault())+"</option>");		
 			}else {
 				str.append("<option value=\""+month.getValue()+"\">"+month.getDisplayName(TextStyle.FULL, Locale.getDefault())+"</option>");

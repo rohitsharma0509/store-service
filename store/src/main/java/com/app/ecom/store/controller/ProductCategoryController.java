@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
@@ -51,14 +52,14 @@ public class ProductCategoryController {
 			productCategoryDto = new ProductCategoryDto();
 		}
 		model.addAttribute(FieldNames.PRODUCT_CATEGORY_DTO, productCategoryDto);
-		return "addCategory";
+		return View.ADD_CATEGORY;
 	}
 	
 	@PostMapping(value = RequestUrls.CATEGORIES)
 	public String addCategory(Model model, @Valid ProductCategoryDto productCategoryDto, BindingResult bindingResult) {
 		productCategoryValidator.validate(productCategoryDto, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "addCategory";
+			return View.ADD_CATEGORY;
 		}
 		
 		productCategoryService.addCategory(productCategoryDto);
@@ -68,19 +69,19 @@ public class ProductCategoryController {
 	@GetMapping(value = RequestUrls.CATEGORIES)
 	public String getCategories(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required = false) String name) {
 		Map<String, String> params = new HashMap<>();
-		params.put("name", name);
+		params.put(FieldNames.NAME, name);
 		
 		CustomPage<ProductCategoryDto> page = productCategoryService.getCategories(pageable, params);
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.CATEGORIES, page.getPageNumber()+1, page.getTotalPages(), params));
 	    model.addAttribute(FieldNames.PAGE, page);
-		return "categories";
+		return View.CATEGORIES;
 	}
 	
 	@GetMapping(value = RequestUrls.CATEGORIES_ALL)
 	public String getAllCategories(Model model) {
 		List<ProductCategoryDto> categories = productCategoryService.getAllProductCategories();
 		model.addAttribute(FieldNames.CATEGORIES, categories);
-		return "categories";
+		return View.CATEGORIES;
 	}
 	
 	@ResponseBody

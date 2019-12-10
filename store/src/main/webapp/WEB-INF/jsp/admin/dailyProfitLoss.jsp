@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -9,14 +10,14 @@
 				<div class="card-body main-center">
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="fromDate" class="control-label text-right"><spring:message code="From Date" text="From Date" /></label> 
-							<input type="date" id="fromDate" name="fromDate" value="${param.fromDate}" class="form-control input-sm" />
+							<label for="<%=FieldNames.FROM_DATE %>" class="control-label text-right"><spring:message code="From Date" text="From Date" /></label> 
+							<input type="date" id="<%=FieldNames.FROM_DATE %>" name="<%=FieldNames.FROM_DATE %>" value="${param.fromDate}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="toDate"><spring:message code="To Date" text="To Date" /></label> 
-							<input type="date" id="toDate" name="toDate" value="${param.toDate}" class="form-control input-sm" />
+							<label for="<%=FieldNames.TO_DATE %>"><spring:message code="To Date" text="To Date" /></label> 
+							<input type="date" id="<%=FieldNames.TO_DATE %>" name="<%=FieldNames.TO_DATE %>" value="${param.toDate}" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">

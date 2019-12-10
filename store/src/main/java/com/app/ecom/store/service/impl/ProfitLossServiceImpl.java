@@ -36,7 +36,7 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		List<ProfitLossDto> profitLossDtos = new ArrayList<>();
 		for(Tuple tuple : tuples){
 			ProfitLossDto profitLossDto = new ProfitLossDto();
-			profitLossDto.setOrderDate(commonUtil.formatDate(String.valueOf(tuple.get("orderDate")), Constants.YYYY_MM_DD, Constants.DD_MM_YYYY));
+			profitLossDto.setOrderDate(commonUtil.formatDate(String.valueOf(tuple.get(FieldNames.ORDER_DATE)), Constants.YYYY_MM_DD, Constants.DD_MM_YYYY));
 			profitLossDto.setNoOfOrders(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_ORDERS))));
 			profitLossDto.setSoldQuantity(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_SOLD_QUANTITY))));
 			profitLossDto.setAmountReceived(Double.parseDouble(String.valueOf(tuple.get(FieldNames.TOTAL_AMOUNT_RECEIVED))));
@@ -82,7 +82,7 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		List<ProfitLossDto> profitLossDtos = new ArrayList<>();
 		for(Tuple tuple : tuples){
 			ProfitLossDto profitLossDto = new ProfitLossDto();
-			profitLossDto.setOrderDate(String.valueOf(tuple.get("month")));
+			profitLossDto.setOrderDate(String.valueOf(tuple.get(FieldNames.MONTH)));
 			profitLossDto.setNoOfOrders(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_ORDERS))));
 			profitLossDto.setSoldQuantity(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_SOLD_QUANTITY))));
 			profitLossDto.setAmountReceived(Double.parseDouble(String.valueOf(tuple.get(FieldNames.TOTAL_AMOUNT_RECEIVED))));
@@ -93,6 +93,7 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		Integer totalRecords = queryBuilder.countByQuery(countQuery.toString(), null);
 		CustomPage<ProfitLossDto> page = new CustomPage<>();
 		page.setContent(profitLossDtos);
+		
 		page.setPageNumber(pageable.getPageNumber() - 1);
 		page.setSize(pageable.getPageSize());
 		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
@@ -126,7 +127,7 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		List<ProfitLossDto> profitLossDtos = new ArrayList<>();
 		for(Tuple tuple : tuples){
 			ProfitLossDto profitLossDto = new ProfitLossDto();
-			profitLossDto.setOrderDate(tuple.get("quarter") +" Qaurter of "+ tuple.get("year"));
+			profitLossDto.setOrderDate(tuple.get(FieldNames.QUARTER) +" Qaurter of "+ tuple.get(FieldNames.YEAR));
 			profitLossDto.setNoOfOrders(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_ORDERS))));
 			profitLossDto.setSoldQuantity(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_SOLD_QUANTITY))));
 			profitLossDto.setAmountReceived(Double.parseDouble(String.valueOf(tuple.get(FieldNames.TOTAL_AMOUNT_RECEIVED))));
@@ -165,7 +166,7 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		List<ProfitLossDto> profitLossDtos = new ArrayList<>();
 		for(Tuple tuple : tuples){
 			ProfitLossDto profitLossDto = new ProfitLossDto();
-			profitLossDto.setOrderDate(String.valueOf(tuple.get("year")));
+			profitLossDto.setOrderDate(String.valueOf(tuple.get(FieldNames.YEAR)));
 			profitLossDto.setNoOfOrders(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_ORDERS))));
 			profitLossDto.setAmountReceived(Double.parseDouble(String.valueOf(tuple.get(FieldNames.TOTAL_AMOUNT_RECEIVED))));
 			profitLossDto.setSoldQuantity(Integer.parseInt(String.valueOf(tuple.get(FieldNames.TOTAL_SOLD_QUANTITY))));

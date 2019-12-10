@@ -1,3 +1,5 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -27,8 +29,8 @@
 					<h6 class="card-title">${product.perProductPrice}</h6>
 					<c:choose>
 						<c:when test="${product.availableQuantity != null && product.availableQuantity > 0}">
-							<a href="${contextPath}/checkout?id=${product.id}" class="btn btn-sm btn-transparent"><spring:message code="Buy Now" text="Buy Now" /></a>
-    						<a href="${contextPath}/addToCart?id=${product.id}" class="btn btn-sm btn-transparent"><spring:message code="Add To Cart" text="Add To Cart" /></a>
+							<a href="${contextPath}<%=RequestUrls.CHECKOUT %>?<%=FieldNames.ID %>=${product.id}" class="btn btn-sm btn-transparent"><spring:message code="Buy Now" text="Buy Now" /></a>
+    						<a href="${contextPath}<%=RequestUrls.ADD_TO_CART %>?<%=FieldNames.ID %>=${product.id}" class="btn btn-sm btn-transparent"><spring:message code="Add To Cart" text="Add To Cart" /></a>
     					</c:when>
 	    				<c:otherwise>
 	    					<h6 class="card-title has-error text-center"><spring:message code="Out Of Stock" text="Out Of Stock" /></h6>

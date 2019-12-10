@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import com.app.ecom.store.client.UserServiceClient;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
@@ -38,8 +39,8 @@ public class RoleServiceImpl implements RoleService {
 		int limit = offset + pageable.getPageSize();
 		
 		RoleSearchRequest roleSearchRequest = new RoleSearchRequest();
-		roleSearchRequest.setRoleName(params.get("roleName"));
-		roleSearchRequest.setUserName(params.get("name"));
+		roleSearchRequest.setRoleName(params.get(FieldNames.ROLE_NAME));
+		roleSearchRequest.setUserName(params.get(FieldNames.NAME));
 		roleSearchRequest.setOffset(offset);
 		roleSearchRequest.setLimit(limit);
 		RoleDtos roleDtos = userServiceClient.getRoles(roleSearchRequest);

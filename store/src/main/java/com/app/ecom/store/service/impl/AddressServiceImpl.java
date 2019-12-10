@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.client.AddressLookupServiceClient;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
 import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
@@ -33,7 +34,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public void addAddress(AddressDto addressDto) {
-		UserDto userDto = (UserDto) httpSession.getAttribute("user");
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
 		addressDto.setUserId(userDto.getId());
 		addressLookupServiceClient.createUpdateAddress(addressDto);
 	}

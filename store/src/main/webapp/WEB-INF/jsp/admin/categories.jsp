@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -20,7 +21,7 @@ $(document).ready(function(){
 });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Categories" text="Categories" /></li>
   <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
@@ -33,7 +34,7 @@ $(document).ready(function(){
 					<div class="row">
 						<div class="col-sm-3">
 							<label for="categoryName"><spring:message code="Category Name" text="Category Name" /></label>
-							<input type="text" id="name" name="name" value="${param.name}" class="form-control input-sm" />
+							<input type="text" id="<%=FieldNames.NAME %>" name="<%=FieldNames.NAME %>" value="${param.name}" class="form-control input-sm" />
 						</div>
 						<div class="col-sm-9"></div>
 					</div>
@@ -77,7 +78,7 @@ $(document).ready(function(){
 							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_CATEGORY %>?id=${category.id}"><spring:message code="Edit" text="Edit" /></a></li>
+                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_CATEGORY %>?<%=FieldNames.ID %>=${category.id}"><spring:message code="Edit" text="Edit" /></a></li>
                     <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.CATEGORIES %>/${category.id}"><spring:message code="Delete" text="Delete" /></a></li>
                   </ul>
                 </div>

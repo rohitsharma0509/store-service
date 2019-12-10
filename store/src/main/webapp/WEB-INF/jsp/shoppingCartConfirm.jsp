@@ -1,8 +1,9 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<script src="js/address.js"></script>
+<script src="/js/address.js"></script>
 <script>
 function validate(form) {
 	var addressId = $('input[name=addressId]:checked').val();
@@ -14,20 +15,20 @@ function validate(form) {
 }
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
 	<% 
 	String productId = "";
 	if(null != request.getParameter("id")){ 
 		productId = request.getParameter("id");
 	%> 
 	<%}else{%>
-	  <li class="breadcrumb-item"><a href="${contextPath}/shoppingCart"><spring:message code="Shopping Cart" text="Shopping Cart" /></a></li>
+	  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.SHOPPING_CART %>"><spring:message code="Shopping Cart" text="Shopping Cart" /></a></li>
 	<%} %>
 	<li class="breadcrumb-item active"><spring:message code="Address" text="Address" /></li>
 </ol>
 <div class="row" style="height:10px;"></div>
 <form method="GET" id="customerForm" class="form-horizontal" enctype="multipart/form-data" action="buy" onSubmit="return validate(this);">
-<input type="hidden" name="productId" value="<%=productId %>">
+<input type="hidden" name="<%=FieldNames.PRODUCT_ID %>" value="<%=productId %>">
 <div class="row">
 	<div class="col-sm-6">
 		<div class="card">
@@ -52,12 +53,12 @@ function validate(form) {
 			</c:when>
 			<c:otherwise>
 				<div class="row address">
-	       <div class="col-sm-12">Address not available. Click below link to add.</div>
+	       <div class="col-sm-12"><spring:message code="Address not available" text="Address not available" />.</div>
 				</div>
 			</c:otherwise>
 			</c:choose>
 		  <div class="row">
-         <div class="col-sm-12"><a href="#" id="addAddressBtn" onclick="addAddress();">Add new address</a></div>
+         <div class="col-sm-12"><a href="#" id="addAddressBtn" onclick="addAddress();"><spring:message code="Add new address" text="Add new address" /></a></div>
        </div>
 			</div>
 		</div>

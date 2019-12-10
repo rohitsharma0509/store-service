@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.app.ecom.store.client.UserServiceClient;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
@@ -41,7 +42,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		int limit = offset + pageable.getPageSize();
 		
 		PrivilegeSearchRequest privilegeSearchRequest = new PrivilegeSearchRequest();
-		privilegeSearchRequest.setName(params.get("name"));
+		privilegeSearchRequest.setName(params.get(FieldNames.NAME));
 		privilegeSearchRequest.setOffset(offset);
 		privilegeSearchRequest.setLimit(limit);
 		

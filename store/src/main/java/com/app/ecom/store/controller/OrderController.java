@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.ShoppingCart;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
@@ -51,9 +53,9 @@ public class OrderController {
 	private HttpSession httpSession;
 	
 	@GetMapping(value = RequestUrls.BUY)
-	public String buyNow(HttpServletRequest request, @RequestParam(value = "addressId", required=true) Long addressId, @RequestParam(value = "productId", required=false) Long id) {
+	public String buyNow(HttpServletRequest request, @RequestParam(value = FieldNames.ADDRESS_ID, required=true) Long addressId, @RequestParam(value = FieldNames.PRODUCT_ID, required=false) Long id) {
 		OrderDto orderDto;
-		UserDto userDto = (UserDto) httpSession.getAttribute("user");
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
 		if(StringUtils.isEmpty(id)) {
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 			orderDto = orderService.addOrder(shoppingCart.getOrderDetailDtos(), userDto, shoppingCart.getTotalPrice(), addressId);
@@ -69,32 +71,32 @@ public class OrderController {
 	}
 	
 	@GetMapping(value = RequestUrls.GET_ORDERS)
-	public String getOrder(Model model, @PathVariable(value = "id") Long id) {
+	public String getOrder(Model model, @PathVariable(value = FieldNames.ID) Long id) {
 		OrderDto orderDto = orderService.getOrder(id);
-		model.addAttribute("orderDto", orderDto);
-		model.addAttribute("userDto", orderService.getUserDtoByUserId(orderDto.getUserId()));
-		model.addAttribute("addressDto", orderService.getAddressDtoByAddressId(orderDto.getAddressId()));
-		return "order";
+		model.addAttribute(FieldNames.ORDER_DTO, orderDto);
+		model.addAttribute(FieldNames.USER_DTO, orderService.getUserDtoByUserId(orderDto.getUserId()));
+		model.addAttribute(FieldNames.ADDRESS_DTO, orderService.getAddressDtoByAddressId(orderDto.getAddressId()));
+		return View.ORDER;
 	}
 	
 	@GetMapping(value =RequestUrls.ORDERS)
 	public String searchOrders(Model model, @RequestParam(required=false) String orderNumber, @RequestParam(required=false) String fromDate, @RequestParam(required=false) String toDate, @PageableDefault(page = 1, size = 10) Pageable pageable) {
-		UserDto userDto = (UserDto) httpSession.getAttribute("user");
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
 		
 		Map<String, String> params = new HashMap<>();
-		params.put("orderNumber", orderNumber);
-		params.put("fromDate", fromDate);
-		params.put("toDate", toDate);
-		params.put("userId", String.valueOf(userDto.getId()));
+		params.put(FieldNames.ORDER_NUMBER, orderNumber);
+		params.put(FieldNames.FROM_DATE, fromDate);
+		params.put(FieldNames.TO_DATE, toDate);
+		params.put(FieldNames.USER_ID, String.valueOf(userDto.getId()));
 		CustomPage<OrderDto> page = orderService.getOrders(pageable, params);
-		model.addAttribute("pagging", commonUtil.getPagging("orders", page.getPageNumber()+1, page.getTotalPages(), params));
-		model.addAttribute("page", page);
-		return "orders";	
+		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.ORDERS, page.getPageNumber()+1, page.getTotalPages(), params));
+		model.addAttribute(FieldNames.PAGE, page);
+		return View.ORDERS;	
 	}
 	
 	@GetMapping(value = RequestUrls.DOWNLOAD_ORDER)
 	public void downloadOrder(Model model, HttpServletResponse response,
-			@PathVariable(value = "id") Long id) throws IOException {
+			@PathVariable(value = FieldNames.ID) Long id) throws IOException {
 		response.setContentType("application/pdf");
 		response.setHeader("Content-Disposition", "attachment; filename=\""+ id + ".pdf\"");
 		ByteArrayOutputStream baos = orderService.createOrderPdf(id);

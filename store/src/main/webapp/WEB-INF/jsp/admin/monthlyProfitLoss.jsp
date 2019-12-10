@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -9,17 +10,17 @@
 				<div class="card-body main-center">
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="month" class="control-label text-right">Month</label>${months}
+							<label for="<%=FieldNames.MONTH %>" class="control-label text-right"><spring:message code="Month" text="Month" /></label>${months}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<label for="month" class="control-label text-right">Year</label>${years}
+							<label for="<%=FieldNames.YEAR %>" class="control-label text-right"><spring:message code="Year" text="Year" /></label>${years}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<input type="submit" value="Search" style="margin-top: 15px;" class="btn btn-sm btn-info form-control">
+							<input type="submit" value="<spring:message code="Search" text="Search" />" style="margin-top: 15px;" class="btn btn-sm btn-info form-control">
 						</div>
 					</div>
 				</div>
@@ -33,11 +34,11 @@
 					<div class="col-sm-12">
 						<table class="table content-table">
 							<tr>
-								<th>Month</th>
-								<th>No of Orders</th>
-								<th>Sold Quantity</th>
-								<th>Amount Received</th>
-								<th>Profit / Loss</th>
+								<th><spring:message code="Month" text="Month" /></th>
+								<th><spring:message code="No of Orders" text="No of Orders" /></th>
+								<th><spring:message code="Sold Quantity" text="Sold Quantity" /></th>
+								<th><spring:message code="Amount Received" text="Amount Received" /></th>
+								<th><spring:message code="Profit / Loss" text="Profit / Loss" /></th>
 							</tr>
 							<c:forEach var="profitLossDto" items="${page.getContent()}">
 								<tr>
@@ -61,7 +62,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="row">
-					<div class="col-sm-12">No Records Found.</div>
+					<div class="col-sm-12"><spring:message code="No Records Found" text="No Records Found" />.</div>
 				</div>
 			</c:otherwise>
 		</c:choose>

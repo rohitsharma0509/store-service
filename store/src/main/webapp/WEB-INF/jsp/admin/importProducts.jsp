@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
@@ -14,7 +15,7 @@
 }
 </style>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.PRODUCTS %>"><spring:message code="Products" text="Products" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Import Products" text="Import Products" /></li>
 </ol>
@@ -44,7 +45,7 @@
 						<div class="col-sm-4">
 						    <h3 class="font-weight-bold pl-0 my-4"><strong>Select File</strong></h3>
 						    <div class="form-group md-form">
-						        <input id="file" name="file" type="file" required="required" class="form-control validate">
+						        <input id="<%=FieldNames.FILE %>" name="<%=FieldNames.FILE %>" type="file" required="required" class="form-control validate">
 						    </div>
 						</div>
 						<div class="col-sm-5"></div>
@@ -54,12 +55,12 @@
 						<div class="col-sm-7">
 		            		<div class="form-check">
 								<label class="form-check-label">
-								    <input type="radio" class="form-check-input" value="csv" checked name="fileType">CSV (Comma Separated Values)&nbsp;&nbsp;&nbsp;<a href="${contextPath}/sample?fileType=csv">Download Sample</a>
+								    <input type="radio" class="form-check-input" value="csv" checked name="<%=FieldNames.FILE_TYPE %>">CSV (Comma Separated Values)&nbsp;&nbsp;&nbsp;<a href="${contextPath}/sample?fileType=csv">Download Sample</a>
 								</label>
 							</div>
 							<div class="form-check-inline">
 								<label class="form-check-label">
-								<input type="radio" class="form-check-input" value="xml" name="fileType">XML (Extensible Markup Language)&nbsp;&nbsp;&nbsp;<a href="${contextPath}/sample?fileType=xml">Download Sample</a>
+								<input type="radio" class="form-check-input" value="xml" name="<%=FieldNames.FILE_TYPE %>">XML (Extensible Markup Language)&nbsp;&nbsp;&nbsp;<a href="${contextPath}/sample?fileType=xml">Download Sample</a>
 								</label>
 							</div>
 						</div>

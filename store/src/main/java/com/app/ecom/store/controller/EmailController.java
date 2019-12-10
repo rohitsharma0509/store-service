@@ -2,7 +2,9 @@ package com.app.ecom.store.controller;
 
 import javax.validation.Valid;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.Email;
 import com.app.ecom.store.model.EmailAccount;
 import com.app.ecom.store.service.EmailService;
@@ -26,18 +28,18 @@ public class EmailController {
 	
 	@GetMapping(value = RequestUrls.COMPOSE_EMAIL)
 	public String composeEmail(Model model) {
-		model.addAttribute("email", new Email());
-		return "composeEmail";
+		model.addAttribute(FieldNames.EMAIL, new Email());
+		return View.COMPOSE_EMAIL;
 	}
 	
 	@PostMapping(value = RequestUrls.SEND_EMAIL)
-	public String sendEmail(Model model, @ModelAttribute("email")  @Valid Email email, BindingResult bindingResult) {
+	public String sendEmail(Model model, @ModelAttribute(FieldNames.EMAIL)  @Valid Email email, BindingResult bindingResult) {
 		emailValidator.validate(email, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "composeEmail";
+			return View.COMPOSE_EMAIL;
 		}
 		emailService.sendEmail(email);
-		return "admin";
+		return View.ADMIN;
 	}
 	
 	@GetMapping(value = RequestUrls.GET_EMAIL_ACCOUNT)

@@ -3,6 +3,8 @@ package com.app.ecom.store.controller;
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
+import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class AddressController {
 	@Autowired
 	private AddressService addressService;
 	
-	@GetMapping(value = "/manageAddress")
+	@GetMapping(value = RequestUrls.MANAGE_ADDRESS)
 	public String manageAddress(Model model, @RequestParam(value = FieldNames.ID, required=false) Long id) {
 		AddressDto addressDto;
 		if (id != null) {
@@ -29,11 +31,11 @@ public class AddressController {
 		} else {
 			addressDto = new AddressDto();
 		}
-		model.addAttribute("addressDto", addressDto);
-		return "addAddress";
+		model.addAttribute(FieldNames.ADDRESS_DTO, addressDto);
+		return View.ADD_ADDRESS;
 	}
 	
-	@PostMapping(value = "/addAddress")
+	@PostMapping(value = RequestUrls.ADD_ADDRESS)
 	@ResponseBody
 	public void addAddress(Model model, @ModelAttribute  @Valid AddressDto addressDto, BindingResult bindingResult) {
 		addressService.addAddress(addressDto);

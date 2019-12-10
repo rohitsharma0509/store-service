@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.ShoppingCart;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
 import com.app.ecom.store.dto.productservice.ProductDto;
@@ -99,24 +100,24 @@ public class ShoppingCartController {
 		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
 		if(null == id){
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-			model.addAttribute("orderDetailDtos", shoppingCart.getOrderDetailDtos());
+			model.addAttribute(FieldNames.ORDER_DETAIL_DTOS, shoppingCart.getOrderDetailDtos());
 			model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
 		}else {
 			List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
 			ProductDto productDto = productService.getProductById(id);
 			OrderDetailDto orderDetailDto = getOrderDetailDto(id, productDto);
 			orderDetailDtos.add(orderDetailDto);
-			model.addAttribute("orderDetailDtos", orderDetailDtos);
+			model.addAttribute(FieldNames.ORDER_DETAIL_DTOS, orderDetailDtos);
 			model.addAttribute(FieldNames.TOTAL_PRICE, productDto.getPerProductPrice());
 		}
-		model.addAttribute("addresses", addressService.getAddressByUserId(userDto.getId()));
-		return "shoppingCartConfirm";
+		model.addAttribute(FieldNames.ADDRESSES, addressService.getAddressByUserId(userDto.getId()));
+		return View.SHOPPING_CART_CONFIRM;
 	}
 	
 	@PostMapping(value = RequestUrls.SHOPPING_CART)
 	public String updateShoppingCart(Model model, @ModelAttribute ShoppingCart shoppingCart) {
 		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCartService.updateShoppingCart(shoppingCart));
-		return "redirect:checkout";
+		return "redirect:"+RequestUrls.CHECKOUT;
 	}
 	
 	private OrderDetailDto getOrderDetailDto(Long productId, ProductDto productDto) {

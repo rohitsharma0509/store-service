@@ -3,6 +3,8 @@ package com.app.ecom.store.validator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.enums.ErrorCode;
@@ -36,31 +38,31 @@ public class ProductValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		ProductDto productDto = (ProductDto) o;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "brandName", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "perProductPrice", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "purchasePrice", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "quantity", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "alertQuantity", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.BRAND_NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.PER_PRODUCT_PRICE, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.PURCHASE_PRICE, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.QUANTITY, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.ALERT_QUANTITY, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 
-		if (!commonUtil.isValid(productDto.getCategoryId() + "")) {
-			errors.rejectValue("categoryId", commonUtil.getMessage(ErrorCode.ERR000009.getCode()));
+		if (!commonUtil.isValid(productDto.getCategoryId() + Constants.EMPTY_STRING)) {
+			errors.rejectValue(FieldNames.CATEGORY_ID, commonUtil.getMessage(ErrorCode.ERR000009.getCode()));
 		}
 
-		if (!commonUtil.isDouble(productDto.getPerProductPrice() + "")) {
-			errors.rejectValue("perProductPrice", commonUtil.getMessage(ErrorCode.ERR000010.getCode()));
+		if (!commonUtil.isDouble(productDto.getPerProductPrice() + Constants.EMPTY_STRING)) {
+			errors.rejectValue(FieldNames.PER_PRODUCT_PRICE, commonUtil.getMessage(ErrorCode.ERR000010.getCode()));
 		}
 
-		if (!commonUtil.isDouble(productDto.getPurchasePrice() + "")) {
-			errors.rejectValue("purchasePrice", commonUtil.getMessage(ErrorCode.ERR000011.getCode()));
+		if (!commonUtil.isDouble(productDto.getPurchasePrice() + Constants.EMPTY_STRING)) {
+			errors.rejectValue(FieldNames.PURCHASE_PRICE, commonUtil.getMessage(ErrorCode.ERR000011.getCode()));
 		}
 
-		if (!commonUtil.isInteger(productDto.getQuantity() + "")) {
-			errors.rejectValue("quantity", commonUtil.getMessage(ErrorCode.ERR000012.getCode()));
+		if (!commonUtil.isInteger(productDto.getQuantity() + Constants.EMPTY_STRING)) {
+			errors.rejectValue(FieldNames.QUANTITY, commonUtil.getMessage(ErrorCode.ERR000012.getCode()));
 		}
 
-		if (!commonUtil.isInteger(productDto.getAlertQuantity() + "")) {
-			errors.rejectValue("alertQuantity", commonUtil.getMessage(ErrorCode.ERR000013.getCode()));
+		if (!commonUtil.isInteger(productDto.getAlertQuantity() + Constants.EMPTY_STRING)) {
+			errors.rejectValue(FieldNames.ALERT_QUANTITY, commonUtil.getMessage(ErrorCode.ERR000013.getCode()));
 		}
 	}
 

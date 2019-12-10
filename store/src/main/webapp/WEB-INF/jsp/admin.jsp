@@ -51,7 +51,7 @@
   <div class="col-sm-6">
     <table class="table">
       <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Mailing" text="Mailing" /></b></span></th></tr>
-      <tr><td><a href="${contextPath}/composeEmail"><spring:message code="Send Email" text="Send Email" /></a></td></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.COMPOSE_EMAIL %>"><spring:message code="Send Email" text="Send Email" /></a></td></tr>
     </table>
   </div>
   <div class="col-sm-6"></div>

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.app.ecom.store.client.UserTokenServiceClient;
+import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
 import com.app.ecom.store.service.UserTokenService;
@@ -38,7 +39,7 @@ public class UserTokenServiceImpl implements UserTokenService {
         userTokenDto.setExpiryDate(expiryDate);
         userTokenDto.setUserId(userDto.getId());
         UserTokenDto tokenDto = userTokenServiceClient.createToken(userTokenDto);
-        return tokenDto == null ? "" : tokenDto.getToken();
+        return tokenDto == null ? Constants.EMPTY_STRING : tokenDto.getToken();
     }
 
     @Override

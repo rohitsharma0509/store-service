@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -21,7 +22,7 @@ $(document).ready(function(){
 });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Privileges" text="Privileges" /></li>
   <li class="ml-auto"><span id="hideShowDiv"><a href="#"><spring:message code="Hide Filters" text="Hide Filters" /></a></span></li>
 </ol>
@@ -33,8 +34,8 @@ $(document).ready(function(){
         <div class="card-body main-center">
           <div class="row">
             <div class="col-sm-2">
-              <label for="name"><spring:message code="Privilege Name" text="Privilege Name" /></label> 
-              <input type="text" id="name" name="name" value="${param.name}" class="form-control input-sm" />
+              <label for="<%=FieldNames.NAME %>"><spring:message code="Privilege Name" text="Privilege Name" /></label> 
+              <input type="text" id="<%=FieldNames.NAME %>" name="<%=FieldNames.NAME %>" value="${param.name}" class="form-control input-sm" />
             </div>
             <div class="col-sm-10"></div>
           </div>
@@ -81,7 +82,7 @@ $(document).ready(function(){
                 <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_PRIVILEGE %>?id=${privilege.id}"><spring:message code="Edit" text="Edit" /></a></li>
+                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_PRIVILEGE %>?<%=FieldNames.ID %>=${privilege.id}"><spring:message code="Edit" text="Edit" /></a></li>
                     <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.PRIVILEGES %>/${privilege.id}"><spring:message code="Delete" text="Delete" /></a></li>
                   </ul>
                 </div>

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
@@ -48,11 +49,11 @@ public class PrivilegeController {
 	@GetMapping(value = RequestUrls.PRIVILEGES)
     public String getRoles(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required=false) String name) {
 		Map<String, String> params = new HashMap<>();
-		params.put("name", name);
+		params.put(FieldNames.NAME, name);
 		CustomPage<PrivilegeDto> page = privilegeService.getPrivileges(pageable, params);
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.PRIVILEGES, page.getPageNumber()+1, page.getTotalPages(), params));
 		model.addAttribute(FieldNames.PAGE, page);
-        return "privileges";
+        return View.PRIVILEGES;
     }
 	
 	@GetMapping(value = RequestUrls.ADD_PRIVILEGE)
@@ -65,15 +66,15 @@ public class PrivilegeController {
 		}
 		model.addAttribute(FieldNames.PRIVILEGE_DTO, privilegeDto);
 		List<PrivilegeDto> allPrivileges = privilegeService.getAllPrivileges();
-		model.addAttribute("privileges", allPrivileges == null ? Collections.emptyList() : allPrivileges.stream().filter(p-> !p.getId().equals(id)).collect(Collectors.toList()));
-		return "addPrivilege";
+		model.addAttribute(FieldNames.PRIVILEGES, allPrivileges == null ? Collections.emptyList() : allPrivileges.stream().filter(p-> !p.getId().equals(id)).collect(Collectors.toList()));
+		return View.ADD_PRIVILEGE;
 	}
 	
 	@PostMapping(value = RequestUrls.PRIVILEGES)
 	public String addPrivilege(Model model, @Valid PrivilegeDto privilegeDto, BindingResult bindingResult) {
 		privilegeValidator.validate(privilegeDto, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "addPrivilege";
+			return View.ADD_PRIVILEGE;
 		}
 		
 		privilegeService.addPrivilege(privilegeDto);

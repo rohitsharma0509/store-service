@@ -1,11 +1,11 @@
 package com.app.ecom.store.controller;
 
+import com.app.ecom.store.constants.FieldNames;
+import com.app.ecom.store.dto.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-
-import com.app.ecom.store.dto.Message;
 
 @Controller
 public class ChatController {
@@ -20,7 +20,7 @@ public class ChatController {
     @SendTo("/topic/public")
     public Message addUser(Message message, SimpMessageHeaderAccessor headerAccessor) {
         // Add username in web socket session
-        headerAccessor.getSessionAttributes().put("username", message.getFrom());
+        headerAccessor.getSessionAttributes().put(FieldNames.USERNAME, message.getFrom());
         return message;
     }
 }

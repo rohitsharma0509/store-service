@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.enums.ErrorCode;
@@ -36,11 +37,11 @@ public class PrivilegeValidator implements Validator {
 		
 		List<PrivilegeDto> privilegeDtos = privilegeService.getAllPrivileges();
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
 		for(PrivilegeDto privilege : privilegeDtos) {
 			if(!privilege.getName().equalsIgnoreCase(privilegeDto.getOldName()) && privilege.getName().equalsIgnoreCase(privilegeDto.getName())) {
-				errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000022.getCode()));
+				errors.rejectValue(FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000022.getCode()));
 			}
 		}
 	}

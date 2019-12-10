@@ -7,7 +7,7 @@
 String action = "Save";
 %>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.CATEGORIES %>"><spring:message code="Categories" text="Categories" /></a></li>
   <c:choose>
     <c:when test="${empty productCategory.id}">
@@ -22,16 +22,16 @@ String action = "Save";
 <div class="row" style="height:10px;">
 </div>
 <form:form method="POST" modelAttribute="<%=FieldNames.PRODUCT_CATEGORY_DTO %>" class="form-horizontal" action="<%=RequestUrls.CATEGORIES %>">
-<form:hidden path="id"  class="form-control input-sm"/>
+<form:hidden path="<%=FieldNames.ID %>" />
 <div class="container py-5">
     <h6><spring:message code="Category Details" text="Category Details" /></h6><hr>
     <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
               <div class="col-sm-6">
-                  <label for="name"><spring:message code="Category Name" text="Category Name" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="name" id="name" class="form-control input-sm"/>
-                  <form:errors path="name" class="help-inline has-error"></form:errors>
+                  <label for="<%=FieldNames.NAME %>"><spring:message code="Category Name" text="Category Name" />&nbsp;<span class="urgent_fields">*</span></label>
+                  <form:input type="text" path="<%=FieldNames.NAME %>" id="<%=FieldNames.NAME %>" class="form-control input-sm"/>
+                  <form:errors path="<%=FieldNames.NAME %>" class="help-inline has-error"></form:errors>
               </div>
               <div class="col-sm-6"></div>
           </div>

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
 import com.app.ecom.store.service.UserService;
@@ -42,15 +43,15 @@ public class SignupController {
     
     @GetMapping(value = RequestUrls.REGISTRATION)
     public String registration(Model model) {
-        model.addAttribute("userForm", new UserDto());
-        return "registration";
+        model.addAttribute(FieldNames.USER_DTO, new UserDto());
+        return View.REGISTRATION;
     }
 
     @PostMapping(value = RequestUrls.REGISTRATION)
-    public String registration(@ModelAttribute("userForm") UserDto userDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
+    public String registration(@ModelAttribute(FieldNames.USER_DTO) UserDto userDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
         userValidator.validate(userDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return View.REGISTRATION;
         }
         UserDto createdUserDto = userService.createUser(userDto);
         try {
@@ -60,7 +61,7 @@ public class SignupController {
         	model.addAttribute(FieldNames.ERROR, "Due to some technical problem, we are unable to send the email verification mail to activate your account. Please contact your administrator to activate your account.");
         	logger.error("Exception while sending verification mail." + e);
         }
-        return "login";
+        return View.LOGIN;
     }
     
     @GetMapping(value = RequestUrls.REGISTRATION_CONFIRM)

@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -20,7 +21,7 @@ $(document).ready(function(){
 });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Products" text="Products" /></li>
   <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
@@ -32,8 +33,8 @@ $(document).ready(function(){
 			<div class="card-body main-center">
 			<div class="row">
 				<div class="col-sm-2">
-					<label for="category" class="control-label text-right"><spring:message code="Category" text="Category" /></label> 
-					<select id="categoryId" name="categoryId" class="form-control input-sm">
+					<label for="<%=FieldNames.CATEGORY_ID %>" class="control-label text-right"><spring:message code="Category" text="Category" /></label> 
+					<select id="<%=FieldNames.CATEGORY_ID %>" name="<%=FieldNames.CATEGORY_ID %>" class="form-control input-sm">
 						<option value="-1"><spring:message code="Select Category" text="Select Category" /></option>
 						<c:forEach var="category" items="${categories}">
 							<c:choose>
@@ -49,13 +50,13 @@ $(document).ready(function(){
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-2">
-					<label for="brandName"><spring:message code="Brand Name" text="Brand Name" /></label>
-					<input type="text" id="brandName" name="brandName" value="${param.brandName}" class="form-control input-sm" />
+					<label for="<%=FieldNames.BRAND_NAME %>"><spring:message code="Brand Name" text="Brand Name" /></label>
+					<input type="text" id="<%=FieldNames.BRAND_NAME %>" name="<%=FieldNames.BRAND_NAME %>" value="${param.brandName}" class="form-control input-sm" />
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-2">
-					<label for="productName"><spring:message code="Product Name" text="Product Name" /></label> 
-					<input type="text" id="productName" name="productName" value="${param.productName}" class="form-control input-sm" />
+					<label for="<%=FieldNames.PRODUCT_NAME %>"><spring:message code="Product Name" text="Product Name" /></label> 
+					<input type="text" id="<%=FieldNames.PRODUCT_NAME %>" name="<%=FieldNames.PRODUCT_NAME %>" value="${param.productName}" class="form-control input-sm" />
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
@@ -110,7 +111,7 @@ $(document).ready(function(){
 										<a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
 		                <div id="singleRecordAction${loop.index}" class="d-none">
 		                  <ul class="list-group list-group-flush">
-		                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_PRODUCT %>?id=${product.id}"><spring:message code="Edit" text="Edit" /></a></li>
+		                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_PRODUCT %>?<%=FieldNames.ID %>=${product.id}"><spring:message code="Edit" text="Edit" /></a></li>
 		                    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.PRODUCTS %>/${product.id}"><spring:message code="Delete" text="Delete" /></a></li>
 		                  </ul>
 		                </div>

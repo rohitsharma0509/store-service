@@ -124,13 +124,13 @@ String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLast
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <!-- <a class="navbar-brand" href="#"><img src="../images/logo.jpg" alt="Store" style="width:40px;"></a> -->
         <ul class="navbar-nav">
-           <li class="nav-item"><a class="nav-link" href="${contextPath}/home"><spring:message code="Dashboard" text="Dashboard" /></a></li>
-           <li class="nav-item"><a class="nav-link" href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
-           <li class="nav-item"><a class="nav-link" href="${contextPath}/shoppingCart"><spring:message code="Shopping Cart" text="Shopping Cart" /></a>
+           <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.HOME %>"><spring:message code="Dashboard" text="Dashboard" /></a></li>
+           <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
+           <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.SHOPPING_CART %>"><spring:message code="Shopping Cart" text="Shopping Cart" /></a>
            <security:authorize access="hasAuthority('ADMIN')">
-             <li class="nav-item"><a class="nav-link" href="${contextPath}/stock"><spring:message code="Stock" text="Stock" /></a></li>
+             <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.STOCK %>"><spring:message code="Stock" text="Stock" /></a></li>
            </security:authorize>
-          <li class="nav-item"><a class="nav-link" href="${contextPath}/orders"><spring:message code="Orders" text="Orders" /></a></li>
+          <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.ORDERS %>"><spring:message code="Orders" text="Orders" /></a></li>
         </ul>
         <div id="navbarNavDropdown" class="navbar-collapse collapse justify-content-end">
 				    <ul class="navbar-nav">
@@ -138,10 +138,10 @@ String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLast
                     <a class="nav-link dropdown-toggle" href="#" id="side-dropdown-menus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=name %></a>
                     <div class="dropdown-menu" aria-labelledby="side-dropdown-menus">
                       <c:if test="${pageContext.request.userPrincipal.name != null}">
-								        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+								        <form id="logoutForm" method="POST" action="${contextPath}<%=RequestUrls.LOGOUT %>">
 									        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                        <security:authorize access="hasAuthority('ADMIN')">
-							              <a class="dropdown-item" href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a>
+							              <a class="dropdown-item" href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a>
 							            </security:authorize>
 							            <a class="dropdown-item" href="${contextPath}<%=RequestUrls.MY_ACCOUNT %>"><spring:message code="My Account" text="My Account" /></a>
 							            <a class="dropdown-item" href="#" onclick="document.forms['logoutForm'].submit()"><spring:message code="Logout" text="Logout" /></a>

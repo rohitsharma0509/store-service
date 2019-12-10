@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
@@ -57,7 +58,7 @@ public class ProductController {
 		}
 		model.addAttribute(FieldNames.PRODUCTDTO, productDto);
 		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
-		return "addProduct";
+		return View.ADD_PRODUCT;
 	}
 	
 	@PostMapping(value = RequestUrls.PRODUCTS)
@@ -65,7 +66,7 @@ public class ProductController {
 		productValidator.validate(productDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
-			return "addProduct";
+			return View.ADD_PRODUCT;
 		}
 		
 		productService.addProduct(productDto);
@@ -87,7 +88,7 @@ public class ProductController {
 		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.PRODUCTS, page.getPageNumber()+1, page.getTotalPages(), params));
 	    model.addAttribute(FieldNames.PAGE, page);
-		return "products";
+		return View.PRODUCTS;
 	}
 	
 	@ResponseBody
@@ -127,13 +128,13 @@ public class ProductController {
 	
 	@GetMapping(value = RequestUrls.PRODUCTS_IMPORT)
 	public String importProducts() {
-		return "importProducts";
+		return View.IMPORT_PRODUCTS;
 	}
 	
 	@PostMapping(value = RequestUrls.PRODUCTS_SAVE)
 	public String importProductsFromFile(@RequestParam(FieldNames.FILE) MultipartFile multiPartFile, @RequestParam(required= true) String fileType) {
 		productService.importProducts(multiPartFile, fileType);
-		return "importProducts";
+		return View.IMPORT_PRODUCTS;
 	}
 	
 	//Non-admin API
@@ -151,7 +152,7 @@ public class ProductController {
 		CustomPage<ProductDto> page = productService.searchProducts(pageable, params);
 		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllProductCategories());
 		model.addAttribute(FieldNames.PAGE, page);
-		return "allProducts";
+		return View.ALL_PRODUCTS;
 	}
 	
 	@GetMapping(value = RequestUrls.PRODUCTS_AJAX)
@@ -166,6 +167,6 @@ public class ProductController {
 		params.put(FieldNames.PRODUCT_NAME, productName);
 		CustomPage<ProductDto> page = productService.searchProducts(pageable, params);
 		model.addAttribute(FieldNames.PAGE, page);
-		return "productListing";
+		return View.PRODUCT_LISTING;
 	}
 }

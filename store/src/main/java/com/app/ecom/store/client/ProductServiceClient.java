@@ -3,6 +3,7 @@ package com.app.ecom.store.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.productservice.ProductDto;
@@ -52,11 +53,11 @@ public class ProductServiceClient {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, IMPORT_PRODUCT);
 		Map<String, String> queryParamMap = new HashMap<>();
 		try {
-			queryParamMap.put("file", new String(multiPartFile.getBytes()));
+			queryParamMap.put(FieldNames.FILE, new String(multiPartFile.getBytes()));
 		} catch(Exception e) {
 			logger.error(new StringBuilder("Exception while converting file to String: ").append(commonUtil.getStackTraceAsString(e)));
 		}
-		queryParamMap.put("fileType", fileType);
+		queryParamMap.put(FieldNames.FILE_TYPE, fileType);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.PUT, null, queryParamMap, null);
 		externalApiHandler.callExternalApi(externalApi);
 	}
@@ -82,8 +83,8 @@ public class ProductServiceClient {
 	public Integer getProductsQuantity(Long productId, QuantityStatus status) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, PRODUCT);
 		Map<String, String> queryParamMap = new HashMap<>();
-		queryParamMap.put("productId", String.valueOf(productId));
-		queryParamMap.put("status", status.name());
+		queryParamMap.put(FieldNames.PRODUCT_ID, String.valueOf(productId));
+		queryParamMap.put(FieldNames.STATUS, status.name());
 		ExternalApiRequest<Integer> externalApi = commonUtil.getExternalApiRequest(Integer.class, url, HttpMethod.GET, null, queryParamMap, null);
 		return externalApiHandler.callExternalApi(externalApi);
 	}

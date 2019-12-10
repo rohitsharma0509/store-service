@@ -118,9 +118,9 @@ public class UserServiceImpl implements UserService {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
 		int limit = offset + pageable.getPageSize();
 		UserSearchRequest userSearchRequest = new UserSearchRequest();
-		userSearchRequest.setName(params.get("name"));
-		userSearchRequest.setMobile(params.get("mobile"));
-    	userSearchRequest.setEmail(params.get("email"));
+		userSearchRequest.setName(params.get(FieldNames.NAME));
+		userSearchRequest.setMobile(params.get(FieldNames.MOBILE));
+    	userSearchRequest.setEmail(params.get(FieldNames.EMAIL));
     	userSearchRequest.setOffset(offset);
     	userSearchRequest.setLimit(limit);
     	UserDtos userDtos = userServiceClient.getUsers(userSearchRequest);

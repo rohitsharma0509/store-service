@@ -1,5 +1,6 @@
 package com.app.ecom.store.config;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.handler.CustomAccessDeniedHandler;
 import com.app.ecom.store.handler.CustomAuthenticationFailureHandler;
@@ -53,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
 		//.and().exceptionHandling().accessDeniedPage(RequestUrls.ERROR+"/"+HttpStatus.FORBIDDEN.value())
 		.and().exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
-		.and().logout().invalidateHttpSession(true).deleteCookies("rememberMe").permitAll()
+		.and().logout().invalidateHttpSession(true).deleteCookies(FieldNames.REMEMBER_ME).permitAll()
 		.and().rememberMe().tokenValiditySeconds(5);
 	}
 

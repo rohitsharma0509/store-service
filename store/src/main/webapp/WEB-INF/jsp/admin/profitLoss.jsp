@@ -32,7 +32,7 @@ function submitForm(f, tabId) {
 	});
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Profit & Loss" text="Profit & Loss" /></li>
 </ol>
 <div class="row" style="height: 10px;"></div>

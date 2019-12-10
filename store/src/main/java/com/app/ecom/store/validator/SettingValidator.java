@@ -2,6 +2,8 @@ package com.app.ecom.store.validator;
 
 import java.util.List;
 
+import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.masterdata.SettingDto;
 import com.app.ecom.store.enums.ErrorCode;
@@ -31,20 +33,20 @@ public class SettingValidator implements Validator {
 	public void validate(Object o, Errors errors) {
 		SettingDto settingDto = (SettingDto) o;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "value", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.VALUE, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
 		List<SettingDto> settingDtos = settingService.getAllSettings();
 		
 		for(SettingDto setting : settingDtos) {
 			if(!setting.getName().equalsIgnoreCase(settingDto.getOldName()) && setting.getName().equalsIgnoreCase(settingDto.getName())) {
-				errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000027.getCode()));
+				errors.rejectValue(FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000027.getCode()));
 			}
 		}
 	}
 
 	public Response validateSettingAssociation(List<Long> ids) {
-		return commonUtil.getResponse(ids == null, "");
+		return commonUtil.getResponse(ids == null, Constants.EMPTY_STRING);
 	}
 }

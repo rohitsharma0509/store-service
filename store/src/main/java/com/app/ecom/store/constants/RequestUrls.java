@@ -3,6 +3,8 @@ package com.app.ecom.store.constants;
 public class RequestUrls {
 	private RequestUrls() {
 	}
+	
+	public static final String DEFAULT = "/";
 	public static final String PRODUCT_ALL = "/allProducts";
 	public static final String PRODUCTS_AJAX = "/products/ajax";
 	public static final String ADD_PRODUCT = "/admin/addProduct";
@@ -57,6 +59,7 @@ public class RequestUrls {
 	public static final String REGISTRATION_CONFIRM = "/registration/confirm";
 	public static final String REGISTRATION_CONFIG = "/registration/config";
 	public static final String LOGIN = "/login";
+	public static final String LOGOUT = "/logout";
 	public static final String FORGET_PASSWORD = "/forgetPassword";
 	public static final String CHANGE_PASSWORD = "/changePassword";
 	public static final String RESET_PASSWORD = "/resetPassword";
@@ -94,4 +97,9 @@ public class RequestUrls {
 	public static final String MONTHLY_PROFIT_LOSS = "/admin/monthlyProfitLoss";
 	public static final String QUARTERLY_PROFIT_LOSS = "/admin/quarterlyProfitLoss";
 	public static final String YEARLY_PROFIT_LOSS = "/admin/yearlyProfitLoss";
+	
+	public static final String MANAGE_ADDRESS = "/manageAddress";
+	public static final String ADD_ADDRESS = "/addAddress";
+	public static final String USER_SEARCH = "/users/search";
+	
 }

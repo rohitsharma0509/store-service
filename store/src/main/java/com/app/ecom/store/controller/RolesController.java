@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
@@ -54,18 +55,18 @@ public class RolesController {
     public String getRoles(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required=false) String name, @RequestParam(required=false) String roleName) {
 		Map<String, String> params = new HashMap<>();
 		params.put(FieldNames.NAME, name);
-		params.put("roleName", roleName);
+		params.put(FieldNames.ROLE_NAME, roleName);
 		CustomPage<RoleDto> page = roleService.getRoles(pageable, params);
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.ROLES, page.getPageNumber()+1, page.getTotalPages(), params));
 		model.addAttribute(FieldNames.PAGE, page);
-        return "roles";
+        return View.ROLES;
     }
 	
 	@PostMapping(value = RequestUrls.ROLES)
 	public String addRole(Model model, @Valid RoleDto roleDto, BindingResult bindingResult) {
 		roleValidator.validate(roleDto, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "addRole";
+			return View.ADD_ROLE;
 		}
 		
 		roleService.addRole(roleDto);
@@ -94,9 +95,9 @@ public class RolesController {
 		}
 		List<PrivilegeDto> privilegesToDisplay = allPrivileges.stream().filter(p->!childPrivilegeIds.contains(p.getId())).collect(Collectors.toList());
 		roleDto.setPrivilegeDtos(privilegesToDisplay);
-		model.addAttribute("roleDto", roleDto);
+		model.addAttribute(FieldNames.ROLE_DTO, roleDto);
 
-		return "addRole";
+		return View.ADD_ROLE;
 	}
 	
 	@ResponseBody

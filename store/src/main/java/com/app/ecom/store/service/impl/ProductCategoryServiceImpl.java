@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.app.ecom.store.client.MasterDataClient;
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDto;
@@ -61,11 +62,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		ProductCategorySearchRequest productCategorySearchRequest = new ProductCategorySearchRequest();
 		productCategorySearchRequest.setOffset(offset);
 		productCategorySearchRequest.setLimit(limit);	
-		productCategorySearchRequest.setName(params.get("name"));
+		productCategorySearchRequest.setName(params.get(FieldNames.NAME));
 		ProductCategoryDtos productCategoryDtos = masterDataClient.getProductCategories(productCategorySearchRequest);
 		
 		ProductCategoryDto productCategoryDto = new ProductCategoryDto();
-		productCategoryDto.setName(params.get("name"));
+		productCategoryDto.setName(params.get(FieldNames.NAME));
 		Long totalRecords = masterDataClient.countProductCategories(productCategoryDto);
 		CustomPage<ProductCategoryDto> page = new CustomPage<>();
 		page.setContent(productCategoryDtos == null ? Collections.emptyList() : productCategoryDtos.getProductCategories());

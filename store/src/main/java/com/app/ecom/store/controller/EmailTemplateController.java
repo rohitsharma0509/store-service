@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.EmailTemplateDto;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
@@ -51,14 +52,14 @@ public class EmailTemplateController {
         }else {
             emailTemplateDto = new EmailTemplateDto();
         }
-        model.addAttribute("emailTemplateDto", emailTemplateDto);
+        model.addAttribute(FieldNames.EMAIL_TEMPLATE_DTO, emailTemplateDto);
         List<TemplateType> templateTypes = new ArrayList<>();
         TemplateType templateType = new TemplateType();
         templateType.setId(1L);
         templateType.setType("User registration mail");
         templateTypes.add(templateType);
         model.addAttribute("types", templateTypes);
-        return "addEmailTemplates";
+        return View.ADD_EMAIL_TEMPLATES;
     }
     
     @PostMapping(value = RequestUrls.EMAIL_TEMPLATES)
@@ -77,7 +78,7 @@ public class EmailTemplateController {
         Page<EmailTemplate> page = emailTemplateService.getEmailTemplates(pageable);
         model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.EMAIL_TEMPLATES, page.getNumber()+1, page.getTotalPages(), null));
         model.addAttribute(FieldNames.PAGE, page);
-        return "emailTemplates";
+        return View.EMAIL_TEMPLATES;
     }
     
     @ResponseBody

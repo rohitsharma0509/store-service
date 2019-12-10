@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDto;
 import com.app.ecom.store.enums.ErrorCode;
@@ -38,14 +39,14 @@ public class ProductCategoryValidator implements Validator {
 	public void validate(Object o, Errors errors) {
 		ProductCategoryDto productCategoryDto = (ProductCategoryDto) o;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
 		
 		List<ProductCategoryDto> productCategoryDtos = productCategoryService.getAllProductCategories();
 		
 		for(ProductCategoryDto productCategory : productCategoryDtos) {
 			if(!productCategory.getName().equalsIgnoreCase(productCategoryDto.getOldName()) && productCategory.getName().equalsIgnoreCase(productCategoryDto.getName())) {
-				errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000016.getCode()));
+				errors.rejectValue(FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000016.getCode()));
 			}
 		}
 	}

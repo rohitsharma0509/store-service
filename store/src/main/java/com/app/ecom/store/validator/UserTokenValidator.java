@@ -2,6 +2,7 @@ package com.app.ecom.store.validator;
 
 import java.util.Calendar;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.util.CommonUtil;
@@ -30,12 +31,12 @@ public class UserTokenValidator implements Validator {
 		UserTokenDto userTokenDto = (UserTokenDto) o;
 		if (userTokenDto == null) {
         	logger.info("Invalid token");
-        	errors.rejectValue("token", commonUtil.getMessage(ErrorCode.ERR000025.getCode()));
+        	errors.rejectValue(FieldNames.TOKEN, commonUtil.getMessage(ErrorCode.ERR000025.getCode()));
         } else {
 	        Calendar cal = Calendar.getInstance();
 	        if ((userTokenDto.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 	        	logger.info("Token has been expired");
-	        	errors.rejectValue("token", commonUtil.getMessage(ErrorCode.ERR000026.getCode()));
+	        	errors.rejectValue(FieldNames.TOKEN, commonUtil.getMessage(ErrorCode.ERR000026.getCode()));
 	        }
         }
 	}

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -27,12 +28,12 @@ public class SigninController {
         if (logout != null) {
             model.addAttribute(FieldNames.MESSAGE, "You have been logged out successfully.");
         }
-        return "login";
+        return View.LOGIN;
     }
     
     @GetMapping(value = RequestUrls.FORGET_PASSWORD)
     public String forgetPassword() {
-        return "forgetPassword";
+        return View.FORGET_PASSWORD;
     }
     
     @GetMapping(value = RequestUrls.CHANGE_PASSWORD)
@@ -44,13 +45,13 @@ public class SigninController {
         } catch (Exception e) {
         	model.addAttribute(FieldNames.ERROR, "Due to some technical problem, we are unable to send change password link to your email. Please try after some time.");
         	logger.error("Exception while sending change password mail." + e);
-        	return "login";
+        	return View.LOGIN;
         }
-    	return "changePassword";
+    	return View.CHANGE_PASSWORD;
     }
     
     @GetMapping(value = RequestUrls.RESET_PASSWORD)
     public String changePassword(Model model, @RequestParam String email) {
-    	return "resetPassword";
+    	return View.RESET_PASSWORD;
     }
 }
