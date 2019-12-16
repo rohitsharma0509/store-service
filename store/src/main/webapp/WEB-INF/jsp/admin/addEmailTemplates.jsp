@@ -62,10 +62,12 @@ String action = "Save";
               <div class="col-sm-6">
                   <label for="<%=FieldNames.CC %>"><spring:message code="CC" text="CC" /></label>
                   <form:input type="text" path="<%=FieldNames.CC %>" id="<%=FieldNames.CC %>" class="form-control input-sm"/>
+                  <form:errors path="<%=FieldNames.CC %>" class="help-inline has-error"></form:errors>
               </div>
               <div class="col-sm-6">
                   <label for="<%=FieldNames.BCC %>"><spring:message code="BCC" text="BCC" /></label>
-                  <form:input type="text" path="<%=FieldNames.BCC %>" id="<%=FieldNames.BCC %>" data-role="tagsinput" class="form-control input-sm"/>
+                  <form:input type="text" path="<%=FieldNames.BCC %>" id="<%=FieldNames.BCC %>" class="form-control input-sm"/>
+                  <form:errors path="<%=FieldNames.BCC %>" class="help-inline has-error"></form:errors>
               </div>
           </div>
           <div class="form-group row">

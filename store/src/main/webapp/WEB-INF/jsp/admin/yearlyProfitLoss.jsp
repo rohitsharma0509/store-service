@@ -4,7 +4,7 @@
 <div class="row" style="height: 10px;"></div>
 <div class="row">
 	<div class="col-sm-3">
-		<form method="GET" class="form-horizontal" action="dailyProfitLoss">
+	  <form method="GET" class="form-horizontal" name="yearlyForm" onsubmit="submitForm(event, this, 'yearlyProfitLossTab')">
 			<div class="card">
 				<div class="card-body main-center">
 					<div class="row">

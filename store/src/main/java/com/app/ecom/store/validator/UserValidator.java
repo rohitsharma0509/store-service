@@ -5,6 +5,7 @@ import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -14,9 +15,7 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator {
 
-    private static final String EMAIL_PATTERN = "[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-
-	@Autowired
+    @Autowired
     private UserService userService;
     
     @Autowired
@@ -48,7 +47,7 @@ public class UserValidator implements Validator {
         	errors.rejectValue(FieldNames.PASSWORD_CONFIRM, commonUtil.getMessage(ErrorCode.ERR000007.getCode()));
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.EMAIL, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-        if (!userDto.getEmail().matches(EMAIL_PATTERN)) {
+        if (!StringUtils.isEmpty(userDto.getEmail()) && !commonUtil.isValidEmail(userDto.getEmail())) {
         	errors.rejectValue(FieldNames.EMAIL, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
         }
         if (userDto.getMobile().length() < 10) {

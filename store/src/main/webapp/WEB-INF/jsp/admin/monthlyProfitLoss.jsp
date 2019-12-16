@@ -5,7 +5,7 @@
 <div class="row" style="height: 20px;"></div>
 <div class="row">
 	<div class="col-sm-3">
-		<form method="GET" class="form-horizontal" name="monthlyForm" onsubmit="submitForm(this, 'tab2')">
+		<form method="GET" class="form-horizontal" name="dailyForm" onsubmit="submitForm(event, this, 'monthlyProfitLossTab')">
 			<div class="card">
 				<div class="card-body main-center">
 					<div class="row">

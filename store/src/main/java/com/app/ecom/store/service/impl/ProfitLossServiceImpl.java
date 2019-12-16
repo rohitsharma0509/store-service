@@ -63,11 +63,11 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		monthlyQuery.append(dailyQuery);
 		monthlyQuery.append(") as temp where 1=1 ");
 		
-		if(month != null){
+		if(month != null && month != -1){
 			monthlyQuery.append(" and month(orderDate)="+month);
 			countQuery.append(" and month(orderDate)="+month);
 		}
-		if(null != year){
+		if(null != year && year != -1){
 			monthlyQuery.append(" and year(orderDate)="+year);
 			countQuery.append(" and year(orderDate)="+year);
 		}
@@ -110,11 +110,11 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		
 		quarterlyQuery.append(dailyQuery);
 		quarterlyQuery.append(") as temp where 1=1");
-		if(quarter != null){
+		if(quarter != null && quarter != -1){
 			quarterlyQuery.append(" and quarter(orderDate)="+quarter);
 			countQuery.append(" and quarter(orderDate)="+quarter);
 		}
-		if(null != year){
+		if(null != year && year != -1){
 			quarterlyQuery.append(" and year(orderDate)="+year);
 			countQuery.append(" and year(orderDate)="+year);
 		}
@@ -153,7 +153,7 @@ public class ProfitLossServiceImpl implements ProfitLossService{
 		StringBuilder countQuery = new StringBuilder("select count(year) from (select year(orderDate) year from ("+dailyQuery+") as temp where 1=1");
 		yearlyQuery.append(dailyQuery);
 		yearlyQuery.append(") as temp where 1=1");
-		if(null != year){
+		if(null != year && year != -1){
 			yearlyQuery.append(" and year(orderDate)="+year);
 			countQuery.append(" and year(orderDate)="+year);
 		}

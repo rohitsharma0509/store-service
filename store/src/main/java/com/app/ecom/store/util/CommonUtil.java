@@ -29,6 +29,8 @@ import org.springframework.util.StringUtils;
 @Component
 public class CommonUtil {
 	
+	private static final String EMAIL_PATTERN = "[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+	
 	private static final Logger logger = LogManager.getLogger(CommonUtil.class);
 	
 	@Autowired
@@ -85,6 +87,9 @@ public class CommonUtil {
 	}
 	
 	public String getPagging(String baseUrl, int currentPage, int totalPage, Map<String, String> parameters) {
+		return getPagging(baseUrl, currentPage, totalPage, parameters, false, null);
+	}
+	public String getPagging(String baseUrl, int currentPage, int totalPage, Map<String, String> parameters, boolean isTab, String tabId) {
 		int begin = Math.max(1, currentPage - 5);
 		int end = Math.min(begin + 10, totalPage);
 		
@@ -103,15 +108,15 @@ public class CommonUtil {
 			pagging.append(getPageItem(true, false, "#", "First"));
 			pagging.append(getPageItem(true, false, "#", "Previous"));
 		}else {
-			pagging.append(getPageItem(false, false, baseUrl+"?page=1&"+params, "First"));
-			pagging.append(getPageItem(false, false, baseUrl+"?page="+(currentPage-1)+"&"+params, "Previous"));
+			pagging.append(getPageItem(false, false, baseUrl+"?page=1&"+params, "First", isTab, tabId));
+			pagging.append(getPageItem(false, false, baseUrl+"?page="+(currentPage-1)+"&"+params, "Previous", isTab, tabId));
 		}
 		
 		for(int i = begin; i<= end; i++){
 			if(i==currentPage){
-				pagging.append(getPageItem(false, true, baseUrl+"?page="+i+"&"+params, ""+i));
+				pagging.append(getPageItem(false, true, baseUrl+"?page="+i+"&"+params, ""+i, isTab, tabId));
 			}else {
-				pagging.append(getPageItem(false, false, baseUrl+"?page="+i+"&"+params, ""+i));
+				pagging.append(getPageItem(false, false, baseUrl+"?page="+i+"&"+params, ""+i, isTab, tabId));
 			}
 		}
 		
@@ -119,21 +124,29 @@ public class CommonUtil {
 			pagging.append(getPageItem(true, false, "#", "Next"));
 			pagging.append(getPageItem(true, false, "#", "Last"));
 		}else {
-			pagging.append(getPageItem(false, false, baseUrl+"?page="+(currentPage + 1)+"&"+params, "Next"));
-			pagging.append(getPageItem(false, false, baseUrl+"?page="+totalPage+"&"+params, "Last"));
+			pagging.append(getPageItem(false, false, baseUrl+"?page="+(currentPage + 1)+"&"+params, "Next", isTab, tabId));
+			pagging.append(getPageItem(false, false, baseUrl+"?page="+totalPage+"&"+params, "Last", isTab, tabId));
 		}
 		pagging.append("</ul>");
 		return pagging.toString();
 	}
 	
 	private String getPageItem(boolean isDisabled, boolean isActive, String baseUrl, String name) {
+		return getPageItem(isDisabled, isActive, baseUrl, name, false, null);
+	}
+	private String getPageItem(boolean isDisabled, boolean isActive, String baseUrl, String name, boolean isTab, String tabName) {
 		StringBuilder item = new StringBuilder("<li class=\"page-item");
 		if(isDisabled) {
 			item.append(" disabled");
 		} else if(isActive) {
 			item.append(" active");
 		}
-		item.append("\"><a class=\"page-link\" href=\"").append(baseUrl).append("\">");
+		item.append("\">");
+		if(isTab) {
+			item.append("<a class=\"page-link\" href=\"#\" onclick=\"getPage('").append(baseUrl).append("', '").append(tabName).append("')\">");
+		} else {
+			item.append("<a class=\"page-link\" href=\"").append(baseUrl).append("\">");
+		}
 		item.append(name).append("</a></li>");
 		return item.toString();
 	}
@@ -212,5 +225,21 @@ public class CommonUtil {
 		externalApiRequest.setParameterMap(parameterMap);
 		externalApiRequest.setBody(body);
 		return externalApiRequest;
+	}
+	
+	public boolean isValidEmails(String[] emails) {
+		if (null != emails && emails.length > 0) {
+
+			for (String email : emails) {
+				if (null != email && !isValidEmail(email)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean isValidEmail(String email) {
+		return email.matches(EMAIL_PATTERN);
 	}
 }

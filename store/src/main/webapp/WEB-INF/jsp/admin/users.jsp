@@ -98,27 +98,10 @@ $(document).ready(function(){
 		</div>
 	</c:otherwise>
 </c:choose>
-	<c:choose>
-		<c:when test="${page.getTotalPages() > 1}">
-			<div class="row">
-				<div class="col-sm-12">${pagging}</div>
-			</div>
-		</c:when>
-	</c:choose>
-<div class="row">
-  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body mx-3">
-          <p>Are you sure you want to delete? </p>
-        </div>
-        <div class="modal-footer">
-          <form:form method="post" id="deleteForm">
-            <button type="submit" class="btn btn-success"><spring:message code="Delete" text="Delete" /></button>
-            <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
-          </form:form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<c:choose>
+	<c:when test="${page.getTotalPages() > 1}">
+		<div class="row">
+			<div class="col-sm-12">${pagging}</div>
+		</div>
+	</c:when>
+</c:choose>

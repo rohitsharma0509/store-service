@@ -66,7 +66,7 @@ public class EmailTemplateController {
     public String addEmailTemplate(Model model, @Valid EmailTemplateDto emailTemplateDto, BindingResult bindingResult) {
         emailTemplateValidator.validate(emailTemplateDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return RequestUrls.ADD_EMAIL_TEMPLATES;
+            return View.ADD_EMAIL_TEMPLATES;
         }
         
         emailTemplateService.addEmailTemplate(emailTemplateDto);

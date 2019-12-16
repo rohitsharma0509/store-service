@@ -149,6 +149,7 @@ $(document).ready(function(){
 			      <div class="delete-modal-content"><spring:message code="Do you really want to delete these records? This process cannot be undone" text="Do you really want to delete these records? This process cannot be undone" />.</div>
 		      <div>
         <form id="deleteForm">
+          <input type="hidden" id="deleteType">
           <button type="submit" class="btn btn-lg btn-danger"><spring:message code="Delete" text="Delete" /></button>
           <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
         </form>

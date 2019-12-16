@@ -28,9 +28,10 @@
 		  var flag = $(this).data('flag');
 		  var url = $(this).data('url');
 		  $('#deleteForm').attr('action', url);
+		  $('#deleteForm').find("input[id=deleteType]").val(flag);
 		  
 		  if(flag == 'MULTIPLE') {
-			  $('#deleteForm').find("input[name=id]").remove();
+			 $('#deleteForm').find("input[name=id]").remove();
 			 
 			 var selectedIds = getSelectedIds();
 			 
@@ -47,7 +48,7 @@
       
       $('#deleteForm').submit(function(e) {
 		e.preventDefault();
-		var flag = $(".deleteBtn").data('flag');
+		var flag = $(this).find("input[id=deleteType]").val();
 		var idsDto = {};
 		
 		if(flag == 'MULTIPLE') {

@@ -13,7 +13,7 @@ public class ComboGenerator {
 		StringBuilder str = new StringBuilder("<select id=\"quarter\" name=\"quarter\" class=\"form-control input-sm\">");
 		str.append("<option value=\"-1\">Select Quarter</option>");
 		for(int i=1; i<5; i++){
-			if(null != selected && selected.equals(i)){
+			if(null != selected && selected.equals(String.valueOf(i))){
 				str.append("<option selected value=\""+i+"\">"+i+"</option>");		
 			}else {
 				str.append("<option value=\""+i+"\">"+i+"</option>");

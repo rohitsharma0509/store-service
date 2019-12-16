@@ -14,8 +14,6 @@ import org.springframework.validation.Validator;
 @Component
 public class EmailValidator implements Validator {
 
-	private static final String EMAIL_PATTERN = "[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-	
 	@Autowired
 	private CommonUtil commonUtil;
 
@@ -32,12 +30,16 @@ public class EmailValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.BODY, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 
 		String[] to = commonUtil.convertStringToArray(email.getTo(), Constants.COMMA);
-		if(null != to && to.length>0){
-			for (String emailTo : to) {
-				if (!emailTo.matches(EMAIL_PATTERN)) {
-					errors.rejectValue(FieldNames.TO, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
-				}
-			}
+		if (!commonUtil.isValidEmails(to)) {
+			errors.rejectValue(FieldNames.TO, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
+		}
+		String[] cc = commonUtil.convertStringToArray(email.getCc(), Constants.COMMA);
+		if (!commonUtil.isValidEmails(cc)) {
+			errors.rejectValue(FieldNames.CC, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
+		}
+		String[] bcc = commonUtil.convertStringToArray(email.getBcc(), Constants.COMMA);
+		if (!commonUtil.isValidEmails(bcc)) {
+			errors.rejectValue(FieldNames.BCC, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
 		}
 	}
 

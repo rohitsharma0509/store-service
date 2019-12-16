@@ -6,18 +6,26 @@
 <script>
 function loadTab(tab, url, data) {
 	var target = tab.data("target"); // the target pane
+	$(".spinner-grow").show();
 	
 	$(target).load(url, data, function(result) {
 		tab.tab('show');
+		$(".spinner-grow").hide();
+		
 	});
 }
 
-function submitForm(f, tabId) {
+function submitForm(e, f, tabId) {
+	e.preventDefault();
 	var data = $(f).serialize();
-	var tab = $('.nav-tabs a[id="'+tabId+'"]')
-	var href = tab.attr("href");// the remote url for content
-	var url = href;
+	var tab = $('.nav-tabs a[id="'+tabId+'"]');
+	var url = tab.attr("href");// the remote url for content
 	loadTab(tab, url, data);
+}
+
+function getPage(url, tabId) {
+	var tab = $('.nav-tabs a[id="'+tabId+'"]');
+	loadTab(tab, url, null);
 }
 
 	$(function() {
@@ -28,7 +36,7 @@ function submitForm(f, tabId) {
 			loadTab(tab, url, null);
 		});
 		
-		$('#tab1').tab('show');
+		$('#dailyProfitLossTab').tab('show');
 	});
 </script>
 <ol class="breadcrumb">
@@ -39,10 +47,10 @@ function submitForm(f, tabId) {
 <div class="row">
 	<div class="col-sm-12">
 		<ul class="nav nav-tabs">
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" id="tab1" data-target="#daily" href="${contextPath}<%=RequestUrls.DAILY_PROFIT_LOSS %>"><spring:message code="Daily" text="Daily" /></a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" id="tab2" data-target="#monthly" href="${contextPath}<%=RequestUrls.MONTHLY_PROFIT_LOSS %>"><spring:message code="Monthly" text="Monthly" /></a></li>
-			<li class="nav-item"><a class="nav-link"  data-toggle="tab" id="tab3" data-target="#quarterly" href="${contextPath}<%=RequestUrls.QUARTERLY_PROFIT_LOSS %>"><spring:message code="Quarterly" text="Quarterly" /></a></li>
-			<li class="nav-item"><a class="nav-link"  data-toggle="tab" id="tab4" data-target="#yearly" href="${contextPath}<%=RequestUrls.YEARLY_PROFIT_LOSS %>"><spring:message code="Yearly" text="Yearly" /></a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" id="dailyProfitLossTab" data-target="#daily" href="${contextPath}<%=RequestUrls.DAILY_PROFIT_LOSS %>"><spring:message code="Daily" text="Daily" /></a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" id="monthlyProfitLossTab" data-target="#monthly" href="${contextPath}<%=RequestUrls.MONTHLY_PROFIT_LOSS %>"><spring:message code="Monthly" text="Monthly" /></a></li>
+			<li class="nav-item"><a class="nav-link"  data-toggle="tab" id="quarterlyProfitLossTab" data-target="#quarterly" href="${contextPath}<%=RequestUrls.QUARTERLY_PROFIT_LOSS %>"><spring:message code="Quarterly" text="Quarterly" /></a></li>
+			<li class="nav-item"><a class="nav-link"  data-toggle="tab" id="yearlyProfitLossTab" data-target="#yearly" href="${contextPath}<%=RequestUrls.YEARLY_PROFIT_LOSS %>"><spring:message code="Yearly" text="Yearly" /></a></li>
 		</ul>
 		
 		<div class="tab-content">
@@ -50,6 +58,11 @@ function submitForm(f, tabId) {
 			<div class="tab-pane container fade" id="monthly"></div>
 			<div class="tab-pane container fade" id="quarterly"></div>
 			<div class="tab-pane container fade" id="yearly"></div>
+		</div>
+		<div class="d-flex justify-content-center">
+		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
+		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
+		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
 		</div>
 	</div>
 </div>
