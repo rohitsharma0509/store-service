@@ -57,7 +57,7 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-sm-2"><button type="submit" class="btn btn-success"><spring:message code="Update" text="Update" /></button></div>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="Update" text="Update" /></button></div>
         <div class="col-sm-10"></div>
     </div>
 </div>

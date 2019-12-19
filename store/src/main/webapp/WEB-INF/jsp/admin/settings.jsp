@@ -11,7 +11,7 @@
 <div class="row" style="height: 10px;"></div>
 <div class="row">
   <div class="col-sm-12">
-    <a class="btn btn-sm btn-primary-outline" href="${contextPath}<%=RequestUrls.ADD_SETTING %>"><spring:message code="Add Setting" text="Add Setting" /></a>
+    <a class="btn btn-sm btn-info float-right ml-1" href="${contextPath}<%=RequestUrls.ADD_SETTING %>"><spring:message code="Add Setting" text="Add Setting" /></a>
   </div>
 </div>
 <c:choose>
@@ -66,7 +66,7 @@
         <form id="deleteForm">
           <input type="hidden" id="deleteType">
           <button type="submit" class="btn btn-lg btn-danger"><spring:message code="Delete" text="Delete" /></button>
-          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
+          <button type="button" class="btn btn-lg btn-light" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
         </form>
       </div>
       </div>

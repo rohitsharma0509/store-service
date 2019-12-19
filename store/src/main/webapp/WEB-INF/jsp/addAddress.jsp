@@ -75,10 +75,9 @@ String action = "Add Your Address";
                </div>
              </div>
              <div class="row form-group">
-               <div class="col-sm-2">
-                 <button type="submit" class="btn btn-success"><spring:message code="<%=action %>" text="<%=action %>" /></button>
+               <div class="col-sm-12">
+                 <button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button>
                </div>
-               <div class="col-sm-10"></div>
              </div>
           </form:form>
         </div>

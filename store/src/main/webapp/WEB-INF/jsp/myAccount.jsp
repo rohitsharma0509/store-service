@@ -8,9 +8,8 @@
 </ol>
 <div class="row" style="height: 10px;"></div>
 <div class="row">
-	<div class="col-sm-10"></div>
-	<div class="col-sm-2">
-		<a class="" href="${contextPath}<%=RequestUrls.EDIT_PROFILE %>"><spring:message code="Edit Profile" text="Edit Profile" /></a>
+	<div class="col-sm-12">
+		<a class="float-right" href="${contextPath}<%=RequestUrls.EDIT_PROFILE %>"><spring:message code="Edit Profile" text="Edit Profile" /></a>
 	</div>
 </div>
 <div class="row">

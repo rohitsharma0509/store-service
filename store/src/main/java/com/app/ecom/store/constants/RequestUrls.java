@@ -8,6 +8,7 @@ public class RequestUrls {
 	public static final String PRODUCT_ALL = "/allProducts";
 	public static final String PRODUCTS_AJAX = "/products/ajax";
 	public static final String ADD_PRODUCT = "/admin/addProduct";
+	public static final String VIEW_PRODUCT = "/admin/viewProduct";
 	public static final String PRODUCTS = "/admin/products";
 	public static final String DELETE_PRODUCT = PRODUCTS+"/{id}";
 	public static final String DELETE_BULK_PRODUCT = "/admin/bulkproducts";

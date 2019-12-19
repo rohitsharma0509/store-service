@@ -53,10 +53,10 @@ $(document).ready(function(){
 <div class="row">
   <div class="col-sm-12">
     <c:if test="${page.getContent().size() > 0}"> 
-      <a class="btn btn-sm btn-primary-outline deleteBtn" href="#" data-flag="ALL" data-url="<%=RequestUrls.DELETE_ALL_EMAIL_TEMPLATES %>"><spring:message code="Delete All" text="Delete All" /></a>
-      <a class="btn btn-sm btn-primary-outline deleteBtn" href="#" data-flag="MULTIPLE" data-url="<%=RequestUrls.DELETE_BULK_EMAIL_TEMPLATES %>"><spring:message code="Delete" text="Delete" /></a>
+      <a class="btn btn-sm btn-info float-right ml-1 deleteBtn" href="#" data-flag="ALL" data-url="<%=RequestUrls.DELETE_ALL_EMAIL_TEMPLATES %>"><spring:message code="Delete All" text="Delete All" /></a>
+      <a class="btn btn-sm btn-info float-right ml-1 deleteBtn" href="#" data-flag="MULTIPLE" data-url="<%=RequestUrls.DELETE_BULK_EMAIL_TEMPLATES %>"><spring:message code="Delete" text="Delete" /></a>
     </c:if>
-    <a class="btn btn-sm btn-primary-outline" href="${contextPath}<%=RequestUrls.ADD_EMAIL_TEMPLATES %>"><spring:message code="Add Email Template" text="Add Email Template" /></a>
+    <a class="btn btn-sm btn-info float-right ml-1" href="${contextPath}<%=RequestUrls.ADD_EMAIL_TEMPLATES %>"><spring:message code="Add Email Template" text="Add Email Template" /></a>
   </div>
 </div>
 <c:choose>
@@ -124,7 +124,7 @@ $(document).ready(function(){
         <form id="deleteForm">
           <input type="hidden" id="deleteType">
           <button type="submit" class="btn btn-lg btn-danger"><spring:message code="Delete" text="Delete" /></button>
-          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
+          <button type="button" class="btn btn-lg btn-light" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
         </form>
       </div>
       </div>
@@ -142,7 +142,7 @@ $(document).ready(function(){
             <div><i class="fa fa-warning warning-icon"></i></div>
             <div class="warning-modal-header"><spring:message code="Sorry" text="Sorry" />!</div>
             <div class="warning-modal-content"></div>
-            <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="OK" text="OK" /></button>
+            <button type="button" class="btn btn-lg btn-light" data-dismiss="modal"><spring:message code="OK" text="OK" /></button>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ public class View {
 	public static final String PRIVILEGES = "privileges";
 	public static final String ADD_PRIVILEGE = "addPrivilege";
 	public static final String ADD_PRODUCT = "addProduct";
+	public static final String VIEW_PRODUCT = "viewProduct";
 	public static final String PRODUCTS = "products";
 	public static final String IMPORT_PRODUCTS = "importProducts";
 	public static final String ALL_PRODUCTS = "allProducts";

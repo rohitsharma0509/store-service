@@ -20,7 +20,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Setting {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "setting_id")
 	private Long id;
 

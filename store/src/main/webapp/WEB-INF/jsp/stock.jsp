@@ -77,11 +77,12 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-1"><a class="btn btn-info btn-sm" href="${contextPath}<%=RequestUrls.EXCEL %>?<%=FieldNames.REPORT_NAME %>=<%=Constants.STOCK%>"><spring:message code="Export as Excel" text="Export as Excel" /></a></div>
+					<div class="col-sm-6"><a class="btn btn-info btn-sm" href="${contextPath}<%=RequestUrls.EXCEL %>?<%=FieldNames.REPORT_NAME %>=<%=Constants.STOCK%>"><spring:message code="Export as Excel" text="Export as Excel" /></a></div>
 					<c:choose>
 						<c:when test="${page.getTotalPages() > 1}">
-							<div class="col-sm-11">${pagging}</div>
+							<div class="col-sm-6">${pagging}</div>
 						</c:when>
+						<c:otherwise><div class="col-sm-6"></div></c:otherwise>
 					</c:choose>
 				</div>
 			</c:when>

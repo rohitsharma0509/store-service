@@ -59,7 +59,9 @@ function getPage(url, tabId) {
 			<div class="tab-pane container fade" id="quarterly"></div>
 			<div class="tab-pane container fade" id="yearly"></div>
 		</div>
-		<div class="d-flex justify-content-center">
+		<div class="d-flex justify-content-center" style="height: 110px; align-items: flex-end;">
+		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
+		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
 		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
 		  <div class="spinner-grow spinner-grow-lg text-muted"></div>
 		  <div class="spinner-grow spinner-grow-lg text-muted"></div>

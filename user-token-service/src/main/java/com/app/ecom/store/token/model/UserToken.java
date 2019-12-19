@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class UserToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token_id")
     private Long id;
 

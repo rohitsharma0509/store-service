@@ -73,6 +73,14 @@ public class ProductController {
 		return "redirect:"+RequestUrls.PRODUCTS;
 	}
 	
+	@GetMapping(value = RequestUrls.VIEW_PRODUCT)
+	public String viewProduct(Model model, @RequestParam(value = FieldNames.ID, required=true) Long id) {
+		ProductDto productDto = productService.getProductById(id);
+		productDto.setAvailableQuantity(productService.getAvailableQuantity(id));
+		model.addAttribute(FieldNames.PRODUCTDTO, productDto);
+		return View.VIEW_PRODUCT;
+	}
+	
 	@GetMapping(value =RequestUrls.PRODUCTS)
 	public String getProducts(Model model, 
 			@RequestParam(required = false) String categoryId,

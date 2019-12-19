@@ -93,7 +93,7 @@
           <div>
         <form:form id="deleteForm" method="post">
           <button type="submit" class="btn btn-lg btn-danger"><spring:message code="Delete" text="Delete" /></button>
-          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
+          <button type="button" class="btn btn-lg btn-light" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
         </form:form>
       </div>
       </div>
