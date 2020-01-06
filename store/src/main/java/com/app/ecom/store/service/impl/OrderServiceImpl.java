@@ -2,6 +2,7 @@ package com.app.ecom.store.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import com.app.ecom.store.client.OrderServiceClient;
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
+import com.app.ecom.store.dto.OrderByClause;
 import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
 import com.app.ecom.store.dto.orderservice.OrderDto;
@@ -19,6 +21,7 @@ import com.app.ecom.store.dto.orderservice.OrderDtos;
 import com.app.ecom.store.dto.orderservice.OrderSearchRequest;
 import com.app.ecom.store.dto.productservice.ProductDto;
 import com.app.ecom.store.dto.userservice.UserDto;
+import com.app.ecom.store.enums.SortOrder;
 import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
@@ -95,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public CustomPage<OrderDto> getOrders(Pageable pageable, Map<String, String> params) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
+		int limit = pageable.getPageSize();
 		
 		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
 		orderSearchRequest.setOffset(offset);
@@ -104,6 +107,13 @@ public class OrderServiceImpl implements OrderService {
 		orderSearchRequest.setToDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get(FieldNames.TO_DATE), Constants.YYYY_MM_DD)));
 		orderSearchRequest.setOrderNumber(params.get(FieldNames.ORDER_NUMBER));
 		orderSearchRequest.setUserId(Long.parseLong(params.get(FieldNames.USER_ID)));
+		List<OrderByClause> orderByClauses = new ArrayList<>();
+		OrderByClause orderByClause = new OrderByClause();
+		orderByClause.setSortBy(FieldNames.CREATED_TS);
+		orderByClause.setSortOrder(SortOrder.DESC);
+		orderByClauses.add(orderByClause);
+		orderSearchRequest.setOrderByClauses(orderByClauses);
+		
 		OrderDtos orderDtos = orderServiceClient.getOrders(orderSearchRequest);
 		Long totalRecords = orderServiceClient.countOrders(orderSearchRequest);
 		CustomPage<OrderDto> page = new CustomPage<>();

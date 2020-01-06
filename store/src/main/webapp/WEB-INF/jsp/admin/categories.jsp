@@ -68,12 +68,20 @@ $(document).ready(function(){
 					<tr>
 						<th><input type="checkbox" name="ids" id="all" /></th>
 						<th><spring:message code="Category Name" text="Category Name" /></th>
+						<th><spring:message code="Created By" text="Created By" /></th>
+						<th><spring:message code="Creation Time" text="Creation Time" /></th>
+						<th><spring:message code="Last Modified By" text="Last Modified By" /></th>
+            <th><spring:message code="Last Modified Time" text="Last Modified Time" /></th>
 						<th><spring:message code="Action" text="Action" /></th>
 					</tr>
 					<c:forEach var="category" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${category.id}" /></td>
 							<td>${category.name}</td>
+							<td>${category.createdBy}</td>
+							<td>${category.createdTs}</td>
+							<td>${category.lastModifiedBy}</td>
+              <td>${category.lastModifiedTs}</td>
 							<td>
 							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">

@@ -65,6 +65,10 @@ public class ProductCategoryMapper {
 		ProductCategory productCategory = new ProductCategory();
 		productCategory.setId(productCategoryDto.getId());
 		productCategory.setName(productCategoryDto.getName());
+		productCategory.setCreatedBy(productCategoryDto.getCreatedBy());
+		productCategory.setCreatedTs(productCategoryDto.getCreatedTs());
+		productCategory.setLastModifiedBy(productCategoryDto.getLastModifiedBy());
+		productCategory.setLastModifiedTs(productCategoryDto.getLastModifiedTs());
 		return productCategory;
 	}
 	

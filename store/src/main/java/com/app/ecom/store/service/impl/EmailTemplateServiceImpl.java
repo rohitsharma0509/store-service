@@ -42,7 +42,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 
     @Override
     public void addEmailTemplate(EmailTemplateDto emailTemplateDto) {
-        emailTemplateRepository.save(emailTemplateMapper.emailTemplateDtoToEmailTemplate(emailTemplateDto));
+    	emailTemplateRepository.save(emailTemplateMapper.emailTemplateDtoToEmailTemplate(emailTemplateDto));
     }
 
     @Override

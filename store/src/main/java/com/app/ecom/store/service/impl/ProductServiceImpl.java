@@ -1,5 +1,6 @@
 package com.app.ecom.store.service.impl;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import com.app.ecom.store.client.ProductServiceClient;
@@ -19,6 +21,7 @@ import com.app.ecom.store.dto.productservice.ProductDtos;
 import com.app.ecom.store.dto.productservice.ProductSearchRequest;
 import com.app.ecom.store.dto.productservice.StockDto;
 import com.app.ecom.store.dto.productservice.StockDtos;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.ProductStatus;
 import com.app.ecom.store.enums.QuantityStatus;
 import com.app.ecom.store.enums.SortOrder;
@@ -36,6 +39,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductServiceClient productServiceClient;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@Override
 	public ProductDto getProductById(Long id) {
 		ProductSearchRequest productSearchRequest = getProductSearchRequest(Arrays.asList(id), null, null);
@@ -51,13 +57,26 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDto addProduct(ProductDto productDto) {
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
+		if(productDto.getId() != null) {
+			ProductDto existingProductDto = getProductById(productDto.getId());
+			productDto.setCreatedBy(existingProductDto.getCreatedBy());
+			productDto.setCreatedTs(existingProductDto.getCreatedTs());
+			productDto.setLastModifiedBy(userDto.getUsername());
+			productDto.setLastModifiedTs(ZonedDateTime.now());
+		} else {
+			productDto.setCreatedBy(userDto.getUsername());
+			productDto.setCreatedTs(ZonedDateTime.now());
+			productDto.setLastModifiedBy(userDto.getUsername());
+			productDto.setLastModifiedTs(ZonedDateTime.now());
+		}
 		return productServiceClient.addUpdateProduct(productDto);
 	}
 	
 	@Override
 	public CustomPage<ProductDto> searchProducts(Pageable pageable, Map<String, String> params) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
+		int limit = pageable.getPageSize();
 		
 		List<Long> categoryIds = new ArrayList<>();
 		if(!StringUtils.isEmpty(params.get(FieldNames.CATEGORY_ID))) {
@@ -114,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
 		productSearchRequest.setIsExcel(isExcel);
 		if(null != pageable) {			
 			int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-			int limit = offset + pageable.getPageSize();
+			int limit = pageable.getPageSize();
 			productSearchRequest.setOffset(offset);
 			productSearchRequest.setLimit(limit);
 		}

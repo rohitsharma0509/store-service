@@ -1,5 +1,6 @@
 package com.app.ecom.store.service.impl;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import com.app.ecom.store.client.UserServiceClient;
@@ -17,6 +19,7 @@ import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.RoleDto;
 import com.app.ecom.store.dto.userservice.RoleDtos;
 import com.app.ecom.store.dto.userservice.RoleSearchRequest;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.service.RoleService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -33,10 +36,13 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private PrivilegeService privilegeService;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
     @Override
 	public CustomPage<RoleDto> getRoles(Pageable pageable, Map<String, String> params) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
+		int limit = pageable.getPageSize();
 		
 		RoleSearchRequest roleSearchRequest = new RoleSearchRequest();
 		roleSearchRequest.setRoleName(params.get(FieldNames.ROLE_NAME));
@@ -60,6 +66,19 @@ public class RoleServiceImpl implements RoleService {
     	for(PrivilegeDto priv: privs) {
     		roleDto.getPrivilegeDtos().add(privilegeService.getPrivilegeById(priv.getId()));
     	}
+    	UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
+    	if(roleDto.getId() != null) {
+    		RoleDto existingRoleDto = getRoleById(roleDto.getId());
+    		roleDto.setCreatedBy(existingRoleDto.getCreatedBy());
+    		roleDto.setCreatedTs(existingRoleDto.getCreatedTs());
+    		roleDto.setLastModifiedBy(userDto.getUsername());
+    		roleDto.setLastModifiedTs(ZonedDateTime.now());
+		} else {
+			roleDto.setCreatedBy(userDto.getUsername());
+			roleDto.setCreatedTs(ZonedDateTime.now());
+			roleDto.setLastModifiedBy(userDto.getUsername());
+			roleDto.setLastModifiedTs(ZonedDateTime.now());
+		}
 		return userServiceClient.createUpdateRole(roleDto);
 	}
 	

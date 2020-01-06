@@ -75,13 +75,21 @@ $(document).ready(function(){
 						<th><input type="checkbox" name="ids" id="all" /></th>
 						<th><spring:message code="Name" text="Name" /></th>
 						<th><spring:message code="User Assigned" text="User Assigned" /></th>
+						<th><spring:message code="Created By" text="Created By" /></th>
+            <th><spring:message code="Creation Time" text="Creation Time" /></th>
+            <th><spring:message code="Last Modified By" text="Last Modified By" /></th>
+            <th><spring:message code="Last Modified Time" text="Last Modified Time" /></th>
 						<th><spring:message code="Action" text="Action" /></th>
 					</tr>
 					<c:forEach var="role" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${role.id}" /></td>
 							<td>${role.name}</td>
-				   			<td>${fn:length(role.userDtos)}</td>
+				   		<td>${fn:length(role.userDtos)}</td>
+				   		<td>${role.createdBy}</td>
+              <td>${role.createdTs}</td>
+              <td>${role.lastModifiedBy}</td>
+              <td>${role.lastModifiedTs}</td>
 							<td>
 							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
 								<div id="singleRecordAction${loop.index}" class="d-none">

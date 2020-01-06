@@ -96,6 +96,10 @@ $(document).ready(function(){
 								<th><spring:message code="Quantity" text="Quantity" /></th>
 								<th><spring:message code="Price" text="Price" /></th>
 								<th><spring:message code="Alert Quantity" text="Alert Quantity" /></th>
+								<th><spring:message code="Created By" text="Created By" /></th>
+                <th><spring:message code="Creation Time" text="Creation Time" /></th>
+                <th><spring:message code="Last Modified By" text="Last Modified By" /></th>
+                <th><spring:message code="Last Modified Time" text="Last Modified Time" /></th>
 								<th><spring:message code="Action" text="Action" /></th>
 							</tr>
 							<c:forEach var="product" items="${page.getContent()}" varStatus="loop">
@@ -107,6 +111,10 @@ $(document).ready(function(){
 									<td>${product.quantity}</td>
 									<td>${product.perProductPrice}</td>
 									<td>${product.alertQuantity}</td>
+									<td>${product.createdBy}</td>
+                  <td>${product.createdTs}</td>
+                  <td>${product.lastModifiedBy}</td>
+                  <td>${product.lastModifiedTs}</td>
 									<td>
 										<a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
 		                <div id="singleRecordAction${loop.index}" class="d-none">

@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
     @Override
 	public CustomPage<UserDto> getUsers(Pageable pageable, Map<String, String> params) {
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
+		int limit = pageable.getPageSize();
 		UserSearchRequest userSearchRequest = new UserSearchRequest();
 		userSearchRequest.setName(params.get(FieldNames.NAME));
 		userSearchRequest.setMobile(params.get(FieldNames.MOBILE));

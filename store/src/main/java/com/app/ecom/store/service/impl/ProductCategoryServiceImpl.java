@@ -1,10 +1,13 @@
 package com.app.ecom.store.service.impl;
 
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.client.MasterDataClient;
 import com.app.ecom.store.constants.FieldNames;
@@ -13,6 +16,7 @@ import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDto;
 import com.app.ecom.store.dto.masterdata.ProductCategoryDtos;
 import com.app.ecom.store.dto.masterdata.ProductCategorySearchRequest;
+import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +28,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	
 	@Autowired
 	private MasterDataClient masterDataClient;
+	
+	@Autowired
+	private HttpSession httpSession;
 	
 	@Override
 	public List<ProductCategoryDto> getAllProductCategories() {
@@ -51,13 +58,26 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
 	@Override
 	public ProductCategoryDto addCategory(ProductCategoryDto productCategoryDto) {
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
+		if(productCategoryDto.getId() != null) {
+			ProductCategoryDto existingProductCategoryDto = getProductCategoryByIdOrName(productCategoryDto.getId(), null);
+			productCategoryDto.setCreatedBy(existingProductCategoryDto.getCreatedBy());
+			productCategoryDto.setCreatedTs(existingProductCategoryDto.getCreatedTs());
+			productCategoryDto.setLastModifiedBy(userDto.getUsername());
+			productCategoryDto.setLastModifiedTs(ZonedDateTime.now());
+		} else {
+			productCategoryDto.setCreatedBy(userDto.getUsername());
+			productCategoryDto.setCreatedTs(ZonedDateTime.now());
+			productCategoryDto.setLastModifiedBy(userDto.getUsername());
+			productCategoryDto.setLastModifiedTs(ZonedDateTime.now());
+		}
 		return masterDataClient.addUpdateProductCategory(productCategoryDto);
 	}
 
 	@Override
 	public CustomPage<ProductCategoryDto> getCategories(Pageable pageable, Map<String, String> params) {	
 		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
-		int limit = offset + pageable.getPageSize();
+		int limit = pageable.getPageSize();
 		
 		ProductCategorySearchRequest productCategorySearchRequest = new ProductCategorySearchRequest();
 		productCategorySearchRequest.setOffset(offset);

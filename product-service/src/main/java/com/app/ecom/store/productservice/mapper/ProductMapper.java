@@ -92,6 +92,10 @@ public class ProductMapper {
 		} catch (IOException e) {
 			logger.error("unable to parse image to bytes: "+e);
 		}
+		product.setCreatedBy(productDto.getCreatedBy());
+		product.setCreatedTs(productDto.getCreatedTs());
+		product.setLastModifiedBy(productDto.getLastModifiedBy());
+		product.setLastModifiedTs(productDto.getLastModifiedTs());
 		return product;
 	}
 

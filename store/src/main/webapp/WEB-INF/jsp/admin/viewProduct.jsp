@@ -46,6 +46,14 @@
           <div class="col-md-3"><label><spring:message code="Description" text="Description" /></label></div>
           <div class="col-md-9"><p>${productDto.description}</p></div>
         </div>
+        <div class="row">
+          <div class="col-md-3"><label><spring:message code="Created By" text="Created By" /></label></div>
+          <div class="col-md-9"><p>${productDto.createdBy}</p></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3"><label><spring:message code="Creation Time" text="Creation Time" /></label></div>
+          <div class="col-md-9"><p>${productDto.createdTs}</p></div>
+        </div>
       </div>
       <div class="tab-pane fade" id="pricing" role="tabpanel" aria-labelledby="pricing-tab">
         <div class="row" style="height:50px;"></div>
