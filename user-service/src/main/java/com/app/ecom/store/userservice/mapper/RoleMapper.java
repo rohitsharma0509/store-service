@@ -45,6 +45,10 @@ public class RoleMapper {
 		role.setId(roleDto.getId());
 		role.setName(roleDto.getName());
 		role.setDescription(roleDto.getDescription());
+		role.setCreatedBy(roleDto.getCreatedBy());
+		role.setCreatedTs(roleDto.getCreatedTs());
+		role.setLastModifiedBy(roleDto.getLastModifiedBy());
+		role.setLastModifiedTs(roleDto.getLastModifiedTs());
 		role.setPrivileges(privilegeMapper.privilegeDtosToPrivileges(roleDto.getPrivilegeDtos()));
 		return role;
 	}
@@ -86,6 +90,10 @@ public class RoleMapper {
 			UserDtos userDtos = userMapper.usersToUserDtos(role.getUsers());
 			roleDto.setUserDtos(userDtos == null ? null : userDtos.getUsers());
 		}
+		roleDto.setCreatedBy(role.getCreatedBy());
+		roleDto.setCreatedTs(role.getCreatedTs());
+		roleDto.setLastModifiedBy(role.getLastModifiedBy());
+		roleDto.setLastModifiedTs(role.getLastModifiedTs());
 		return roleDto;
 	}
 

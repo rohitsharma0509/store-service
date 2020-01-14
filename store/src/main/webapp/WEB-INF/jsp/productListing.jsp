@@ -19,7 +19,7 @@
 						<div class="card-img-top"><img style="max-width: 100%; max-height: 100px;" alt="${product.code}" src="data:image/jpg;base64,${product.base64Image}"/></div>
 					</c:when>
 				</c:choose>
-				<div class="card-body shadow">
+				<div class="card-body">
 					<h6 class="card-title">${product.name}</h6>
 					<h6 class="card-title">${product.brandName}</h6>
 					<h6 class="card-title">${product.perProductPrice}</h6>

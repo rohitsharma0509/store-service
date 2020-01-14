@@ -71,6 +71,10 @@ public class RequestUrls {
 	public static final String EDIT_USERS = "/editUsers";
 	public static final String FAILURE = "/failure";
 	
+	public static final String SUPPORT_TICKETS = "/supportTickets";
+	public static final String CREATE_SUPPORT_TICKET = "/createSupportTicket";
+	public static final String VIEW_SUPPORT_TICKET = "/viewSupportTicket";
+	
 	public static final String ROLES = "/admin/roles";
 	public static final String ADD_ROLE = "/admin/addRole";
 	public static final String DELETE_ROLE = ROLES+"/{id}";
@@ -102,5 +106,4 @@ public class RequestUrls {
 	public static final String MANAGE_ADDRESS = "/manageAddress";
 	public static final String ADD_ADDRESS = "/addAddress";
 	public static final String USER_SEARCH = "/users/search";
-	
 }

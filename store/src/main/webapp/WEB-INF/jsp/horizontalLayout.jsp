@@ -3,7 +3,7 @@
 <head>
 <title><tiles:getAsString name="title" /></title>
 </head>
-<body>
+<body style="background-color: #F2F3F8;">
   <div class="container">
     <tiles:insertAttribute name="header" />
     <!-- <tiles:insertAttribute name="menu" />-->

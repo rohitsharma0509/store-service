@@ -55,6 +55,7 @@ public class FieldNames {
 	public static final String PRODUCTDTO = "productDto";
 	public static final String PRODUCTDTOS = "productDtos";
 	public static final String ORDER_DETAIL_DTOS = "orderDetailDtos";
+	public static final String SUPPORT_TICKET_DTO = "supportTicketDto";
 	public static final String PAGGING = "pagging";
 	public static final String PAGE = "page";
 	public static final String CATEGORIES = "categories";
@@ -101,4 +102,9 @@ public class FieldNames {
 	public static final String TOKEN = "token";
 	public static final String PRIVILEGES = "privileges";
 	public static final String SALES = "Sales";
+	public static final String PRIORITY = "priority";
+	public static final String PRIORITIES = "priorities";
+	public static final String TICKET_NUMBER = "ticketNumber";
+	public static final String STATUSES = "statuses";
+	public static final String NOTIFICATIONS = "notifications";
 }

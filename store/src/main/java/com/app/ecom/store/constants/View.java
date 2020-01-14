@@ -42,4 +42,7 @@ public class View {
 	public static final String MY_ACCOUNT = "myAccount";
 	public static final String EDIT_PROFILE = "editProfile";
 	public static final String FAILURE = "failure";
+	public static final String SUPPORT_TICKETS = "supportTickets";
+	public static final String CREATE_SUPPORT_TICKET = "createSupportTicket";
+	public static final String VIEW_SUPPORT_TICKET = "viewSupportTicket";
 }

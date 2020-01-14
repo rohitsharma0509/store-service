@@ -42,7 +42,7 @@ String action = "Save";
               <div class="col-sm-6">
                   <label for="<%=FieldNames.PARENT_ID %>"><spring:message code="Parent Privilege" text="Parent Privilege" /></label>
                   <form:select path="<%=FieldNames.PARENT_ID %>" id="<%=FieldNames.PARENT_ID %>" class="form-control form-control-sm">
-                    <form:option value="-1"><spring:message code="Select Privilege" text="Select Privilege" /></form:option>
+                    <form:option value=""><spring:message code="Select Privilege" text="Select Privilege" /></form:option>
                     <c:forEach var="privilege" items="${privileges}">
                     <form:option value="${privilege.id}">${privilege.name}</form:option>
                     </c:forEach>

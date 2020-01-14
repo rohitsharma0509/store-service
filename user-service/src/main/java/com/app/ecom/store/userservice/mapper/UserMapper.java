@@ -12,8 +12,6 @@ import com.app.ecom.store.userservice.dto.UserSearchRequest;
 import com.app.ecom.store.userservice.dto.WhereClause;
 import com.app.ecom.store.userservice.enums.OperationType;
 import com.app.ecom.store.userservice.model.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -21,8 +19,6 @@ import org.springframework.util.StringUtils;
 
 @Component
 public class UserMapper {
-
-	private static final Logger logger = LogManager.getLogger(UserMapper.class);
 	
 	@Autowired
 	private RoleMapper roleMapper;
@@ -55,6 +51,10 @@ public class UserMapper {
 			roleDtos.setRoles(userDto.getRoles());
 			user.setRoles(roleMapper.roleDtosToRoles(roleDtos));
 		}
+		user.setCreatedBy(userDto.getCreatedBy());
+		user.setCreatedTs(userDto.getCreatedTs());
+		user.setLastModifiedBy(userDto.getLastModifiedBy());
+		user.setLastModifiedTs(userDto.getLastModifiedTs());
 		return user;
 	}
 

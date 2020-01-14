@@ -16,7 +16,7 @@
 						<div class="col-sm-12">
 							<label for="<%=FieldNames.CATEGORY_ID %>" class="control-label text-right"><spring:message code="Category" text="Category" /> </label>
 							<select id="<%=FieldNames.CATEGORY_ID %>" name="<%=FieldNames.CATEGORY_ID %>" class="form-control input-sm">
-							 	<option value="-1"><spring:message code="Select Category" text="Select Category" /></option>
+							 	<option value=""><spring:message code="Select Category" text="Select Category" /></option>
 					        	<c:forEach var="category" items="${categories}">
 					        		<c:choose>
 									<c:when test="${param.categoryId == category.id}">

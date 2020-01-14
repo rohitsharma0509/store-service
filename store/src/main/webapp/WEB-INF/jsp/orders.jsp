@@ -8,7 +8,7 @@
   <li class="breadcrumb-item active"><spring:message code="Orders" text="Orders" /></li>
 </ol>
 <div class="row" style="height: 10px;"></div>
-<div class="row main-row">
+<div class="row">
 	<div class="col-sm-3">
 		<form method="GET" class="form-horizontal" action="orders">
 			<div class="card">

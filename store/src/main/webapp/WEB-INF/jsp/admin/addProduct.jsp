@@ -32,7 +32,7 @@ String action = "Save";
               <div class="col-sm-6">
                   <label for="<%=FieldNames.CATEGORY_ID %>"><spring:message code="Category" text="Category" />&nbsp;<span class="urgent_fields">*</span></label>
                   <form:select path="<%=FieldNames.CATEGORY_ID %>" id="<%=FieldNames.CATEGORY_ID %>" class="form-control form-control-sm">
-		                <form:option value="-1"><spring:message code="Select Category" text="Select Category" /></form:option>
+		                <form:option value=""><spring:message code="Select Category" text="Select Category" /></form:option>
 		                <c:forEach var="category" items="${categories}">
 		                 <form:option value="${category.id}">${category.name}</form:option>
 		                </c:forEach>

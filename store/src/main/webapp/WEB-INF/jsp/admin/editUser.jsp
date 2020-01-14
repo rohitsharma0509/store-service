@@ -44,7 +44,7 @@
               <div class="col-sm-6">
                   <label for="<%=FieldNames.LANGUAGE %>"><spring:message code="Language" text="Language" />&nbsp;<span class="urgent_fields">*</span></label>
                   <form:select path="<%=FieldNames.LANGUAGE %>" id="<%=FieldNames.LANGUAGE %>" class="form-control input-block">
-                <form:option value="-1"><spring:message code="Select Language" text="Select Language" /></form:option>
+                <form:option value=""><spring:message code="Select Language" text="Select Language" /></form:option>
                 <c:forEach var="language" items="${languages}">
                  <form:option value="${language.key}"><spring:message code="${language.value}" text="${language.value}" /></form:option>
                 </c:forEach>

@@ -42,3 +42,6 @@ application:
   user-token-service:
     name: user-token-service
     context-path: /api/usertokenservice/v1
+  support-service:
+    name: support-service
+    context-path: /api/supportservice/v1

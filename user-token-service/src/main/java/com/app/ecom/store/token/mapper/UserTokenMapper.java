@@ -2,14 +2,10 @@ package com.app.ecom.store.token.mapper;
 
 import com.app.ecom.store.token.dto.UserTokenDto;
 import com.app.ecom.store.token.model.UserToken;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserTokenMapper {
-	
-	private static final Logger logger = LogManager.getLogger(UserTokenMapper.class);
 
 	public UserTokenDto userTokenToUserTokenDto(UserToken userToken) {
 		if(userToken == null) {

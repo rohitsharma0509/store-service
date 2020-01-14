@@ -25,6 +25,10 @@ public class SettingMapper {
 		setting.setName(settingDto.getName());
 		setting.setDescription(settingDto.getDescription());
 		setting.setValue(settingDto.getValue());
+		setting.setCreatedBy(settingDto.getCreatedBy());
+		setting.setCreatedTs(settingDto.getCreatedTs());
+		setting.setLastModifiedBy(settingDto.getLastModifiedBy());
+		setting.setLastModifiedTs(settingDto.getLastModifiedTs());
 		return setting;
 	}
 

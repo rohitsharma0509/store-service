@@ -42,6 +42,10 @@ public class PrivilegeMapper {
 		privilege.setName(privilegeDto.getName());
 		privilege.setDescription(privilegeDto.getDescription());
 		privilege.setParentId(privilegeDto.getParentId());
+		privilege.setCreatedBy(privilegeDto.getCreatedBy());
+		privilege.setCreatedTs(privilegeDto.getCreatedTs());
+		privilege.setLastModifiedBy(privilegeDto.getLastModifiedBy());
+		privilege.setLastModifiedTs(privilegeDto.getLastModifiedTs());
 		return privilege;
 	}
 	
@@ -79,6 +83,10 @@ public class PrivilegeMapper {
 			RoleDtos roleDtos = roleMapper.rolesToRoleDtos(privilege.getRoles());
 			privilegeDto.setRoleDtos(roleDtos == null ? null : roleDtos.getRoles());
 		}
+		privilegeDto.setCreatedBy(privilege.getCreatedBy());
+		privilegeDto.setCreatedTs(privilege.getCreatedTs());
+		privilegeDto.setLastModifiedBy(privilege.getLastModifiedBy());
+		privilegeDto.setLastModifiedTs(privilege.getLastModifiedTs());
 		return privilegeDto;
 	}
 

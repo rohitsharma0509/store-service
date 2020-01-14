@@ -11,15 +11,11 @@ import com.app.ecom.store.address.dto.AddressSearchRequest;
 import com.app.ecom.store.address.dto.WhereClause;
 import com.app.ecom.store.address.enums.OperationType;
 import com.app.ecom.store.address.model.Address;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 @Component
 public class AddressMapper {
-	
-	private static final Logger logger = LogManager.getLogger(AddressMapper.class);
 
 	public List<Address> addressDtosToAddress(Set<AddressDto> addressDtos) {
 		if(CollectionUtils.isEmpty(addressDtos)) {
@@ -46,6 +42,10 @@ public class AddressMapper {
 		address.setState(addressDto.getState());
 		address.setCountry(addressDto.getCountry());
 		address.setIsPrimary(addressDto.getIsPrimary());
+		address.setCreatedBy(addressDto.getCreatedBy());
+		address.setCreatedTs(addressDto.getCreatedTs());
+		address.setLastModifiedBy(addressDto.getLastModifiedBy());
+		address.setLastModifiedTs(addressDto.getLastModifiedTs());
 		return address;
 	}
 	
@@ -76,6 +76,10 @@ public class AddressMapper {
 		addressDto.setState(address.getState());
 		addressDto.setCountry(address.getCountry());
 		addressDto.setIsPrimary(address.getIsPrimary());
+		addressDto.setCreatedBy(address.getCreatedBy());
+		addressDto.setCreatedTs(address.getCreatedTs());
+		addressDto.setLastModifiedBy(address.getLastModifiedBy());
+		addressDto.setLastModifiedTs(address.getLastModifiedTs());
 		return addressDto;
 	}
 

@@ -2,7 +2,7 @@
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<<style>
+<style>
   .login-page-font {
     font-size: 12px;
   }

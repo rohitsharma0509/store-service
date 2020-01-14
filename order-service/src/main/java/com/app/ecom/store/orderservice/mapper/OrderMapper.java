@@ -88,13 +88,16 @@ public class OrderMapper {
 		
 		OrderDto orderDto = new OrderDto();
 		orderDto.setId(order.getId());
-		orderDto.setCreatedTs(order.getCreatedTs());
 		orderDto.setStatus(order.getStatus());
 		orderDto.setOrderNumber(order.getOrderNumber());
 		orderDto.setTotalAmount(order.getTotalAmount());
 		orderDto.setUserId(order.getUserId());
 		orderDto.setOrderDetailDtos(orderDetailsToOrderDetailDtos(order.getOrderDetails()));;
 		orderDto.setAddressId(order.getAddressId());
+		orderDto.setCreatedBy(order.getCreatedBy());
+		orderDto.setCreatedTs(order.getCreatedTs());
+		orderDto.setLastModifiedBy(order.getLastModifiedBy());
+		orderDto.setLastModifiedTs(order.getLastModifiedTs());
 		return orderDto;
 	}
 

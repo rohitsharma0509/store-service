@@ -11,6 +11,7 @@ public class Constants {
 	public static final String COMMA = ",";
 	public static final String STOCK = "Stock";
 	public static final String ORDERS = "Orders";
+	public static final String SUPPORT_TICKETS = "SupportTickets";
 	public static final String CSV = "csv";
 	public static final String XML = "xml";
 	public static final String DAILY = "daily";
