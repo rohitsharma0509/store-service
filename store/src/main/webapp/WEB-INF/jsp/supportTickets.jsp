@@ -22,7 +22,7 @@ $(document).ready(function(){
 });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item active"><i class="fa fa-user-headset" style="font-size: 15px;"></i>&nbsp;&nbsp;<spring:message code="Support" text="Support" /></li>
+  <li class="breadcrumb-item active"><i class="fa fa fa-headphones breadcrumb-icon"></i>&nbsp;&nbsp;<spring:message code="Support" text="Support" /></li>
   <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
 <div class="row" id="filters">
@@ -59,7 +59,7 @@ $(document).ready(function(){
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-              <label for="<%=FieldNames.CREATED_TS %>"><spring:message code="Created On" text="Created On" /></label>
+              <label for="<%=FieldNames.CREATED_TS %>"><spring:message code="Created From" text="Created From" /></label>
               <input type="date" name="<%=FieldNames.CREATED_TS %>" id="<%=FieldNames.CREATED_TS %>" value="${param.createdTs}" class="form-control input-sm" />
             </div>
             <div class="col-sm-1"></div>
@@ -92,7 +92,7 @@ $(document).ready(function(){
             <th><spring:message code="Status" text="Status" /></th>
             <th><spring:message code="Priority" text="Priority" /></th>
             <th><spring:message code="Assigned To" text="Assigned To" /></th>
-            <th><spring:message code="Creation By" text="Creation By" /></th>
+            <th><spring:message code="Created By" text="Created By" /></th>
             <th><spring:message code="Creation Time" text="Creation Time" /></th>
             <th><spring:message code="Last Modified By" text="Last Modified By" /></th>
             <th><spring:message code="Last Modified Time" text="Last Modified Time" /></th>
@@ -104,7 +104,7 @@ $(document).ready(function(){
               <td>${ticket.orderNumber}</td>
               <td>${ticket.status}</td>
               <td>${ticket.priority}</td>
-              <td>${ticket.assignedTo}</td>
+              <td>${ticket.assignedTo} ${sessionScope.UserDto.username }</td>
               <td>${ticket.createdBy}</td>
               <td>${ticket.createdTs}</td>
               <td>${ticket.lastModifiedBy}</td>
@@ -113,8 +113,11 @@ $(document).ready(function(){
                 <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.CREATE_SUPPORT_TICKET %>?<%=FieldNames.ID %>=${ticket.id}"><spring:message code="Modify" text="Modify" /></a></li>
-                    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.SUPPORT_TICKETS %>/${ticket.id}"><spring:message code="Delete" text="Delete" /></a></li>
+                    <li class="list-group-item list-group-item-action"><a href="<%=RequestUrls.SUPPORT_TICKETS %>?<%=FieldNames.ID %>=${ticket.id}"><spring:message code="Change Priority" text="Change Priority" /></a></li>
+                    <li class="list-group-item list-group-item-action"><a href="<%=RequestUrls.SUPPORT_TICKETS %>?<%=FieldNames.ID %>=${ticket.id}"><spring:message code="Change Status" text="Change Status" /></a></li>
+                    <c:if test="${ticket.createdBy == sessionScope.UserDto.username}">
+                      <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.SUPPORT_TICKETS %>/${ticket.id}"><spring:message code="Delete" text="Delete" /></a></li>
+                    </c:if>
                   </ul>
                 </div>
               </td>

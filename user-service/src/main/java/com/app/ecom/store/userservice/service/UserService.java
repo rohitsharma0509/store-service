@@ -8,6 +8,8 @@ import com.app.ecom.store.userservice.dto.UserSearchRequest;
 public interface UserService {
 
 	UserDto createUpdateUser(UserDto userDto);
+	
+	UserDto getUserById(Long id);
 
 	UserDtos getUsers(UserSearchRequest userSearchRequest);
 

@@ -112,6 +112,13 @@ public class UserServiceImpl implements UserService {
     	UserDtos userDtos = userServiceClient.getUsers(userSearchRequest);
         return userDtos == null ? null : userDtos.getUsers();
 	}
+	
+	@Override
+	public List<UserDto> getAllUsers() {
+		UserSearchRequest userSearchRequest = new UserSearchRequest();
+    	UserDtos userDtos = userServiceClient.getUsers(userSearchRequest);
+        return userDtos == null ? null : userDtos.getUsers();
+	}
     
     @Override
 	public CustomPage<UserDto> getUsers(Pageable pageable, Map<String, String> params) {

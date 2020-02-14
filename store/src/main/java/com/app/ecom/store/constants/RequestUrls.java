@@ -74,6 +74,9 @@ public class RequestUrls {
 	public static final String SUPPORT_TICKETS = "/supportTickets";
 	public static final String CREATE_SUPPORT_TICKET = "/createSupportTicket";
 	public static final String VIEW_SUPPORT_TICKET = "/viewSupportTicket";
+	public static final String UNCLOSED_SUPPORT_TICKET = "/unclosedSupportTicket";
+	public static final String DELETE_SUPPORT_TICKETS = SUPPORT_TICKETS+"/{id}";
+	public static final String SUPPORT_TICKET_ASSIGNMENT_STRATEGY = "/supportTicketAssignmentStrategy";
 	
 	public static final String ROLES = "/admin/roles";
 	public static final String ADD_ROLE = "/admin/addRole";

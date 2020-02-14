@@ -1,6 +1,7 @@
 package com.app.ecom.store.userservice.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.app.ecom.store.userservice.dto.IdsDto;
 import com.app.ecom.store.userservice.dto.QueryRequest;
@@ -31,6 +32,12 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public RoleDto addUpdateRole(RoleDto roleDto) {
 		return roleMapper.roleToRoleDto(roleRepository.save(roleMapper.roleDtoToRole(roleDto)));
+	}
+	
+	@Override
+	public RoleDto getRoleById(Long id) {
+		Optional<Role> optionalRole = roleRepository.findById(id);
+		return optionalRole.isPresent() ? roleMapper.roleToRoleDto(optionalRole.get()) : null;
 	}
 
 	@Override

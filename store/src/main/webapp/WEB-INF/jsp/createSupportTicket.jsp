@@ -18,11 +18,11 @@ String action = "Save";
     </c:otherwise>
   </c:choose>
 </ol>
-</div>
 <form:form method="POST" modelAttribute="<%=FieldNames.SUPPORT_TICKET_DTO %>" class="form-horizontal" enctype="multipart/form-data" action="<%=RequestUrls.SUPPORT_TICKETS %>">
 <form:hidden path="<%=FieldNames.ID %>"/>
-<div class="container py-5">
-    <h6><spring:message code="Ticket Details" text="Ticket Details" /></h6><hr>
+<h6><spring:message code="Ticket Details" text="Ticket Details" /></h6>
+<div class="card">
+  <div class="card-body">
     <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
@@ -48,10 +48,11 @@ String action = "Save";
           </div>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
-        <div class="col-sm-10"></div>
-    </div>
+  </div>
+</div>
+<div class="row spacer"></div>
+<div class="row">
+    <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
+    <div class="col-sm-10"></div>
 </div>
 </form:form>

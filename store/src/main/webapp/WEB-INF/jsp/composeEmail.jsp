@@ -9,11 +9,10 @@
   <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Send Email" text="Send Email" /></li>
 </ol>
-<div class="row" style="height:10px;">
-</div>
 <form:form method="POST" modelAttribute="email" class="form-horizontal" enctype="multipart/form-data" action="sendEmail">
-<div class="container py-5">
-    <h6><spring:message code="Mail Details" text="Mail Details" /></h6><hr>
+<h6><spring:message code="Mail Details" text="Mail Details" /></h6>
+<div class="card">
+  <div class="card-body">
     <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
@@ -48,10 +47,11 @@
           </div>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="Send Email" text="Send Email" /></button></div>
-        <div class="col-sm-10"></div>
-    </div>
+  </div>
+</div>
+<div class="row spacer"></div>
+<div class="row">
+    <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="Send Email" text="Send Email" /></button></div>
+    <div class="col-sm-10"></div>
 </div>
 </form:form>

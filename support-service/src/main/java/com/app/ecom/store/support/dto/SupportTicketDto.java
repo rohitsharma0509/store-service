@@ -1,6 +1,7 @@
 package com.app.ecom.store.support.dto;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import com.app.ecom.store.support.enums.Priority;
 import com.app.ecom.store.support.enums.SupportTicketStatus;
@@ -43,6 +44,12 @@ public class SupportTicketDto {
 	
 	@JsonProperty("lastModifiedTs")
 	private ZonedDateTime lastModifiedTs;
+	
+	@JsonProperty("statusChangeHistoryDtos")
+	private List<SupportTicketStatusChangeHistoryDto> supportTicketStatusChangeHistoryDtos;
+	
+	@JsonProperty("activityHistoryDtos")
+	private List<SupportTicketActivityHistoryDto> supportTicketActivityHistoryDtos;
 
 	public Long getId() {
 		return id;
@@ -130,5 +137,23 @@ public class SupportTicketDto {
 
 	public void setLastModifiedTs(ZonedDateTime lastModifiedTs) {
 		this.lastModifiedTs = lastModifiedTs;
+	}
+
+	public List<SupportTicketStatusChangeHistoryDto> getSupportTicketStatusChangeHistoryDtos() {
+		return supportTicketStatusChangeHistoryDtos;
+	}
+
+	public void setSupportTicketStatusChangeHistoryDtos(
+			List<SupportTicketStatusChangeHistoryDto> supportTicketStatusChangeHistoryDtos) {
+		this.supportTicketStatusChangeHistoryDtos = supportTicketStatusChangeHistoryDtos;
+	}
+
+	public List<SupportTicketActivityHistoryDto> getSupportTicketActivityHistoryDtos() {
+		return supportTicketActivityHistoryDtos;
+	}
+
+	public void setSupportTicketActivityHistoryDtos(
+			List<SupportTicketActivityHistoryDto> supportTicketActivityHistoryDtos) {
+		this.supportTicketActivityHistoryDtos = supportTicketActivityHistoryDtos;
 	}
 }

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,14 +41,25 @@ public class UserResource {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(value = Endpoint.GET_USER)
+	public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+		try {
+			UserDto userDto = userService.getUserById(id);
+			return new ResponseEntity<>(userDto, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while getting user: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@PostMapping(value = Endpoint.USER)
 	public ResponseEntity<UserDtos> getUsers(@RequestBody UserSearchRequest userSearchRequest) {
 		try {
-			UserDtos productDtos = userService.getUsers(userSearchRequest);
-			return new ResponseEntity<>(productDtos, HttpStatus.OK);
+			UserDtos userDtos = userService.getUsers(userSearchRequest);
+			return new ResponseEntity<>(userDtos, HttpStatus.OK);
 		} catch (Exception e) {
-			logger.error(new StringBuilder("Exception while getting user: ").append(commonUtil.getStackTraceAsString(e)));
+			logger.error(new StringBuilder("Exception while getting users: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

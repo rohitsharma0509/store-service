@@ -17,6 +17,7 @@ public class FieldNames {
 	public static final String VALUE = "value";
 	public static final String TYPE = "type";
 	public static final String ROLE_NAME = "roleName";
+	public static final String ROLE_ID = "roleId";
 	public static final String SUBJECT = "subject";
 	public static final String FROM = "from";
 	public static final String TO = "to";
@@ -43,8 +44,10 @@ public class FieldNames {
 	public static final String HOST = "host";
 	public static final String PORT = "port";
 	public static final String ROLE_DTO = "roleDto";
+	public static final String ROLE_DTOS = "roleDtos";
 	public static final String SETTING_DTO = "settingDto";
 	public static final String USER_DTO = "userDto";
+	public static final String USER_DTOS = "userDtos";
 	public static final String EMAIL_TEMPLATE_DTO = "emailTemplateDto";
 	public static final String IMAGE = "image";
 	public static final String PRODUCT_CATEGORY = "productCategory";
@@ -56,6 +59,7 @@ public class FieldNames {
 	public static final String PRODUCTDTOS = "productDtos";
 	public static final String ORDER_DETAIL_DTOS = "orderDetailDtos";
 	public static final String SUPPORT_TICKET_DTO = "supportTicketDto";
+	public static final String SUPPORT_TICKET_ASSIGNMENT_STRATEGY_DTO = "supportTicketAssignmentStrategyDto";
 	public static final String PAGGING = "pagging";
 	public static final String PAGE = "page";
 	public static final String CATEGORIES = "categories";
@@ -90,6 +94,7 @@ public class FieldNames {
 	public static final String SHOPPING_CART = "shoppingCart";
 	public static final String USER = "user";
 	public static final String USER_ID = "userId";
+	public static final String DEFAULT_USER_ID = "defaultUserId";
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
 	public static final String PASSWORD_CONFIRM = "passwordConfirm";
@@ -107,4 +112,7 @@ public class FieldNames {
 	public static final String TICKET_NUMBER = "ticketNumber";
 	public static final String STATUSES = "statuses";
 	public static final String NOTIFICATIONS = "notifications";
+	public static final String NUMBER = "number";
+	public static final String ASSIGNED_TO = "assignedTo";
+	public static final String UNCLOSED_FOR = "unclosedFor";
 }

@@ -15,7 +15,7 @@ function validate(form) {
 }
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
+  <li class="breadcrumb-item"><i class="fa fa-address-book breadcrum-icon"></i>&nbsp;&nbsp;<a href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
 	<% 
 	String productId = "";
 	if(null != request.getParameter("id")){ 

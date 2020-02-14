@@ -1,3 +1,5 @@
+<%@page import="org.springframework.web.servlet.support.RequestContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="com.app.ecom.store.dto.NotificationDtos"%>
 <%@page import="com.app.ecom.store.dto.NotificationDto"%>
 <%@page import="org.springframework.util.CollectionUtils"%>
@@ -17,7 +19,9 @@ request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
 UserDto userDto = (UserDto) session.getAttribute("user");
 String name = String.format("%1$s %2$s", userDto.getFirstName(), userDto.getLastName());
-NotificationService notificationService = new NotificationServiceImpl();
+
+ApplicationContext applicationContext = RequestContextUtils.findWebApplicationContext(request);
+NotificationService notificationService = (NotificationService) applicationContext.getBean("notificationService");
 NotificationDtos notificationDtos = notificationService.getNotifications();
 %>
 
@@ -118,6 +122,14 @@ NotificationDtos notificationDtos = notificationService.getNotifications();
 
 .dropdown-toggle::after {
   content: none;
+}
+
+.breadcrum-icon {
+  font-size: 15px;
+}
+
+.spacer {
+  margin-top: 10px;
 }
 </style>
 <div class="row">

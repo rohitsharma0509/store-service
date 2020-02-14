@@ -1,36 +1,32 @@
-package com.app.ecom.store.dto.helpservice;
+package com.app.ecom.store.support.dto.userservice;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
-import com.app.ecom.store.enums.Priority;
-import com.app.ecom.store.enums.SupportTicketStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(value = Include.NON_NULL)
-public class SupportTicketDto {
+public class RoleDto {
 	
 	@JsonProperty("id")
 	private Long id;
+
+	@JsonProperty("name")
+	private String name;
 	
-	@JsonProperty("number")
-	private String number;
-	
-	@JsonProperty("orderNumber")
-	private String orderNumber;
-	
-	@JsonProperty("priority")
-	private Priority priority;
-	
-	@JsonProperty("status")
-	private SupportTicketStatus status;
-	
-	@JsonProperty("assignedTo")
-	private String assignedTo;
+	@JsonProperty("oldName")
+	private String oldName;
 	
 	@JsonProperty("description")
 	private String description;
+	
+	@JsonProperty("userDtos")
+	private List<UserDto> userDtos;
+	
+	@JsonProperty("privilegeDtos")
+	private List<PrivilegeDto> privilegeDtos;
 	
 	@JsonProperty("createdBy")
 	private String createdBy;
@@ -52,44 +48,20 @@ public class SupportTicketDto {
 		this.id = id;
 	}
 
-	public String getNumber() {
-		return number;
+	public String getName() {
+		return name;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getOldName() {
+		return oldName;
 	}
 
-	public String getOrderNumber() {
-		return orderNumber;
-	}
-
-	public void setOrderNumber(String orderNumber) {
-		this.orderNumber = orderNumber;
-	}
-
-	public Priority getPriority() {
-		return priority;
-	}
-
-	public void setPriority(Priority priority) {
-		this.priority = priority;
-	}
-
-	public SupportTicketStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(SupportTicketStatus status) {
-		this.status = status;
-	}
-
-	public String getAssignedTo() {
-		return assignedTo;
-	}
-
-	public void setAssignedTo(String assignedTo) {
-		this.assignedTo = assignedTo;
+	public void setOldName(String oldName) {
+		this.oldName = oldName;
 	}
 
 	public String getDescription() {
@@ -98,6 +70,22 @@ public class SupportTicketDto {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<UserDto> getUserDtos() {
+		return userDtos;
+	}
+
+	public void setUserDtos(List<UserDto> userDtos) {
+		this.userDtos = userDtos;
+	}
+
+	public List<PrivilegeDto> getPrivilegeDtos() {
+		return privilegeDtos;
+	}
+
+	public void setPrivilegeDtos(List<PrivilegeDto> privilegeDtos) {
+		this.privilegeDtos = privilegeDtos;
 	}
 
 	public String getCreatedBy() {

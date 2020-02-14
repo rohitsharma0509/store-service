@@ -9,6 +9,8 @@ public interface RoleService {
 
 	RoleDto addUpdateRole(RoleDto roleDto);
 
+	RoleDto getRoleById(Long id);
+	
 	RoleDtos getRoles(RoleSearchRequest roleSearchRequest);
 
 	Long countRoles(RoleSearchRequest roleSearchRequest);

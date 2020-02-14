@@ -19,12 +19,11 @@ String action = "Save";
     </c:otherwise>
   </c:choose>
 </ol>
-<div class="row" style="height:10px;">
-</div>
 <form:form method="POST" modelAttribute="<%=FieldNames.PRIVILEGE_DTO %>" class="form-horizontal" action="<%=RequestUrls.PRIVILEGES %>">
 <form:hidden path="<%=FieldNames.ID %>" />
-<div class="container py-5">
-    <h6><spring:message code="Privilege Details" text="Privilege Details" /></h6><hr>
+<h6><spring:message code="Privilege Details" text="Privilege Details" /></h6>
+<div class="card">
+  <div class="card-body">
     <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
@@ -51,10 +50,11 @@ String action = "Save";
           </div>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
-        <div class="col-sm-10"></div>
-    </div>
+  </div>
+</div>
+<div class="row spacer"></div>
+<div class="row">
+    <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
+    <div class="col-sm-10"></div>
 </div>
 </form:form>

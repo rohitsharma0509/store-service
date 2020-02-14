@@ -19,6 +19,8 @@ public interface UserService {
     
     UserDto findUserByUsername(String username);
     
+    List<UserDto> getAllUsers();
+    
     CustomPage<UserDto> getUsers(Pageable pageable, Map<String, String> params);
     
     List<UserDto> getUserByMobileOrName(String mobileOrName);

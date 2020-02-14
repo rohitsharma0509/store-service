@@ -1,12 +1,14 @@
 package com.app.ecom.store.support.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.app.ecom.store.support.dto.IdsDto;
 import com.app.ecom.store.support.dto.QueryRequest;
 import com.app.ecom.store.support.dto.SupportTicketDto;
 import com.app.ecom.store.support.dto.SupportTicketDtos;
 import com.app.ecom.store.support.dto.SupportTicketSearchRequest;
+import com.app.ecom.store.support.enums.SupportTicketStatus;
 import com.app.ecom.store.support.handler.QueryHandler;
 import com.app.ecom.store.support.mapper.SupportTicketMapper;
 import com.app.ecom.store.support.model.SupportTicket;
@@ -35,6 +37,12 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 		SupportTicket supportTicket = supportTicketRepository.save(supportTicketMapper.supportTicketDtoToSupportTicket(supportTicketDto));
 		return supportTicketMapper.supportTicketToSupportTicketDto(supportTicket);
 	}
+	
+	@Override
+	public SupportTicketDto getSupportTicketById(Long id) {
+		Optional<SupportTicket> optionalSupportTicket = supportTicketRepository.findById(id);
+		return optionalSupportTicket.isPresent() ? supportTicketMapper.supportTicketToSupportTicketDto(optionalSupportTicket.get()) : null;
+	}
 
 	@Override
 	public SupportTicketDtos getSupportTickets(SupportTicketSearchRequest supportTicketSearchRequest) {
@@ -46,6 +54,11 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 		queryRequest.setLimit(supportTicketSearchRequest.getLimit());
 		List<SupportTicket> supportTickets = queryHandler.findByQueryRequest(queryRequest);
 		return supportTicketMapper.supportTicketsToSupportTicketDtos(supportTickets);
+	}			
+	
+	@Override
+	public SupportTicketDtos getUnclosedSupportTickets(String username) {
+		return supportTicketMapper.supportTicketsToSupportTicketDtos(supportTicketRepository.findByAssignedToAndCreatedByNotAndStatusNot(username, username, SupportTicketStatus.CLOSED.name()));
 	}
 	
 	@Override
@@ -54,6 +67,11 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 		QueryRequest queryRequest = new QueryRequest();
 		queryRequest.setWhereClauses(supportTicketMapper.supportTicketSearchRequestToWhereClauses(supportTicketSearchRequest));
 		return queryHandler.countByQueryRequest(queryRequest, "id");
+	}
+	
+	@Override
+	public Long countUnclosedSupportTickets(String username) {
+		return supportTicketRepository.countByAssignedToAndCreatedByNotAndStatusNot(username, username, SupportTicketStatus.CLOSED.name());
 	}
 
 	@Override
@@ -66,5 +84,23 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 		} else {
 			supportTicketRepository.deleteByIdIn(idsDto.getIds());
 		}
+	}
+
+	@Override
+	@Transactional
+	public void changeSupportTicketStatus(Long ticketId, String status) {
+		supportTicketRepository.updateSupportTicketStatus(ticketId, status);
+	}
+
+	@Override
+	@Transactional
+	public void changeSupportTicketPriority(Long ticketId, String priority) {
+		supportTicketRepository.updateSupportTicketPriority(ticketId, priority);
+	}
+	
+	@Override
+	@Transactional
+	public void changeSupportTicketStatusAndAssignedTo(Long ticketId, String status, String assignedTo) {
+		supportTicketRepository.updateSupportTicketStatusAndAssignedTo(status, assignedTo, ticketId);
 	}
 }

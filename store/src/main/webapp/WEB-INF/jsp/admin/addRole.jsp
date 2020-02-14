@@ -65,12 +65,11 @@ String action = "Save";
     </c:otherwise>
   </c:choose>
 </ol>
-<div class="row" style="height:10px;">
-</div>
 <form:form method="POST" modelAttribute="<%=FieldNames.ROLE_DTO %>" class="form-horizontal" action="<%=RequestUrls.ROLES %>">
 <form:hidden path="<%=FieldNames.ID %>" />
-<div class="container py-5">
-    <h6><spring:message code="Role Details" text="Role Details" /></h6><hr>
+<h6><spring:message code="Role Details" text="Role Details" /></h6>
+<div class="card">
+  <div class="card-body">
     <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
@@ -90,21 +89,26 @@ String action = "Save";
           </div>
         </div>
     </div>
-    <h6><spring:message code="Privileges" text="Privileges" /></h6><hr>
+  </div>
+</div>
+<div class="row spacer"></div>
+<h6><spring:message code="Privileges" text="Privileges" /></h6>
+<div class="card">
+  <div class="card-body">
     <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
 			      <div class="col-sm-12">
-			        <table class="table role-table">
+			        <table class="table">
 			         <tbody>
-			          <tr style="background-color: #8d99a2ab;">
+			          <tr>
 			            <th><spring:message code="No." text="No." /></th>
 			            <th><spring:message code="Privilege Name" text="Privilege Name" /></th>
 			            <th><spring:message code="Description" text="Description" /></th>
 			            <th><input type="checkbox" name="ids" id="all" /></th>
 			          </tr>
 		            <c:forEach var="privilegeDto" items="${roleDto.getPrivilegeDtos()}" varStatus="loop">
-			          <tr style="background-color: #f6f6f6;">
+			          <tr>
 			            <td>${loop.index+1}</td>
 			            <td>${privilegeDto.name}</td>
                   <td>${privilegeDto.description}</td>
@@ -129,10 +133,11 @@ String action = "Save";
 			    </div>
 			  </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
-        <div class="col-sm-10"></div>
-    </div>
+  </div>
+</div>
+<div class="row spacer"></div>
+<div class="row">
+  <div class="col-sm-2"><button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
+  <div class="col-sm-10"></div>
 </div>
 </form:form>

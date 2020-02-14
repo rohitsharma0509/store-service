@@ -1,5 +1,6 @@
 package com.app.ecom.store.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,28 +10,42 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.helpservice.SupportTicketDto;
+import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.supportservice.SupportTicketAssignmentStrategyDto;
+import com.app.ecom.store.dto.supportservice.SupportTicketDto;
 import com.app.ecom.store.enums.Priority;
 import com.app.ecom.store.enums.SupportTicketStatus;
+import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.service.SupportTicketService;
+import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.SupportTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class SupportTicketController {
 	
 	@Autowired
 	private SupportTicketService supportTicketService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private SupportTicketValidator supportTicketValidator;
@@ -74,17 +89,47 @@ public class SupportTicketController {
 			@RequestParam(required = false) String ticketNumber,
 			@RequestParam(required = false) String orderNumber,
 			@RequestParam(required = false) String status,
-			@RequestParam(required = false, name=FieldNames.CREATED_TS) String ticketCreationDate,
+			@RequestParam(required = false) String createdTs,
+			@RequestParam(required = false) String unclosedFor,
 			@PageableDefault(page=1, size=10) Pageable pageable) {
 		Map<String, String> params = new HashMap<>();
 		params.put(FieldNames.TICKET_NUMBER, ticketNumber);
 		params.put(FieldNames.ORDER_NUMBER, orderNumber);
 		params.put(FieldNames.STATUS, status);
-		params.put(FieldNames.CREATED_TS, ticketCreationDate);
+		params.put(FieldNames.CREATED_TS, createdTs);
+		params.put(FieldNames.UNCLOSED_FOR, unclosedFor);
 		CustomPage<SupportTicketDto> page = supportTicketService.searchSupportTickets(pageable, params);
 		model.addAttribute(FieldNames.STATUSES, SupportTicketStatus.values());
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.SUPPORT_TICKETS, page.getPageNumber()+1, page.getTotalPages(), params));
 	    model.addAttribute(FieldNames.PAGE, page);
 		return View.SUPPORT_TICKETS;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.DELETE_SUPPORT_TICKETS)
+	public Response deleteSupportTicketById(Model model, @PathVariable(FieldNames.ID) Long id) {
+		Response response = supportTicketValidator.validateSupportTicketAssociation(Arrays.asList(id));
+		
+		if(HttpStatus.OK.value() == response.getCode()) {
+			IdsDto idsDto = new IdsDto();
+			idsDto.setIds(Arrays.asList(id));
+			supportTicketService.deleteSupportTickets(idsDto);
+		}
+		return response;
+	}
+	
+	@GetMapping(value = RequestUrls.SUPPORT_TICKET_ASSIGNMENT_STRATEGY)
+	public String getSupportTicketAssignmentStrategy(Model model) {
+		model.addAttribute(FieldNames.USER_DTOS, userService.getAllUsers());
+		model.addAttribute(FieldNames.ROLE_DTOS, roleService.getAllRoles());
+		model.addAttribute(FieldNames.SUPPORT_TICKET_ASSIGNMENT_STRATEGY_DTO, supportTicketService.getSupportTicketAssignmentStrategy());
+		return View.SUPPORT_TICKET_ASSIGNMENT_STRATEGY;
+	}
+	
+	@PostMapping(value = RequestUrls.SUPPORT_TICKET_ASSIGNMENT_STRATEGY)
+	public String addEmailAccount(@ModelAttribute(FieldNames.SUPPORT_TICKET_ASSIGNMENT_STRATEGY_DTO) @Valid 
+			SupportTicketAssignmentStrategyDto supportTicketAssignmentStrategyDto, BindingResult bindingResult) {
+		supportTicketService.configureSupportTicketAssignmentStrategy(supportTicketAssignmentStrategyDto);
+		return "redirect:" + RequestUrls.SUPPORT_TICKET_ASSIGNMENT_STRATEGY;
 	}
 }

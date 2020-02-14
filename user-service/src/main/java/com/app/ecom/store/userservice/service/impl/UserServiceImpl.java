@@ -52,6 +52,12 @@ public class UserServiceImpl implements UserService {
 			return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDto)));
 		}
 	}
+	
+	@Override
+	public UserDto getUserById(Long id) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		return optionalUser.isPresent() ? userMapper.userToUserDto(optionalUser.get()) : null;
+	}
 
 	@Override
 	public UserDtos getUsers(UserSearchRequest userSearchRequest) {

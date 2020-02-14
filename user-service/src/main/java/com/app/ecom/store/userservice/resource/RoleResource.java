@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,9 +41,20 @@ public class RoleResource {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(value = Endpoint.GET_ROLE)
+	public ResponseEntity<RoleDto> getRoleById(@PathVariable Long id) {
+		try {
+			RoleDto roleDto = roleService.getRoleById(id);
+			return new ResponseEntity<>(roleDto, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while getting role: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@PostMapping(value = Endpoint.ROLE)
-	public ResponseEntity<RoleDtos> getAllRoles(@RequestBody RoleSearchRequest roleSearchRequest) {
+	public ResponseEntity<RoleDtos> getRoles(@RequestBody RoleSearchRequest roleSearchRequest) {
 		try {
 			RoleDtos roleDtos = roleService.getRoles(roleSearchRequest);
 			return new ResponseEntity<>(roleDtos, HttpStatus.OK);

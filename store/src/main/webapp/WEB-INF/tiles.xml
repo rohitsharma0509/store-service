@@ -230,6 +230,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/stock.jsp" />  
     </definition>
     
+    <definition name="supportTicketAssignmentStrategy" extends="base.definition">  
+        <put-attribute name="title" value="Support Ticket Assignment Strategy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/supportTicketAssignmentStrategy.jsp" />
+    </definition>
+    
     <definition name="supportTickets" extends="base.definition">  
         <put-attribute name="title" value="Support Tickets" />  
         <put-attribute name="body" value="/WEB-INF/jsp/supportTickets.jsp" />  

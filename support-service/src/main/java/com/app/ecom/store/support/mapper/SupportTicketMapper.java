@@ -1,12 +1,12 @@
 package com.app.ecom.store.support.mapper;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.app.ecom.store.support.dto.SupportTicketActivityHistoryDto;
 import com.app.ecom.store.support.dto.SupportTicketDto;
 import com.app.ecom.store.support.dto.SupportTicketDtos;
 import com.app.ecom.store.support.dto.SupportTicketSearchRequest;
@@ -15,12 +15,17 @@ import com.app.ecom.store.support.enums.OperationType;
 import com.app.ecom.store.support.enums.Priority;
 import com.app.ecom.store.support.enums.SupportTicketStatus;
 import com.app.ecom.store.support.model.SupportTicket;
+import com.app.ecom.store.support.model.SupportTicketActivityHistory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 @Component
 public class SupportTicketMapper {
+	
+	@Autowired
+	private SupportTicketStatusChangeHistoryMapper supportTicketStatusChangeHistoryMapper;
 	
 	public SupportTicketDtos supportTicketsToSupportTicketDtos(List<SupportTicket> supportTickets) {
 		SupportTicketDtos supportTicketDtos = new SupportTicketDtos();
@@ -50,10 +55,39 @@ public class SupportTicketMapper {
 		supportTicketDto.setCreatedTs(supportTicket.getCreatedTs());
 		supportTicketDto.setLastModifiedBy(supportTicket.getLastModifiedBy());
 		supportTicketDto.setLastModifiedTs(supportTicket.getLastModifiedTs());
+		supportTicketDto.setSupportTicketActivityHistoryDtos(supportTicketActivityHistoriesToSupportTicketActivityHistoryDtos(supportTicket.getSupportTicketActivityHistories()));
+		supportTicketDto.setSupportTicketStatusChangeHistoryDtos(supportTicketStatusChangeHistoryMapper.supportTicketStatusChangeHistoriesToSupportTicketStatusChangeHistoryDtos(supportTicket.getSupportTicketStatusChangeHistories()));
 		return supportTicketDto;
 	}
-	
-	public Set<SupportTicket> supportTicketDtosToProductCategories(Set<SupportTicketDto> supportTicketDtos) {
+
+	public List<SupportTicketActivityHistoryDto> supportTicketActivityHistoriesToSupportTicketActivityHistoryDtos(
+			Set<SupportTicketActivityHistory> supportTicketActivityHistories) {
+		if(CollectionUtils.isEmpty(supportTicketActivityHistories)) {
+			return Collections.emptyList();
+		}
+		
+		List<SupportTicketActivityHistoryDto> listOfActivityHistory = new ArrayList<>();
+		supportTicketActivityHistories.stream().forEach(supportTicketActivityHistory -> listOfActivityHistory.add(supportTicketActivityHistoryToSupportTicketActivityHistoryDto(supportTicketActivityHistory)));
+		return listOfActivityHistory;
+	}
+
+
+	public SupportTicketActivityHistoryDto supportTicketActivityHistoryToSupportTicketActivityHistoryDto(
+			SupportTicketActivityHistory supportTicketActivityHistory) {
+		if(supportTicketActivityHistory == null) {
+			return null;
+		}
+		
+		SupportTicketActivityHistoryDto supportTicketActivityHistoryDto = new SupportTicketActivityHistoryDto();
+		supportTicketActivityHistoryDto.setId(supportTicketActivityHistory.getId());
+		supportTicketActivityHistoryDto.setMessage(supportTicketActivityHistory.getMessage());
+		supportTicketActivityHistoryDto.setCreatedBy(supportTicketActivityHistory.getCreatedBy());
+		supportTicketActivityHistoryDto.setCreatedTs(supportTicketActivityHistory.getCreatedTs());
+		return supportTicketActivityHistoryDto;
+	}
+
+
+	public Set<SupportTicket> supportTicketDtosToSupportTickets(Set<SupportTicketDto> supportTicketDtos) {
 		
 		if(CollectionUtils.isEmpty(supportTicketDtos)) {
 			return Collections.emptySet();
@@ -86,29 +120,29 @@ public class SupportTicketMapper {
 	}
 	
 	public List<WhereClause> supportTicketSearchRequestToWhereClauses(SupportTicketSearchRequest supportTicketSearchRequest) {
-		return getWhereClauses(supportTicketSearchRequest.getTicketId(), supportTicketSearchRequest.getTicketNumber(), supportTicketSearchRequest.getOrderNumber(), supportTicketSearchRequest.getStatus(), supportTicketSearchRequest.getCreatedTs());
-	}
-	
-	private List<WhereClause> getWhereClauses(Long ticketId, String ticketNumber, String orderNumber, SupportTicketStatus status, ZonedDateTime createdTs) {
 		List<WhereClause> whereClauses = new ArrayList<>();
-		if (ticketId != null) {
-			WhereClause whereClause = new WhereClause("id", String.valueOf(ticketId), OperationType.EQUALS);
+		if (supportTicketSearchRequest.getTicketId() != null) {
+			WhereClause whereClause = new WhereClause("id", String.valueOf(supportTicketSearchRequest.getTicketId()), OperationType.EQUALS);
 			whereClauses.add(whereClause);
 		} else {
-			if (!StringUtils.isEmpty(ticketNumber)) {
-				WhereClause whereClause = new WhereClause("number", ticketNumber, OperationType.LIKE);
+			if (!StringUtils.isEmpty(supportTicketSearchRequest.getTicketNumber())) {
+				WhereClause whereClause = new WhereClause("number", supportTicketSearchRequest.getTicketNumber(), OperationType.LIKE);
 				whereClauses.add(whereClause);
 			}
-			if (!StringUtils.isEmpty(orderNumber)) {
-				WhereClause whereClause = new WhereClause("orderNumber", orderNumber, OperationType.LIKE);
+			if (!StringUtils.isEmpty(supportTicketSearchRequest.getOrderNumber())) {
+				WhereClause whereClause = new WhereClause("orderNumber", supportTicketSearchRequest.getOrderNumber(), OperationType.LIKE);
 				whereClauses.add(whereClause);
 			}
-			if (null != status) {
-				WhereClause whereClause = new WhereClause("status", status.name(), OperationType.EQUALS);
+			if (null != supportTicketSearchRequest.getStatus()) {
+				WhereClause whereClause = new WhereClause("status", supportTicketSearchRequest.getStatus().name(), OperationType.EQUALS);
 				whereClauses.add(whereClause);
 			}
-			if (!StringUtils.isEmpty(createdTs)) {
-				WhereClause whereClause = new WhereClause("createdTs", createdTs, OperationType.LESS_OR_EQUAL);
+			if (!StringUtils.isEmpty(supportTicketSearchRequest.getCreatedBy())) {
+				WhereClause whereClause = new WhereClause("createdBy", supportTicketSearchRequest.getCreatedBy(), OperationType.EQUALS);
+				whereClauses.add(whereClause);
+			}
+			if (null != supportTicketSearchRequest.getCreatedTs()) {
+				WhereClause whereClause = new WhereClause("createdTs", supportTicketSearchRequest.getCreatedTs(), OperationType.LESS_OR_EQUAL);
 				whereClauses.add(whereClause);
 			}
 		}

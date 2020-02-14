@@ -23,3 +23,12 @@ eureka:
 ribbon:
   eureka:
     enabled: true
+
+application:
+  user-service:
+    name: user-service
+    context-path: /api/userservice/v1
+
+job:
+  support-ticket-assignment:
+    cron: 0 0/5 * * * ?

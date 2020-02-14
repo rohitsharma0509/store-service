@@ -1,4 +1,4 @@
-package com.app.ecom.store.dto.helpservice;
+package com.app.ecom.store.dto.supportservice;
 
 import java.time.ZonedDateTime;
 

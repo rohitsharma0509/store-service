@@ -5,7 +5,7 @@
 <link href="/css/shoppingCart.css" rel="stylesheet">
 <script src="/js/shoppingCart.js"></script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><i class="fa fa-shopping-cart" font-size="15px"></i>&nbsp;&nbsp;<a href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
+  <li class="breadcrumb-item"><i class="fa fa-shopping-cart breadcrum-icon"></i>&nbsp;&nbsp;<a href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Shopping Cart" text="Shopping Cart" /></li>
 </ol>
 <div class="row" style="height:10px;"></div>
@@ -14,7 +14,7 @@
 	<div class="card">
 	<form:form method="POST" modelAttribute="shoppingCart" class="form-horizontal" enctype="multipart/form-data" action="shoppingCart">
 		<div class="card-header">
-	    	<i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;<spring:message code="Shopping cart" text="Shopping cart" />
+	    	<i class="fa fa-shopping-cart"></i>&nbsp;<spring:message code="Shopping cart" text="Shopping cart" />
 	   		<div class="clearfix"></div>
 	   </div>
        <div class="card-body">

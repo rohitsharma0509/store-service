@@ -12,12 +12,12 @@
   });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item active"><i class="fa fa-home" style="font-size: 15px;"></i>&nbsp;&nbsp;<spring:message code="Dashboard" text="Dashboard" /></li>
-  <li class="ml-auto">
+  <li class="breadcrumb-item active"><i class="fa fa-home breadcrum-icon"></i>&nbsp;&nbsp;<spring:message code="Dashboard" text="Dashboard" /></li>
+  <!-- <li class="ml-auto">
     <div class="chat-wrapper">
       <a href="#" onclick="openChatWindow()"><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;<spring:message code="Chat Now" text="Chat Now" /></a>
     </div>
-  </li>
+  </li> -->
 </ol>
 <security:authorize access="hasAuthority('GUEST')">
 <div class="row">
