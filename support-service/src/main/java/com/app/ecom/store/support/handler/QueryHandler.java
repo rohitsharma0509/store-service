@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
@@ -62,6 +64,24 @@ public class QueryHandler<T> {
         }
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
+	
+	public List<Tuple> getTupleByQuery(String queryStr, List<WhereClause> whereClauses) {
+		Query query = entityManager.createNativeQuery(queryStr, Tuple.class);
+		
+		if(!CollectionUtils.isEmpty(whereClauses)){
+			for (WhereClause whereClause : whereClauses){
+				if(OperationType.EQUALS == whereClause.getOperation()) {
+					query.setParameter(whereClause.getKey(), whereClause.getValue());
+				} else if(OperationType.LIKE == whereClause.getOperation()) {
+					query.setParameter(whereClause.getKey(),PERCENT+whereClause.getValue()+PERCENT);
+				} else if(OperationType.IN == whereClause.getOperation()) {
+					query.setParameter(whereClause.getKey(), whereClause.getValue());
+				}
+			}
+		}
+		
+		return query.getResultList();
+	}
 	
 	private Predicate[] getPredicates(CriteriaBuilder criteriaBuilder, Root<T> root, List<WhereClause> whereClauses) {
 		Predicate[] predicates = new Predicate[whereClauses.size()];

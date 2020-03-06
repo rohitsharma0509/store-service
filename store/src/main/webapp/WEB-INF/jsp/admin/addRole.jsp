@@ -57,10 +57,10 @@ String action = "Save";
   <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ROLES %>"><spring:message code="Roles" text="Roles" /></a></li>
   <c:choose>
     <c:when test="${empty role.id}">
-      <li class="breadcrumb-item active"><spring:message code="Add Product" text="Add Role" /></li>
+      <li class="breadcrumb-item active"><spring:message code="Add Role" text="Add Role" /></li>
     </c:when>
     <c:otherwise>
-      <li class="breadcrumb-item active"><spring:message code="Edit Product" text="Edit Role" /></li>
+      <li class="breadcrumb-item active"><spring:message code="Edit Role" text="Edit Role" /></li>
       <% action = "Edit"; %>
     </c:otherwise>
   </c:choose>
@@ -74,12 +74,20 @@ String action = "Save";
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
               <div class="col-sm-6">
+                  <label for="<%=FieldNames.TYPE %>"><spring:message code="Role Type" text="Role Type" /></label>
+                  <form:select path="<%=FieldNames.TYPE %>" id="<%=FieldNames.TYPE %>" class="form-control form-control-sm">
+                    <form:option value=""><spring:message code="Select Role Type" /></form:option>
+                    <c:forEach var="roleType" items="${roleTypes}">
+                     <form:option value="${roleType.name()}">${roleType.name()}</form:option>
+                    </c:forEach>
+                  </form:select>
+              </div>
+              <div class="col-sm-6">
                   <label for="<%=FieldNames.NAME %>"><spring:message code="Role Name" text="Role Name" />&nbsp;<span class="urgent_fields">*</span></label>
                   <form:input type="hidden" path="<%=FieldNames.OLD_NAME %>" id="<%=FieldNames.OLD_NAME %>"/>
                   <form:input type="text" path="<%=FieldNames.NAME %>" id="<%=FieldNames.NAME %>" class="form-control input-sm"/>
                   <form:errors path="<%=FieldNames.NAME %>" class="help-inline has-error"></form:errors>
               </div>
-              <div class="col-sm-6"></div>
           </div>
           <div class="form-group row">
               <div class="col-sm-12">

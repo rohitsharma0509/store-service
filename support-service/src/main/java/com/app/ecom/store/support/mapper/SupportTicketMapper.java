@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.app.ecom.store.support.dto.SupportTicketActivityHistoryDto;
 import com.app.ecom.store.support.dto.SupportTicketDto;
 import com.app.ecom.store.support.dto.SupportTicketDtos;
 import com.app.ecom.store.support.dto.SupportTicketSearchRequest;
@@ -15,7 +14,6 @@ import com.app.ecom.store.support.enums.OperationType;
 import com.app.ecom.store.support.enums.Priority;
 import com.app.ecom.store.support.enums.SupportTicketStatus;
 import com.app.ecom.store.support.model.SupportTicket;
-import com.app.ecom.store.support.model.SupportTicketActivityHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -26,6 +24,9 @@ public class SupportTicketMapper {
 	
 	@Autowired
 	private SupportTicketStatusChangeHistoryMapper supportTicketStatusChangeHistoryMapper;
+	
+	@Autowired
+	private SupportTicketActivityHistoryMapper supportTicketActivityHistoryMapper;
 	
 	public SupportTicketDtos supportTicketsToSupportTicketDtos(List<SupportTicket> supportTickets) {
 		SupportTicketDtos supportTicketDtos = new SupportTicketDtos();
@@ -55,40 +56,12 @@ public class SupportTicketMapper {
 		supportTicketDto.setCreatedTs(supportTicket.getCreatedTs());
 		supportTicketDto.setLastModifiedBy(supportTicket.getLastModifiedBy());
 		supportTicketDto.setLastModifiedTs(supportTicket.getLastModifiedTs());
-		supportTicketDto.setSupportTicketActivityHistoryDtos(supportTicketActivityHistoriesToSupportTicketActivityHistoryDtos(supportTicket.getSupportTicketActivityHistories()));
+		supportTicketDto.setSupportTicketActivityHistoryDtos(supportTicketActivityHistoryMapper.supportTicketActivityHistoriesToSupportTicketActivityHistoryDtos(supportTicket.getSupportTicketActivityHistories()));
 		supportTicketDto.setSupportTicketStatusChangeHistoryDtos(supportTicketStatusChangeHistoryMapper.supportTicketStatusChangeHistoriesToSupportTicketStatusChangeHistoryDtos(supportTicket.getSupportTicketStatusChangeHistories()));
 		return supportTicketDto;
 	}
 
-	public List<SupportTicketActivityHistoryDto> supportTicketActivityHistoriesToSupportTicketActivityHistoryDtos(
-			Set<SupportTicketActivityHistory> supportTicketActivityHistories) {
-		if(CollectionUtils.isEmpty(supportTicketActivityHistories)) {
-			return Collections.emptyList();
-		}
-		
-		List<SupportTicketActivityHistoryDto> listOfActivityHistory = new ArrayList<>();
-		supportTicketActivityHistories.stream().forEach(supportTicketActivityHistory -> listOfActivityHistory.add(supportTicketActivityHistoryToSupportTicketActivityHistoryDto(supportTicketActivityHistory)));
-		return listOfActivityHistory;
-	}
-
-
-	public SupportTicketActivityHistoryDto supportTicketActivityHistoryToSupportTicketActivityHistoryDto(
-			SupportTicketActivityHistory supportTicketActivityHistory) {
-		if(supportTicketActivityHistory == null) {
-			return null;
-		}
-		
-		SupportTicketActivityHistoryDto supportTicketActivityHistoryDto = new SupportTicketActivityHistoryDto();
-		supportTicketActivityHistoryDto.setId(supportTicketActivityHistory.getId());
-		supportTicketActivityHistoryDto.setMessage(supportTicketActivityHistory.getMessage());
-		supportTicketActivityHistoryDto.setCreatedBy(supportTicketActivityHistory.getCreatedBy());
-		supportTicketActivityHistoryDto.setCreatedTs(supportTicketActivityHistory.getCreatedTs());
-		return supportTicketActivityHistoryDto;
-	}
-
-
-	public Set<SupportTicket> supportTicketDtosToSupportTickets(Set<SupportTicketDto> supportTicketDtos) {
-		
+	public Set<SupportTicket> supportTicketDtosToSupportTickets(Set<SupportTicketDto> supportTicketDtos) {		
 		if(CollectionUtils.isEmpty(supportTicketDtos)) {
 			return Collections.emptySet();
 		}

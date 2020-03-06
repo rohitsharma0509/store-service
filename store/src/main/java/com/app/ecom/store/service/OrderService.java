@@ -21,11 +21,11 @@ public interface OrderService {
 	
 	ByteArrayOutputStream createOrderPdf(Long id);
 
-	Long countByOrderDateGreaterThanEqual(ZonedDateTime orderDate);
-	
 	Long countOrderByProductIdIn(List<Long> ids);
 
 	UserDto getUserDtoByUserId(Long userId);
 	
 	AddressDto getAddressDtoByAddressId(Long addressId);
+
+	Object getNumberOfOrdersByDateAndUserId(ZonedDateTime date, Long userId);
 }

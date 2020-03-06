@@ -1,6 +1,7 @@
 package com.app.ecom.store.validator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.app.ecom.store.constants.FieldNames;
@@ -57,16 +58,21 @@ public class RoleValidator implements Validator {
 	}
 	
 	public Response checkIfAnyRoleAssociatedWithUser(List<RoleDto> roleDtos, String errorCode) {
+		boolean canDelete = roleDtos.stream().filter(Objects::nonNull).anyMatch(RoleDto::getIsDeletable);
+		if(!canDelete) {
+			return commonUtil.getResponse(true, ErrorCode.ERR000028.getCode());
+		}
+		
 		List<RoleDto> roles = roleDtos.stream().filter(roleDto -> {
 			boolean flag = false;
-			if (null != roleDto && !CollectionUtils.isEmpty(roleDto.getUserDtos()) && roleDto.getUserDtos().size() > 0) {
+			if (null != roleDto && !CollectionUtils.isEmpty(roleDto.getUserDtos())) {
 				flag = true;
 			}
 			return flag;
 		}).collect(Collectors.toList());
 		
 		boolean flag = false;
-		if(!CollectionUtils.isEmpty(roles) && roles.size() > 0) {
+		if(!CollectionUtils.isEmpty(roles)) {
 			flag = true;
 		}
 		

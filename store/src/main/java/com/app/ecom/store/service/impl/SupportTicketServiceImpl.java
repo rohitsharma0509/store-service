@@ -13,9 +13,11 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.OrderByClause;
+import com.app.ecom.store.dto.supportservice.SupportTicketActivityHistoryDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketAssignmentStrategyDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketDtos;
+import com.app.ecom.store.dto.supportservice.SupportTicketReportByStatus;
 import com.app.ecom.store.dto.supportservice.SupportTicketSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.SortOrder;
@@ -88,7 +90,7 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 			totalRecords = supportTicketClient.countUnclosedSupportTickets(params.get(FieldNames.UNCLOSED_FOR));
 		} else {
 			UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
-			supportTicketSearchRequest.setCreatedBy(userDto.getUsername());
+			supportTicketSearchRequest.setCreatedBy(userDto.isAdmin() ? null : userDto.getUsername());
 			supportTicketDtos = supportTicketClient.getSupportTickets(supportTicketSearchRequest);			
 			totalRecords = supportTicketClient.countSupportTickets(supportTicketSearchRequest);
 		}
@@ -113,11 +115,23 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 	}
 
 	@Override
-	public void configureSupportTicketAssignmentStrategy(
-			SupportTicketAssignmentStrategyDto supportTicketAssignmentStrategyDto) {
+	public void configureSupportTicketAssignmentStrategy(SupportTicketAssignmentStrategyDto supportTicketAssignmentStrategyDto) {
 		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
 		supportTicketAssignmentStrategyDto.setLastModifiedBy(userDto.getUsername());
 		supportTicketAssignmentStrategyDto.setLastModifiedTs(ZonedDateTime.now());
 		supportTicketClient.configureSupportTicketAssignmentStrategy(supportTicketAssignmentStrategyDto);
+	}
+	
+	@Override
+	public SupportTicketReportByStatus getSupportTicketReportByStatus(String username) {
+		return supportTicketClient.getSupportTicketReportByStatus(username);
+	}
+
+	@Override
+	public SupportTicketActivityHistoryDto postSupportTicketActivity(SupportTicketActivityHistoryDto supportTicketActivityHistoryDto) {
+		UserDto userDto = (UserDto) httpSession.getAttribute(FieldNames.USER);
+		supportTicketActivityHistoryDto.setCreatedBy(userDto.getUsername());
+		supportTicketActivityHistoryDto.setCreatedTs(ZonedDateTime.now());
+		return supportTicketClient.postSupportTicketActivity(supportTicketActivityHistoryDto);
 	}
 }

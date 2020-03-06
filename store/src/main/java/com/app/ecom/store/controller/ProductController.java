@@ -13,6 +13,7 @@ import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.productservice.ProductDto;
+import com.app.ecom.store.enums.ProductStatus;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
@@ -176,5 +177,17 @@ public class ProductController {
 		CustomPage<ProductDto> page = productService.searchProducts(pageable, params);
 		model.addAttribute(FieldNames.PAGE, page);
 		return View.PRODUCT_LISTING;
+	}
+	
+	@ResponseBody
+	@GetMapping(value = RequestUrls.COUNT_PRODUCT)
+	public Long getNumberOfProducts(@RequestParam(required = false) ProductStatus status) {
+		if(status == ProductStatus.OUT_OF_STOCK) {
+			return productService.getOutOfStockProductQuantity();
+		} else if(status == ProductStatus.ALERT) {
+			return productService.getAlertProductQuantity();
+		} else {
+			return productService.getNumberOfProducts();
+		}
 	}
 }

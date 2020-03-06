@@ -50,6 +50,7 @@
 								<th><spring:message code="Order Number" text="Order Number" /></th>
 								<th><spring:message code="Order Date" text="Order Date" /></th>
 								<th><spring:message code="Amount" text="Amount" /></th>
+								<th><spring:message code="Created By" text="Created By" /></th>
 							</tr>
 							<c:forEach var="order" items="${page.getContent()}"
 								varStatus="loop">
@@ -57,6 +58,7 @@
 									<td><a href="${contextPath}/orders/${order.id}">${order.orderNumber}</a></td>
 									<td>${order.createdTs}</td>
 									<td>${order.totalAmount}</td>
+									<td>${order.createdBy}</td>
 								</tr>
 							</c:forEach>
 						</table>

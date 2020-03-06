@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class SupportTicketAssignmentScheduler {
@@ -69,7 +70,9 @@ public class SupportTicketAssignmentScheduler {
 						assignedTo = userDto.getUsername();
 					}
 					logger.info(new StringBuilder("Ticket Id: ").append(unassignedSupportTicket.getId()).append(" Assigned To: ").append(assignedTo).append(new Date()).toString());
-					supportTicketService.changeSupportTicketStatusAndAssignedTo(unassignedSupportTicket.getId(), SupportTicketStatus.IN_PROGRESS.name(), assignedTo);
+					if(!StringUtils.isEmpty(assignedTo)) {
+						supportTicketService.changeSupportTicketStatusAndAssignedTo(unassignedSupportTicket.getId(), SupportTicketStatus.IN_PROGRESS.name(), assignedTo);
+					}
 				});
 			} else {
 				logger.info(new StringBuilder("Support ticket assignment strategy not configured.").append(" Time: ").append(new Date()).toString());

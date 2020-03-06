@@ -25,8 +25,14 @@ public class Role {
 	@Column(name="role_name")
 	private String name;
 	
+	@Column(name="role_type")
+	private String type;
+	
 	@Column(name="description")
 	private String description;
+	
+	@Column(name="is_deletable", columnDefinition="tinyint(1)")
+	private Boolean isDeletable;
 
 	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
@@ -63,12 +69,28 @@ public class Role {
 		this.name = name;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getIsDeletable() {
+		return isDeletable;
+	}
+
+	public void setIsDeletable(Boolean isDeletable) {
+		this.isDeletable = isDeletable;
 	}
 
 	public List<User> getUsers() {

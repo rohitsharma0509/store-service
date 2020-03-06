@@ -16,4 +16,7 @@ public class Endpoint {
 	public static final String TICKET_PRIORITY = "/ticket/priority";
 	
 	public static final String TICKET_ASSIGNMENT_STRATEGY = "/ticketAssignmentStrategy";
+	
+	public static final String TICKET_STATUS_REPORT = "/ticketStatusReport";
+	public static final String TICKET_ACTIVITY = "/ticketActivity";
 }

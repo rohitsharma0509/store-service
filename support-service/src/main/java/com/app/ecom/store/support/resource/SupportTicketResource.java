@@ -4,6 +4,7 @@ import com.app.ecom.store.support.constants.Endpoint;
 import com.app.ecom.store.support.dto.IdsDto;
 import com.app.ecom.store.support.dto.SupportTicketDto;
 import com.app.ecom.store.support.dto.SupportTicketDtos;
+import com.app.ecom.store.support.dto.SupportTicketReportByStatus;
 import com.app.ecom.store.support.dto.SupportTicketSearchRequest;
 import com.app.ecom.store.support.service.SupportTicketService;
 import com.app.ecom.store.support.util.CommonUtil;
@@ -130,4 +131,16 @@ public class SupportTicketResource {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(value = Endpoint.TICKET_STATUS_REPORT)
+	public ResponseEntity<SupportTicketReportByStatus> getSupportTicketStatusReport(@RequestParam(required = false) String username) {
+		try {
+			SupportTicketReportByStatus supportTicketReportByStatus = supportTicketService.getSupportTicketStatusReport(username);
+			return new ResponseEntity<>(supportTicketReportByStatus, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while getting Support Ticket Status Report: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

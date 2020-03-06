@@ -11,6 +11,7 @@ import com.app.ecom.store.userservice.dto.RoleSearchRequest;
 import com.app.ecom.store.userservice.dto.UserDtos;
 import com.app.ecom.store.userservice.dto.WhereClause;
 import com.app.ecom.store.userservice.enums.OperationType;
+import com.app.ecom.store.userservice.enums.RoleType;
 import com.app.ecom.store.userservice.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,8 @@ public class RoleMapper {
 		role.setCreatedTs(roleDto.getCreatedTs());
 		role.setLastModifiedBy(roleDto.getLastModifiedBy());
 		role.setLastModifiedTs(roleDto.getLastModifiedTs());
+		role.setIsDeletable(roleDto.getIsDeletable());
+		role.setType(roleDto.getType() == null ? null : roleDto.getType().name());
 		role.setPrivileges(privilegeMapper.privilegeDtosToPrivileges(roleDto.getPrivilegeDtos()));
 		return role;
 	}
@@ -84,6 +87,8 @@ public class RoleMapper {
 		roleDto.setName(role.getName());
 		roleDto.setOldName(role.getName());
 		roleDto.setDescription(role.getDescription());
+		roleDto.setIsDeletable(role.getIsDeletable());
+		roleDto.setType(role.getType() == null ? null : RoleType.valueOf(role.getType()));
 		PrivilegeDtos privilegeDtos = privilegeMapper.privilegesToPrivilegeDtos(role.getPrivileges());
 		roleDto.setPrivilegeDtos(privilegeDtos==null ? null : privilegeDtos.getPrivileges());
 		if(isUserRequired) {

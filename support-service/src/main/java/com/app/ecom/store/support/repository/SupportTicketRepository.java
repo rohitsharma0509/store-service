@@ -20,13 +20,16 @@ public interface SupportTicketRepository extends JpaRepository<SupportTicket, Lo
 
 	void deleteByIdIn(List<Long> ids);
 	
+	@Modifying
 	@Query(value = "update support_tickets set status=:status where ticket_id=:ticketId", nativeQuery = true)
 	void updateSupportTicketStatus(Long ticketId, String status);
 
+	@Modifying
 	@Query(value = "update support_tickets set priority=:priority where ticket_id=:ticketId", nativeQuery = true)
 	void updateSupportTicketPriority(Long ticketId, String priority);
 
 	@Modifying
 	@Query(value = "update support_tickets set status=:status, assigned_to=:username where ticket_id=:ticketId", nativeQuery = true)
 	void updateSupportTicketStatusAndAssignedTo(@Param("status") String status, @Param("username") String assignedTo, @Param("ticketId") Long ticketId);
+	
 }

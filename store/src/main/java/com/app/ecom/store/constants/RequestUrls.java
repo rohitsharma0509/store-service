@@ -13,12 +13,13 @@ public class RequestUrls {
 	public static final String DELETE_PRODUCT = PRODUCTS+"/{id}";
 	public static final String DELETE_BULK_PRODUCT = "/admin/bulkproducts";
 	public static final String DELETE_ALL_PRODUCT = "/admin/allproducts";
+	public static final String COUNT_PRODUCT = "/countProduct";
 	
 	public static final String PRODUCTS_IMPORT = "/admin/importProducts";
 	public static final String PRODUCTS_SAVE = "/admin/addProducts";
 	
 	public static final String BUY = "/buy";
-	public static final String GET_ORDERS = "/orders/{id}";
+	public static final String GET_ORDER = "/orders/{id}";
 	public static final String ORDERS = "/orders";
 	public static final String DOWNLOAD_ORDER = "/orders/download/{id}";
 	
@@ -77,6 +78,8 @@ public class RequestUrls {
 	public static final String UNCLOSED_SUPPORT_TICKET = "/unclosedSupportTicket";
 	public static final String DELETE_SUPPORT_TICKETS = SUPPORT_TICKETS+"/{id}";
 	public static final String SUPPORT_TICKET_ASSIGNMENT_STRATEGY = "/supportTicketAssignmentStrategy";
+	public static final String POST_SUPPORT_TICKET_ACTIVITY = "/postSupportTicketActivity";
+	public static final String SUPPORT_TICKET_ACTIVITY_HISTORY = "/supportTicketActivityHistory";
 	
 	public static final String ROLES = "/admin/roles";
 	public static final String ADD_ROLE = "/admin/addRole";

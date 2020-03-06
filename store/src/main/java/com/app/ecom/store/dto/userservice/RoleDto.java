@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
+import com.app.ecom.store.enums.RoleType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,11 +18,17 @@ public class RoleDto {
 	@JsonProperty("name")
 	private String name;
 	
+	@JsonProperty("type")
+	private RoleType type;
+	
 	@JsonProperty("oldName")
 	private String oldName;
 	
 	@JsonProperty("description")
 	private String description;
+	
+	@JsonProperty("isDeletable")
+	private Boolean isDeletable;
 	
 	@JsonProperty("userDtos")
 	private Set<UserDto> userDtos;
@@ -57,6 +64,14 @@ public class RoleDto {
 		this.name = name;
 	}
 	
+	public RoleType getType() {
+		return type;
+	}
+
+	public void setType(RoleType type) {
+		this.type = type;
+	}
+
 	public String getOldName() {
 		return oldName;
 	}
@@ -71,6 +86,14 @@ public class RoleDto {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Boolean getIsDeletable() {
+		return isDeletable;
+	}
+
+	public void setIsDeletable(Boolean isDeletable) {
+		this.isDeletable = isDeletable;
 	}
 
 	public Set<UserDto> getUserDtos() {

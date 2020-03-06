@@ -6,9 +6,11 @@ import java.util.Map;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.supportservice.SupportTicketActivityHistoryDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketAssignmentStrategyDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketDtos;
+import com.app.ecom.store.dto.supportservice.SupportTicketReportByStatus;
 import com.app.ecom.store.dto.supportservice.SupportTicketSearchRequest;
 import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class SupportTicketClient {
 	public static final String UNCLOSED_TICKET = "/unclosedTicket";
 	public static final String COUNT_UNCLOSED_TICKET = "/countUnclosedTicket";
 	public static final String TICKET_ASSIGNMENT_STRATEGY = "/ticketAssignmentStrategy";
+	public static final String TICKET_STATUS_REPORT = "/ticketStatusReport";
+	public static final String TICKET_ACTIVITY = "/ticketActivity";
 	
 	@Value("${application.support-service.name}")
 	private String serviceName;
@@ -93,6 +97,20 @@ public class SupportTicketClient {
 	public SupportTicketAssignmentStrategyDto getSupportTicketAssignmentStrategy() {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TICKET_ASSIGNMENT_STRATEGY);
 		ExternalApiRequest<SupportTicketAssignmentStrategyDto> externalApi = commonUtil.getExternalApiRequest(SupportTicketAssignmentStrategyDto.class, url, HttpMethod.GET, null, null, null);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public SupportTicketReportByStatus getSupportTicketReportByStatus(String username) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TICKET_STATUS_REPORT);
+		Map<String, String> queryParamMap = new HashMap<>();
+		queryParamMap.put(FieldNames.USERNAME, username);
+		ExternalApiRequest<SupportTicketReportByStatus> externalApi = commonUtil.getExternalApiRequest(SupportTicketReportByStatus.class, url, HttpMethod.GET, null, queryParamMap, null);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+
+	public SupportTicketActivityHistoryDto postSupportTicketActivity(SupportTicketActivityHistoryDto supportTicketActivityHistoryDto) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TICKET_ACTIVITY);
+		ExternalApiRequest<SupportTicketActivityHistoryDto> externalApi = commonUtil.getExternalApiRequest(SupportTicketActivityHistoryDto.class, url, HttpMethod.PUT, null, null, supportTicketActivityHistoryDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 

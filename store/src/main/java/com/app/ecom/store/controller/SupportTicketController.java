@@ -12,6 +12,7 @@ import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.supportservice.SupportTicketActivityHistoryDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketAssignmentStrategyDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketDto;
 import com.app.ecom.store.enums.Priority;
@@ -131,5 +132,20 @@ public class SupportTicketController {
 			SupportTicketAssignmentStrategyDto supportTicketAssignmentStrategyDto, BindingResult bindingResult) {
 		supportTicketService.configureSupportTicketAssignmentStrategy(supportTicketAssignmentStrategyDto);
 		return "redirect:" + RequestUrls.SUPPORT_TICKET_ASSIGNMENT_STRATEGY;
+	}
+	
+	@GetMapping(value = RequestUrls.POST_SUPPORT_TICKET_ACTIVITY)
+	public String manageSupportTicketActivity(Model model, @RequestParam(name=FieldNames.TICKET_ID, required=true) Long ticketId) {
+		SupportTicketActivityHistoryDto supportTicketActivityHistoryDto = new SupportTicketActivityHistoryDto();
+		supportTicketActivityHistoryDto.setTicketId(ticketId);
+		model.addAttribute(FieldNames.SUPPORT_TICKET_ACTIVITY_HISTORY_DTO, supportTicketActivityHistoryDto);
+		return View.POST_SUPPORT_TICKET_ACTIVITY;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.SUPPORT_TICKET_ACTIVITY_HISTORY)
+	public void postSupportTicketActivity(@ModelAttribute(FieldNames.SUPPORT_TICKET_ACTIVITY_HISTORY_DTO) 
+		@Valid SupportTicketActivityHistoryDto supportTicketActivityHistoryDto) {
+		supportTicketService.postSupportTicketActivity(supportTicketActivityHistoryDto);
 	}
 }

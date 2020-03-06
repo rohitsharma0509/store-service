@@ -3,6 +3,14 @@
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
+  function postActivity(url) {
+	  $.get(url, function(modal) {
+	    $("#activityModal").html(modal);
+	    $("#modalPostActivity").modal("show");
+	  });
+	}
+</script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item"><i class="fa fa fa-headphones breadcrumb-icon"></i>&nbsp;&nbsp;<a href="${contextPath}<%=RequestUrls.SUPPORT_TICKETS %>"><spring:message code="Support" text="Support" /></a></li>
   <li class="breadcrumb-item active">${supportTicketDto.number}</li>
@@ -42,7 +50,9 @@
   <div class="col-sm-12">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title font-weight-bold"><spring:message code="Activity History" text="Activity History" /></h5>
+        <h5 class="card-title font-weight-bold"><spring:message code="Activity History" />&nbsp;
+          <a href="#" onclick="postActivity('<%=RequestUrls.POST_SUPPORT_TICKET_ACTIVITY %>?<%=FieldNames.TICKET_ID %>=${supportTicketDto.id}')">(<spring:message code="Post Message" />)</a>
+        </h5>
         <div class="row">
           <div class="col-sm-12">
         <c:choose>
@@ -57,8 +67,8 @@
                   </tr>
                   <c:forEach var="activity" items="${supportTicketDto.getSupportTicketActivityHistoryDtos()}" varStatus="loop">
                     <tr>
-                      <td>${history.createdTs}</td>
-                      <td>${history.createdBy}</td>
+                      <td>${activity.createdTs}</td>
+                      <td>${activity.createdBy}</td>
                       <td>${activity.message}</td>
                     </tr>
                   </c:forEach>
@@ -123,3 +133,4 @@
     </div>
   </div>
 </div>
+<div id="activityModal"></div>

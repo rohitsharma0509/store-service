@@ -1,5 +1,7 @@
 package com.app.ecom.store.support.model;
 
+import java.time.ZonedDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +32,7 @@ public class SupportTicketActivityHistory {
 	private String createdBy;
 
 	@Column(name = "created_ts", columnDefinition = "timestamp")
-	private String createdTs;
+	private ZonedDateTime createdTs;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ticket_id")
@@ -60,11 +62,19 @@ public class SupportTicketActivityHistory {
 		this.createdBy = createdBy;
 	}
 
-	public String getCreatedTs() {
+	public ZonedDateTime getCreatedTs() {
 		return createdTs;
 	}
 
-	public void setCreatedTs(String createdTs) {
+	public void setCreatedTs(ZonedDateTime createdTs) {
 		this.createdTs = createdTs;
+	}
+
+	public SupportTicket getSupportTicket() {
+		return supportTicket;
+	}
+
+	public void setSupportTicket(SupportTicket supportTicket) {
+		this.supportTicket = supportTicket;
 	}
 }

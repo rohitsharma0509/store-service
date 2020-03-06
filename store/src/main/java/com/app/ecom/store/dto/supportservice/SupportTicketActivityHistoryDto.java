@@ -1,5 +1,7 @@
 package com.app.ecom.store.dto.supportservice;
 
+import java.time.ZonedDateTime;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,12 +14,15 @@ public class SupportTicketActivityHistoryDto {
 
 	@JsonProperty("message")
 	private String message;
+	
+	@JsonProperty("ticketId")
+	private Long ticketId;
 
 	@JsonProperty("createdBy")
 	private String createdBy;
 
 	@JsonProperty("createdTs")
-	private String createdTs;
+	private ZonedDateTime createdTs;
 
 	public Long getId() {
 		return id;
@@ -35,6 +40,14 @@ public class SupportTicketActivityHistoryDto {
 		this.message = message;
 	}
 
+	public Long getTicketId() {
+		return ticketId;
+	}
+
+	public void setTicketId(Long ticketId) {
+		this.ticketId = ticketId;
+	}
+
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -43,11 +56,11 @@ public class SupportTicketActivityHistoryDto {
 		this.createdBy = createdBy;
 	}
 
-	public String getCreatedTs() {
+	public ZonedDateTime getCreatedTs() {
 		return createdTs;
 	}
 
-	public void setCreatedTs(String createdTs) {
+	public void setCreatedTs(ZonedDateTime createdTs) {
 		this.createdTs = createdTs;
 	}
 }

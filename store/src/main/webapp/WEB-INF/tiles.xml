@@ -259,4 +259,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/addAddress.jsp" />  
     </definition>
     
+    <definition name="postSupportTicketActivity" extends="empty.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/postSupportTicketActivity.jsp" />  
+    </definition>
+    
  </tiles-definitions>

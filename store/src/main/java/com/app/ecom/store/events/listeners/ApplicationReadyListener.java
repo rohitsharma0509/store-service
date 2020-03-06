@@ -7,6 +7,7 @@ import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.RoleDto;
 import com.app.ecom.store.dto.userservice.UserDto;
+import com.app.ecom.store.enums.RoleType;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.service.UserService;
@@ -36,7 +37,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
 		try {
 			UserDto user = userService.findUserByUsername("rohits");
 			if (null == user) {
-				saveRole(Constants.DEFAULT_GUEST_ROLE, Constants.DEFAULT_GUEST_PRIVILEGE, Constants.DEFAULT_GUEST_PRIVILEGE_DESC);
+				saveRole(Constants.DEFAULT_GUEST_ROLE, Constants.DEFAULT_GUEST_PRIVILEGE, Constants.DEFAULT_GUEST_PRIVILEGE_DESC, RoleType.GUEST);
 				UserDto userDto = new UserDto();
 				userDto.setFirstName("Rohit");
 				userDto.setLastName("Sharma");
@@ -55,13 +56,15 @@ public class ApplicationReadyListener implements ApplicationListener<Application
 
 	private List<RoleDto> getAdminRole() {
 		List<RoleDto> roleDtos = new ArrayList<>();
-		roleDtos.add(saveRole(Constants.DEFAULT_ADMIN_ROLE, Constants.DEFAULT_ADMIN_PRIVILEGE, Constants.DEFAULT_ADMIN_PRIVILEGE_DESC));
+		roleDtos.add(saveRole(Constants.DEFAULT_ADMIN_ROLE, Constants.DEFAULT_ADMIN_PRIVILEGE, Constants.DEFAULT_ADMIN_PRIVILEGE_DESC, RoleType.ADMIN));
 		return roleDtos;
 	}
 	
-	private RoleDto saveRole(String roleName, String privilegeName, String privilegeDesc) {
+	private RoleDto saveRole(String roleName, String privilegeName, String privilegeDesc, RoleType type) {
 		RoleDto roleDto = new RoleDto();
 		roleDto.setName(roleName);
+		roleDto.setIsDeletable(false);
+		roleDto.setType(type);
 		roleDto.setPrivilegeDtos(getPrivileges(privilegeName, privilegeDesc));
 		return roleService.addRole(roleDto);
 	}

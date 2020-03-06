@@ -14,6 +14,7 @@ import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -29,17 +30,14 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        setLocale(authentication, request, response);
-        response.sendRedirect(RequestUrls.HOME);
-    }
-
-    protected void setLocale(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
-        if (null != authentication && null != authentication.getPrincipal()) {
-        	String username = authentication.getName();
-            UserDto userDto = userService.findUserByUsername(username);
+    	if (null != authentication && null != authentication.getPrincipal()) {
+        	boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"));
+            UserDto userDto = userService.findUserByUsername(authentication.getName());
+            userDto.setIsAdmin(isAdmin);
             httpSession.setAttribute(FieldNames.USER, userDto);
-            String locale = null == userDto || StringUtils.isEmpty(userDto.getLanguage()) ? Locale.ENGLISH.getLanguage() : userDto.getLanguage();
+            String locale = StringUtils.isEmpty(userDto.getLanguage()) ? Locale.ENGLISH.getLanguage() : userDto.getLanguage();
             userService.updateLocale(request, response, locale);
-        }
+    	}
+        response.sendRedirect(RequestUrls.HOME);
     }
 }

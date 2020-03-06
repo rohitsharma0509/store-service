@@ -43,6 +43,8 @@ public class FieldNames {
 	public static final String REPORT_NAME = "reportName";
 	public static final String HOST = "host";
 	public static final String PORT = "port";
+	public static final String ROLE_TYPE = "roleType";
+	public static final String ROLE_TYPES = "roleTypes";
 	public static final String ROLE_DTO = "roleDto";
 	public static final String ROLE_DTOS = "roleDtos";
 	public static final String SETTING_DTO = "settingDto";
@@ -59,6 +61,7 @@ public class FieldNames {
 	public static final String PRODUCTDTOS = "productDtos";
 	public static final String ORDER_DETAIL_DTOS = "orderDetailDtos";
 	public static final String SUPPORT_TICKET_DTO = "supportTicketDto";
+	public static final String SUPPORT_TICKET_ACTIVITY_HISTORY_DTO = "supportTicketActivityHistoryDto";
 	public static final String SUPPORT_TICKET_ASSIGNMENT_STRATEGY_DTO = "supportTicketAssignmentStrategyDto";
 	public static final String PAGGING = "pagging";
 	public static final String PAGE = "page";
@@ -78,9 +81,10 @@ public class FieldNames {
 	public static final String AVAILABLE_PRODUCTS = "availableProducts";
 	public static final String TODAY_ORDER = "todayOrder";
 	public static final String STOCK_STATUS = "stockStatus";
-	public static final String YEARLY_SALES_GRAPH = "yearlySalesGraph";
+	public static final String LAST_5_DAYS_SALES_GRAPH = "last5DaysSalesGraph";
 	public static final String MONTHLY_SALES_GRAPH = "monthlySalesGraph";
-	public static final String COMPARE_GRAPH = "compareGraph";
+	public static final String SALES_COMPARISION_GRAPH = "salesComparisionGraph";
+	public static final String SUPPORT_TICKET_STATUS_GRAPH = "supportTicketStatusGraph";
 	public static final String ROLE = "role";
 	public static final String MONTHS = "months";
 	public static final String YEARS = "years";
@@ -109,6 +113,7 @@ public class FieldNames {
 	public static final String SALES = "Sales";
 	public static final String PRIORITY = "priority";
 	public static final String PRIORITIES = "priorities";
+	public static final String TICKET_ID = "ticketId";
 	public static final String TICKET_NUMBER = "ticketNumber";
 	public static final String STATUSES = "statuses";
 	public static final String NOTIFICATIONS = "notifications";

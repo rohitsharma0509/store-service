@@ -4,8 +4,10 @@ import java.util.Map;
 
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.supportservice.SupportTicketActivityHistoryDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketAssignmentStrategyDto;
 import com.app.ecom.store.dto.supportservice.SupportTicketDto;
+import com.app.ecom.store.dto.supportservice.SupportTicketReportByStatus;
 import org.springframework.data.domain.Pageable;
 
 public interface SupportTicketService {
@@ -21,5 +23,9 @@ public interface SupportTicketService {
 	SupportTicketAssignmentStrategyDto getSupportTicketAssignmentStrategy();
 
 	void configureSupportTicketAssignmentStrategy(SupportTicketAssignmentStrategyDto supportTicketAssignmentStrategyDto);
+	
+	SupportTicketReportByStatus getSupportTicketReportByStatus(String username);
+
+	SupportTicketActivityHistoryDto postSupportTicketActivity(SupportTicketActivityHistoryDto supportTicketActivityHistoryDto);
 
 }

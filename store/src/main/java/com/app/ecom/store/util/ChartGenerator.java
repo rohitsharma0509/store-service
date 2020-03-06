@@ -21,6 +21,8 @@ import javax.persistence.Tuple;
 
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.SearchCriteria;
+import com.app.ecom.store.dto.supportservice.SupportTicketReportByStatus;
+import com.app.ecom.store.enums.SupportTicketStatus;
 import com.app.ecom.store.querybuilder.QueryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,7 +54,7 @@ public class ChartGenerator {
 	@Autowired
 	private CommonUtil commonUtil;
 
-	public byte[] createPieChart(Long alertProducts, Long availableProducts, Long outOfStockProduct) {
+	public byte[] getStockStatusPieChart(Long alertProducts, Long availableProducts, Long outOfStockProduct) {
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 		try {
 			DefaultPieDataset dataset = new DefaultPieDataset();
@@ -76,8 +78,31 @@ public class ChartGenerator {
 		}
 		return buffer.toByteArray();
 	}
+	
+	public byte[] getSupportTicketStatusPieChart(SupportTicketReportByStatus supportTicketReportByStatus) {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		try {
+			DefaultPieDataset dataset = new DefaultPieDataset();
+			Map<SupportTicketStatus, Long> report = supportTicketReportByStatus.getReport();
+			for(SupportTicketStatus supportTicketStatus : SupportTicketStatus.values()) {
+				dataset.setValue(supportTicketStatus, report.get(supportTicketStatus) == null ? 0 : report.get(supportTicketStatus));
+			}
+			
+			JFreeChart chart = ChartFactory.createPieChart("Support Ticket Status", dataset, true, true, false);
+			PiePlot plot = (PiePlot) chart.getPlot();
+			plot.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
+			plot.setBackgroundPaint(Color.WHITE);
+			plot.setOutlineVisible(false);
 
-	public byte[] createLineChart() {
+			BufferedImage bufferedImage = chart.createBufferedImage(500, 500);
+			ImageIO.write(bufferedImage, "png", buffer);
+		} catch (IOException e) {
+			LOGGER.error("Exception while generating piechart: ", e);
+		}
+		return buffer.toByteArray();
+	}
+
+	public byte[] getLast5DaysSalesLineChart() {
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 		try {
 			List<String> dates = new LinkedList<>();
@@ -120,7 +145,7 @@ public class ChartGenerator {
 		return buffer.toByteArray();
 	}
 
-	public byte[] createBarChart() {
+	public byte[] getCurrentYearMonthlySalesBarChart() {
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 		try {
 			Map<Integer, Double> salesMap = getSalesMapByYear(Calendar.getInstance().get(Calendar.YEAR));
@@ -156,7 +181,7 @@ public class ChartGenerator {
         return salesMap;
 	}
 	
-	public byte[] createCategoryChart() {
+	public byte[] getCurrentAndPrevYearSalesComparisionCategoryChart() {
 	       ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 	        try {
 	            Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);

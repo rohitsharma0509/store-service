@@ -46,6 +46,9 @@ public class UserDto implements Serializable {
 
 	@JsonProperty("isEnabled")
 	private Boolean isEnabled = false;
+	
+	@JsonProperty("isAdmin")
+	private Boolean isAdmin;
 
 	@JsonProperty("addressDtos")
 	private Set<AddressDto> addressDtos;
@@ -144,6 +147,14 @@ public class UserDto implements Serializable {
 
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+
+	public Boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	public Set<AddressDto> getAddressDtos() {

@@ -1,12 +1,16 @@
 package com.app.ecom.store.support.service.impl;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.Tuple;
 
 import com.app.ecom.store.support.dto.IdsDto;
 import com.app.ecom.store.support.dto.QueryRequest;
 import com.app.ecom.store.support.dto.SupportTicketDto;
 import com.app.ecom.store.support.dto.SupportTicketDtos;
+import com.app.ecom.store.support.dto.SupportTicketReportByStatus;
 import com.app.ecom.store.support.dto.SupportTicketSearchRequest;
 import com.app.ecom.store.support.enums.SupportTicketStatus;
 import com.app.ecom.store.support.handler.QueryHandler;
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 @Service
 public class SupportTicketServiceImpl implements SupportTicketService {
@@ -102,5 +107,22 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 	@Transactional
 	public void changeSupportTicketStatusAndAssignedTo(Long ticketId, String status, String assignedTo) {
 		supportTicketRepository.updateSupportTicketStatusAndAssignedTo(status, assignedTo, ticketId);
+	}
+	
+	public SupportTicketReportByStatus getSupportTicketStatusReport(String username) {
+		StringBuilder query = new StringBuilder("select status, count(ticket_id) noOfTickets from support_tickets where 1=1");
+		if(!StringUtils.isEmpty(username)) {
+			query.append(" and created_by='").append(username).append("'");
+		}
+		query.append(" group by status");
+		List<Tuple> tuples = queryHandler.getTupleByQuery(query.toString(), null);
+		SupportTicketReportByStatus supportTicketReportByStatus = new SupportTicketReportByStatus();
+		
+		EnumMap<SupportTicketStatus, Long> countMap = new EnumMap<> (SupportTicketStatus.class);
+		for(Tuple tuple : tuples){
+			countMap.put(SupportTicketStatus.valueOf(String.valueOf(tuple.get("status"))), Long.parseLong(String.valueOf(tuple.get("noOfTickets"))));
+		}
+		supportTicketReportByStatus.setReport(countMap);
+		return supportTicketReportByStatus;
 	}
 }

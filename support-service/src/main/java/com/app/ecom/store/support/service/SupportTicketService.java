@@ -3,6 +3,7 @@ package com.app.ecom.store.support.service;
 import com.app.ecom.store.support.dto.IdsDto;
 import com.app.ecom.store.support.dto.SupportTicketDto;
 import com.app.ecom.store.support.dto.SupportTicketDtos;
+import com.app.ecom.store.support.dto.SupportTicketReportByStatus;
 import com.app.ecom.store.support.dto.SupportTicketSearchRequest;
 
 public interface SupportTicketService {
@@ -26,5 +27,7 @@ public interface SupportTicketService {
 	void changeSupportTicketPriority(Long ticketId, String priority);
 	
 	void changeSupportTicketStatusAndAssignedTo(Long ticketId, String status, String assignedTo);
+	
+	SupportTicketReportByStatus getSupportTicketStatusReport(String username);
 	
 }

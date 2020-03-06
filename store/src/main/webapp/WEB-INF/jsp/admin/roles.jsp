@@ -95,7 +95,9 @@ $(document).ready(function(){
 								<div id="singleRecordAction${loop.index}" class="d-none">
 								  <ul class="list-group list-group-flush">
 								    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_ROLE %>?<%=FieldNames.ID %>=${role.id}"><spring:message code="Edit" text="Edit" /></a></li>
-								    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.ROLES %>/${role.id}"><spring:message code="Delete" text="Delete" /></a></li>
+								    <c:if test="${role.isDeletable}">
+								      <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.ROLES %>/${role.id}"><spring:message code="Delete" text="Delete" /></a></li>
+								    </c:if>
 								  </ul>
 								</div>
 							</td>

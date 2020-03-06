@@ -46,4 +46,5 @@ public class View {
 	public static final String CREATE_SUPPORT_TICKET = "createSupportTicket";
 	public static final String VIEW_SUPPORT_TICKET = "viewSupportTicket";
 	public static final String SUPPORT_TICKET_ASSIGNMENT_STRATEGY = "supportTicketAssignmentStrategy";
+	public static final String POST_SUPPORT_TICKET_ACTIVITY = "postSupportTicketActivity";
 }

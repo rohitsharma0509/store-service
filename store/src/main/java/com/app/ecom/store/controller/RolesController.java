@@ -19,6 +19,7 @@ import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.RoleDto;
+import com.app.ecom.store.enums.RoleType;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.util.CommonUtil;
@@ -70,7 +71,7 @@ public class RolesController {
 		}
 		
 		roleService.addRole(roleDto);
-		return "redirect:"+RequestUrls.ROLES;
+		return RequestUrls.ROLES;
 	}
 	
 	@GetMapping(value = RequestUrls.ADD_ROLE)
@@ -95,6 +96,7 @@ public class RolesController {
 		}
 		List<PrivilegeDto> privilegesToDisplay = allPrivileges.stream().filter(p->!childPrivilegeIds.contains(p.getId())).collect(Collectors.toList());
 		roleDto.setPrivilegeDtos(privilegesToDisplay);
+		model.addAttribute(FieldNames.ROLE_TYPES, RoleType.values());
 		model.addAttribute(FieldNames.ROLE_DTO, roleDto);
 
 		return View.ADD_ROLE;

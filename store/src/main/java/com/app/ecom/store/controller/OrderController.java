@@ -70,7 +70,7 @@ public class OrderController {
 		return "redirect:orders/" + orderDto.getId();
 	}
 	
-	@GetMapping(value = RequestUrls.GET_ORDERS)
+	@GetMapping(value = RequestUrls.GET_ORDER)
 	public String getOrder(Model model, @PathVariable(value = FieldNames.ID) Long id) {
 		OrderDto orderDto = orderService.getOrder(id);
 		model.addAttribute(FieldNames.ORDER_DTO, orderDto);
@@ -87,7 +87,7 @@ public class OrderController {
 		params.put(FieldNames.ORDER_NUMBER, orderNumber);
 		params.put(FieldNames.FROM_DATE, fromDate);
 		params.put(FieldNames.TO_DATE, toDate);
-		params.put(FieldNames.USER_ID, String.valueOf(userDto.getId()));
+		params.put(FieldNames.USER_ID, userDto.isAdmin() ? null : String.valueOf(userDto.getId()));
 		CustomPage<OrderDto> page = orderService.getOrders(pageable, params);
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.ORDERS, page.getPageNumber()+1, page.getTotalPages(), params));
 		model.addAttribute(FieldNames.PAGE, page);

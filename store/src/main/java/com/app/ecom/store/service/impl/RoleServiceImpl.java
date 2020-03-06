@@ -79,6 +79,7 @@ public class RoleServiceImpl implements RoleService {
 			roleDto.setLastModifiedBy(userDto.getUsername());
 			roleDto.setLastModifiedTs(ZonedDateTime.now());
 		}
+    	roleDto.setIsDeletable(true);
 		return userServiceClient.createUpdateRole(roleDto);
 	}
 	

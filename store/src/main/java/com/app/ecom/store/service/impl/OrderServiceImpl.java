@@ -43,6 +43,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -106,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 		orderSearchRequest.setFromDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get(FieldNames.FROM_DATE), Constants.YYYY_MM_DD)));
 		orderSearchRequest.setToDate(commonUtil.convertDateToZonedDateTime(commonUtil.convertStringToDate(params.get(FieldNames.TO_DATE), Constants.YYYY_MM_DD)));
 		orderSearchRequest.setOrderNumber(params.get(FieldNames.ORDER_NUMBER));
-		orderSearchRequest.setUserId(Long.parseLong(params.get(FieldNames.USER_ID)));
+		orderSearchRequest.setUserId(StringUtils.isEmpty(params.get(FieldNames.USER_ID)) ? null : Long.parseLong(params.get(FieldNames.USER_ID)));
 		List<OrderByClause> orderByClauses = new ArrayList<>();
 		OrderByClause orderByClause = new OrderByClause();
 		orderByClause.setSortBy(FieldNames.CREATED_TS);
@@ -125,9 +126,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Long countByOrderDateGreaterThanEqual(ZonedDateTime orderDate){
+	public Long getNumberOfOrdersByDateAndUserId(ZonedDateTime orderDate, Long userId){
 		OrderSearchRequest orderSearchRequest = new OrderSearchRequest();
 		orderSearchRequest.setFromDate(orderDate);
+		orderSearchRequest.setUserId(userId);
 		return orderServiceClient.countOrders(orderSearchRequest);
 	}
 	
