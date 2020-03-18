@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
+import com.app.ecom.store.enums.RoleType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,6 +20,9 @@ public class PrivilegeDto {
 	
 	@JsonProperty("oldName")
 	private String oldName;
+	
+	@JsonProperty("type")
+	private RoleType type;
 	
 	@JsonProperty("description")
 	private String description;
@@ -69,6 +73,14 @@ public class PrivilegeDto {
 
 	public void setOldName(String oldName) {
 		this.oldName = oldName;
+	}
+
+	public RoleType getType() {
+		return type;
+	}
+
+	public void setType(RoleType type) {
+		this.type = type;
 	}
 
 	public String getDescription() {

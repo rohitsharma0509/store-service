@@ -28,13 +28,24 @@ String action = "Save";
         <div class="col-md-10 mx-auto">
           <div class="form-group row">
               <div class="col-sm-6">
+		              <label for="<%=FieldNames.TYPE %>"><spring:message code="Privilege Type" text="Privilege Type" />&nbsp;<span class="urgent_fields">*</span></label>
+		              <form:select path="<%=FieldNames.TYPE %>" id="<%=FieldNames.TYPE %>" class="form-control form-control-sm">
+		                <form:option value=""><spring:message code="Select Privilege Type" /></form:option>
+		                <c:forEach var="privilegeType" items="${privilegeTypes}">
+		                   <form:option value="${privilegeType.name()}">${privilegeType.name()}</form:option>
+		                </c:forEach>
+		              </form:select>
+              </div>
+              <div class="col-sm-6">
                   <label for="<%=FieldNames.NAME %>"><spring:message code="Privilege Name" text="Privilege Name" />&nbsp;<span class="urgent_fields">*</span></label>
                   <form:input type="text" path="<%=FieldNames.NAME %>" id="<%=FieldNames.NAME %>" class="form-control input-sm"/>
                   <form:errors path="<%=FieldNames.NAME %>" class="help-inline has-error"></form:errors>
               </div>
-              <div class="col-sm-6">
+          </div>
+          <div class="form-group row">
+              <div class="col-sm-12">
                   <label for="<%=FieldNames.DESCRIPTION %>"><spring:message code="Description" text="Description" /></label>
-                  <form:input type="text" path="<%=FieldNames.DESCRIPTION %>" id="<%=FieldNames.DESCRIPTION %>" class="form-control input-sm"/>
+                  <form:textarea path="<%=FieldNames.DESCRIPTION %>" rows="5" cols="60" class="form-control form-control-sm" />
               </div>
           </div>
           <div class="form-group row">
@@ -47,6 +58,7 @@ String action = "Save";
                     </c:forEach>
                   </form:select>
               </div>
+              <div class="col-sm-6"></div>
           </div>
         </div>
     </div>

@@ -22,6 +22,9 @@ public class Privilege {
 	@Column(name = "privilege_name")
 	private String name;
 	
+	@Column(name = "privilege_type")
+	private String type;
+	
 	@Column(name = "privilege_desc")
 	private String description;
 	
@@ -57,6 +60,14 @@ public class Privilege {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getDescription() {

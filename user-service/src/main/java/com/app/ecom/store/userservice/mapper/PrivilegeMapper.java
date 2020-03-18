@@ -10,6 +10,7 @@ import com.app.ecom.store.userservice.dto.PrivilegeSearchRequest;
 import com.app.ecom.store.userservice.dto.RoleDtos;
 import com.app.ecom.store.userservice.dto.WhereClause;
 import com.app.ecom.store.userservice.enums.OperationType;
+import com.app.ecom.store.userservice.enums.RoleType;
 import com.app.ecom.store.userservice.model.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,6 +41,7 @@ public class PrivilegeMapper {
 		Privilege privilege = new Privilege();
 		privilege.setId(privilegeDto.getId());
 		privilege.setName(privilegeDto.getName());
+		privilege.setType(privilegeDto.getType() == null ? null : privilegeDto.getType().name());
 		privilege.setDescription(privilegeDto.getDescription());
 		privilege.setParentId(privilegeDto.getParentId());
 		privilege.setCreatedBy(privilegeDto.getCreatedBy());
@@ -77,6 +79,7 @@ public class PrivilegeMapper {
 		PrivilegeDto privilegeDto = new PrivilegeDto();
 		privilegeDto.setId(privilege.getId());
 		privilegeDto.setName(privilege.getName());
+		privilegeDto.setType(privilege.getType() == null ? null : RoleType.valueOf(privilege.getType()));
 		privilegeDto.setDescription(privilege.getDescription());
 		privilegeDto.setParentId(privilege.getParentId());
 		if (isRoleRequired) {

@@ -16,6 +16,7 @@ import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
+import com.app.ecom.store.enums.RoleType;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.PrivilegeValidator;
@@ -67,6 +68,7 @@ public class PrivilegeController {
 		model.addAttribute(FieldNames.PRIVILEGE_DTO, privilegeDto);
 		List<PrivilegeDto> allPrivileges = privilegeService.getAllPrivileges();
 		model.addAttribute(FieldNames.PRIVILEGES, allPrivileges == null ? Collections.emptyList() : allPrivileges.stream().filter(p-> !p.getId().equals(id)).collect(Collectors.toList()));
+		model.addAttribute(FieldNames.PRIVILEGE_TYPES, RoleType.values());
 		return View.ADD_PRIVILEGE;
 	}
 	

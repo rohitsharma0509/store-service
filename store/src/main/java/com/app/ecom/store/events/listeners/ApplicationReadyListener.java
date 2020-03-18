@@ -65,22 +65,23 @@ public class ApplicationReadyListener implements ApplicationListener<Application
 		roleDto.setName(roleName);
 		roleDto.setIsDeletable(false);
 		roleDto.setType(type);
-		roleDto.setPrivilegeDtos(getPrivileges(privilegeName, privilegeDesc));
+		roleDto.setPrivilegeDtos(getPrivileges(privilegeName, privilegeDesc, type));
 		return roleService.addRole(roleDto);
 	}
 	
-	private List<PrivilegeDto> getPrivileges(String privilegeName, String privilegeDesc) {
+	private List<PrivilegeDto> getPrivileges(String privilegeName, String privilegeDesc, RoleType type) {
 		List<PrivilegeDto> privilegeDtos = new ArrayList<>();
-		PrivilegeDto privilegeDto = savePrivilege(privilegeName, privilegeDesc);
+		PrivilegeDto privilegeDto = savePrivilege(privilegeName, privilegeDesc, type);
 		privilegeDto.setIsInRole(true);
 		privilegeDtos.add(privilegeDto);
 		return privilegeDtos;
 	}
 	
-	private PrivilegeDto savePrivilege(String name, String desc) {
+	private PrivilegeDto savePrivilege(String name, String desc, RoleType type) {
 		PrivilegeDto privilegeDto = new PrivilegeDto();
 		privilegeDto.setName(name);
 		privilegeDto.setDescription(desc);
+		privilegeDto.setType(type);
 		return privilegeService.addPrivilege(privilegeDto);
 	}
 }

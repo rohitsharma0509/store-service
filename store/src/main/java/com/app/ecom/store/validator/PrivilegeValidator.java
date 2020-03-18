@@ -38,6 +38,7 @@ public class PrivilegeValidator implements Validator {
 		List<PrivilegeDto> privilegeDtos = privilegeService.getAllPrivileges();
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.TYPE, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
 		for(PrivilegeDto privilege : privilegeDtos) {
 			if(!privilege.getName().equalsIgnoreCase(privilegeDto.getOldName()) && privilege.getName().equalsIgnoreCase(privilegeDto.getName())) {

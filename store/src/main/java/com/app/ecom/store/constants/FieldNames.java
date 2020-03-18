@@ -110,6 +110,7 @@ public class FieldNames {
 	public static final String CREATED_TS = "createdTs";
 	public static final String TOKEN = "token";
 	public static final String PRIVILEGES = "privileges";
+	public static final String PRIVILEGE_TYPES = "privilegeTypes";
 	public static final String SALES = "Sales";
 	public static final String PRIORITY = "priority";
 	public static final String PRIORITIES = "priorities";

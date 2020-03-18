@@ -35,6 +35,7 @@ public class RoleValidator implements Validator {
 	public void validate(Object o, Errors errors) {
 		RoleDto roleDto = (RoleDto) o;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.TYPE, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
 		List<RoleDto> roleDtos = roleService.getAllRoles();
 		

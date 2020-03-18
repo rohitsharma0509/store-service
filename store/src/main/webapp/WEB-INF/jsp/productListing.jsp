@@ -3,17 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<style>
-	.productCard {
-		background-color: #009edf1a;
-	}
-</style>
 <c:forEach var="product" items="${page.getContent()}" varStatus="loop">
 	<c:if test="${loop.index ==0 || (loop.index % 4) == 0}">
 	<div class="row">
 	</c:if>
 		<div class="col-sm-3">
-			<div class="card productCard">
+			<div class="card">
 				<c:choose>
 					<c:when test="${product.base64Image != null && product.base64Image != ''}">
 						<div class="card-img-top"><img style="max-width: 100%; max-height: 100px;" alt="${product.code}" src="data:image/jpg;base64,${product.base64Image}"/></div>

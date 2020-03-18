@@ -6,7 +6,6 @@
 <ol class="breadcrumb">
   <li class="breadcrumb-item active"><spring:message code="My Account" text="My Account" /></li>
 </ol>
-<div class="row" style="height: 10px;"></div>
 <div class="row">
 	<div class="col-sm-12">
 		<a class="float-right" href="${contextPath}<%=RequestUrls.EDIT_PROFILE %>"><spring:message code="Edit Profile" text="Edit Profile" /></a>
