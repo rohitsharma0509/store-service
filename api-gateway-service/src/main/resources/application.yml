@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: api-gateway-service
+
+server:
+  port: 8765
+  servlet: 
+    context-path: /api/apigatewayservice/v1
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${service-registry.uri:http://127.0.0.1:8761}/eureka
+    fetchRegistry: true
+    
+ribbon:
+  eureka:
+    enabled: true
+
+zuul:
+  routes:
+    master-data-service:
+      path: /**/api/masterdataservice/v1/**
+      serviceId: master-data-service
+    order-service:
+      path: /**/api/orderservice/v1/**
+      serviceId: order-service
+    product-service:
+      path: /**/api/productservice/v1/**
+      serviceId: product-service
+    user-service:
+      serviceId: user-service
+      path: /**/api/userservice/v1/**
+    address-lookup-service:
+      path: /**/api/addresslookupservice/v1/**
+      serviceId: address-lookup-service
+    user-token-service:
+      path: /**/api/usertokenservice/v1/**
+      serviceId: user-token-service
+    support-service:
+      path: /**/api/supportservice/v1/**
+      serviceId: support-service
