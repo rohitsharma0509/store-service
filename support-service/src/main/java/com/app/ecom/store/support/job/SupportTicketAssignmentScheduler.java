@@ -17,12 +17,12 @@ import com.app.ecom.store.support.handler.QueryHandler;
 import com.app.ecom.store.support.model.SupportTicket;
 import com.app.ecom.store.support.service.SupportTicketAssignmentStrategyService;
 import com.app.ecom.store.support.service.SupportTicketService;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 @Component

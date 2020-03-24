@@ -7,9 +7,9 @@ import com.app.ecom.store.support.mapper.SupportTicketAssignmentStrategyMapper;
 import com.app.ecom.store.support.repository.SupportTicketAssignmentStrategy;
 import com.app.ecom.store.support.repository.SupportTicketAssignmentStrategyRepository;
 import com.app.ecom.store.support.service.SupportTicketAssignmentStrategyService;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class SupportTicketAssignmentStrategyServiceImpl implements SupportTicketAssignmentStrategyService {
