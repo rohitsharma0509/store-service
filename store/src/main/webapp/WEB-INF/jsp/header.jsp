@@ -131,6 +131,10 @@ NotificationDtos notificationDtos = notificationService.getNotifications();
 .spacer {
   margin-top: 10px;
 }
+
+.mt-40 {
+  margin-top: 40px;
+}
 </style>
 <div class="row">
   <div class="col-sm-12">

@@ -155,6 +155,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/admin/roles.jsp" />  
     </definition>
     
+    <definition name="rolePrivileges" extends="base.definition">  
+        <put-attribute name="title" value="Select Privileges" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/rolePrivileges.jsp" />  
+    </definition>
+    
     <definition name="addRole" extends="base.definition">  
         <put-attribute name="title" value="Add Role" />  
         <put-attribute name="body" value="/WEB-INF/jsp/admin/addRole.jsp" />  

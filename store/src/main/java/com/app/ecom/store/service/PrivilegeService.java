@@ -6,6 +6,7 @@ import java.util.Map;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
+import com.app.ecom.store.enums.RoleType;
 import org.springframework.data.domain.Pageable;
 
 public interface PrivilegeService {
@@ -17,6 +18,8 @@ public interface PrivilegeService {
 	CustomPage<PrivilegeDto> getPrivileges(Pageable pageable, Map<String, String> params);
 	
 	List<PrivilegeDto> getPrivilegesByIdIn(List<Long> ids);
+	
+	List<PrivilegeDto> getPrivilegesByType(RoleType roleType);
 
 	List<PrivilegeDto> getAllPrivileges();
 

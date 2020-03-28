@@ -63,29 +63,35 @@ public class RolesController {
         return View.ROLES;
     }
 	
-	@PostMapping(value = RequestUrls.ROLES)
-	public String addRole(Model model, @Valid RoleDto roleDto, BindingResult bindingResult) {
-		roleValidator.validate(roleDto, bindingResult);
-		if (bindingResult.hasErrors()) {
-			return View.ADD_ROLE;
-		}
-		
-		roleService.addRole(roleDto);
-		return RequestUrls.ROLES;
-	}
-	
 	@GetMapping(value = RequestUrls.ADD_ROLE)
 	public String addRole(Model model, @RequestParam(value = FieldNames.ID, required=false) Long id) {
 		RoleDto roleDto;
-		List<Long> rolePrivileges = new ArrayList<>();
 		if(id != null){
 			roleDto = roleService.getRoleById(id);
-			rolePrivileges = roleDto.getPrivilegeDtos().stream().map(PrivilegeDto::getId).collect(Collectors.toList());
 		}else {
 			roleDto = new RoleDto();
 		}
 		
-		List<PrivilegeDto> allPrivileges = privilegeService.getAllPrivileges();
+		model.addAttribute(FieldNames.ROLE_TYPES, RoleType.values());
+		model.addAttribute(FieldNames.ROLE_DTO, roleDto);
+		return View.ADD_ROLE;
+	}
+	
+	@PostMapping(value = RequestUrls.ROLES)
+	public String addRole(Model model, @Valid RoleDto roleDto, BindingResult bindingResult) {
+		roleValidator.validate(roleDto, bindingResult);
+		if (bindingResult.hasErrors()) {
+			model.addAttribute(FieldNames.ROLE_TYPES, RoleType.values());
+			return View.ADD_ROLE;
+		}
+		
+		List<Long> rolePrivileges = new ArrayList<>();
+		if(roleDto.getId() != null){
+			RoleDto roleDtoDb = roleService.getRoleById(roleDto.getId());
+			rolePrivileges = roleDtoDb.getPrivilegeDtos().stream().map(PrivilegeDto::getId).collect(Collectors.toList());
+		}
+		
+		List<PrivilegeDto> allPrivileges = privilegeService.getPrivilegesByType(roleDto.getType());
 		Set<Long> childPrivilegeIds = new HashSet<>();
 		
 		for(PrivilegeDto privilegeDto : allPrivileges) {
@@ -96,10 +102,18 @@ public class RolesController {
 		}
 		List<PrivilegeDto> privilegesToDisplay = allPrivileges.stream().filter(p->!childPrivilegeIds.contains(p.getId())).collect(Collectors.toList());
 		roleDto.setPrivilegeDtos(privilegesToDisplay);
-		model.addAttribute(FieldNames.ROLE_TYPES, RoleType.values());
 		model.addAttribute(FieldNames.ROLE_DTO, roleDto);
-
-		return View.ADD_ROLE;
+		return View.ROLE_PRIVILEGES;
+	}
+	
+	@PostMapping(value = RequestUrls.ROLE_PRIVILEGES)
+	public String addRolePrivileges(Model model, @Valid RoleDto roleDto, BindingResult bindingResult) {
+		roleValidator.validate(roleDto, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return View.ROLE_PRIVILEGES;
+		}
+		roleService.addRole(roleDto);
+		return "redirect:"+RequestUrls.ROLES;
 	}
 	
 	@ResponseBody

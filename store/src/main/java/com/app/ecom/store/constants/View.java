@@ -28,6 +28,7 @@ public class View {
 	public static final String YEARLY_PROFIT_LOSS = "yearlyProfitLoss";
 	public static final String ROLES = "roles";
 	public static final String ADD_ROLE = "addRole";
+	public static final String ROLE_PRIVILEGES = "rolePrivileges";
 	public static final String SETTINGS = "settings";
 	public static final String ADD_SETTING = "addSetting";
 	public static final String SHOPPING_CART_CONFIRM = "shoppingCartConfirm";

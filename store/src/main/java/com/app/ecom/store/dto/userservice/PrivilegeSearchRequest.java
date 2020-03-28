@@ -3,6 +3,7 @@ package com.app.ecom.store.dto.userservice;
 import java.util.List;
 
 import com.app.ecom.store.dto.DefaultSearchRequest;
+import com.app.ecom.store.enums.RoleType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PrivilegeSearchRequest extends DefaultSearchRequest {
@@ -12,6 +13,9 @@ public class PrivilegeSearchRequest extends DefaultSearchRequest {
 
 	@JsonProperty("name")
 	private String name;
+
+	@JsonProperty("type")
+	private RoleType type;
 	
 	@JsonProperty("description")
 	private String description;
@@ -30,6 +34,14 @@ public class PrivilegeSearchRequest extends DefaultSearchRequest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public RoleType getType() {
+		return type;
+	}
+
+	public void setType(RoleType type) {
+		this.type = type;
 	}
 
 	public String getDescription() {

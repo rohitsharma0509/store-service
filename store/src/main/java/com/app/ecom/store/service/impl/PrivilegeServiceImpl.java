@@ -2,6 +2,7 @@ package com.app.ecom.store.service.impl;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDtos;
 import com.app.ecom.store.dto.userservice.PrivilegeSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
+import com.app.ecom.store.enums.RoleType;
 import com.app.ecom.store.service.PrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -82,6 +84,14 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		privilegeSearchRequest.setIds(ids);
 		PrivilegeDtos privilegeDtos = userServiceClient.getPrivileges(privilegeSearchRequest);
 		return privilegeDtos == null ? null : privilegeDtos.getPrivileges();
+	}
+	
+	@Override
+	public List<PrivilegeDto> getPrivilegesByType(RoleType roleType) {
+		PrivilegeSearchRequest privilegeSearchRequest = new PrivilegeSearchRequest();
+		privilegeSearchRequest.setType(roleType);
+		PrivilegeDtos privilegeDtos = userServiceClient.getPrivileges(privilegeSearchRequest);
+		return privilegeDtos == null ? Collections.emptyList() : privilegeDtos.getPrivileges();
 	}
 
 	@Override
