@@ -10,8 +10,13 @@ public interface ProductCategoryService {
 	ProductCategoryDto addUpdateProductCategory(ProductCategoryDto productCategoryDto);
 	
 	Long countProductCategories(ProductCategoryDto productCategoryDto);
+	
+	ProductCategoryDto getProductCategoryById(Long id);
 
 	ProductCategoryDtos getProductCategories(ProductCategorySearchRequest productCategorySearchRequest);
 	
-	void deleteCategories(IdsDto idsDto);
+	void deleteProductCategoryById(Long id);
+	
+	void deleteProductCategories(IdsDto idsDto);
+
 }

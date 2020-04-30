@@ -1,5 +1,9 @@
 package com.app.ecom.store.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
@@ -45,6 +49,12 @@ public class UserServiceClient {
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
+	public UserDto getUser(Long id) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
+		ExternalApiRequest<UserDto> externalApi = commonUtil.getExternalApiRequest(UserDto.class, url+"/"+id, HttpMethod.GET, null, null, null);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
 	public UserDtos getUsers(UserSearchRequest userSearchRequest) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
 		ExternalApiRequest<UserDtos> externalApi = commonUtil.getExternalApiRequest(UserDtos.class, url, HttpMethod.POST, null, null, userSearchRequest);
@@ -61,6 +71,14 @@ public class UserServiceClient {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public boolean changePassword(Long userId, String pswrd) {
+		Map<String, String> queryParamMap = new HashMap<>();
+		queryParamMap.put(FieldNames.PSWRD, pswrd);
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER);
+		ExternalApiRequest<Boolean> externalApi = commonUtil.getExternalApiRequest(Boolean.class, url+ "/" +userId, HttpMethod.PUT, null, queryParamMap, null);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
 	public RoleDto createUpdateRole(RoleDto roleDto) {

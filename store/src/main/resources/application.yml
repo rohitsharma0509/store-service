@@ -45,3 +45,6 @@ application:
   support-service:
     name: support-service
     context-path: /api/supportservice/v1
+  template-service:
+    name: template-service
+    context-path: /api/templateservice/v1

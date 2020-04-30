@@ -6,7 +6,6 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.Email;
-import com.app.ecom.store.model.EmailAccount;
 import com.app.ecom.store.service.EmailService;
 import com.app.ecom.store.validator.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +39,5 @@ public class EmailController {
 		}
 		emailService.sendEmail(email);
 		return View.ADMIN;
-	}
-	
-	@GetMapping(value = RequestUrls.GET_EMAIL_ACCOUNT)
-	public String getEmailAccount(Model model) {
-		model.addAttribute("emailAccount", emailService.getEmailAccount());
-		return "addEmailAccount";
-	}
-	
-	@PostMapping(value = RequestUrls.ADD_EMAIL_ACCOUNT)
-	public String addEmailAccount(@ModelAttribute("emailAccount")  @Valid EmailAccount emailAccount, BindingResult bindingResult) {
-		emailService.addEmailAccount(emailAccount);
-		return "redirect:"+RequestUrls.GET_EMAIL_ACCOUNT;
 	}
 }

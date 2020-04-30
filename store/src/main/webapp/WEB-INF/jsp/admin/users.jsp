@@ -21,7 +21,7 @@ $(document).ready(function(){
 });
 </script>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><i class="fa fa-users breadcrumb-icon"></i>&nbsp;&nbsp;<a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Users" text="Users" /></li>
   <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
@@ -75,9 +75,9 @@ $(document).ready(function(){
 					<c:forEach var="user" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${user.id}" /></td>
-							<td>${user.firstName} ${user.lastName}</td>
-				   			<td>${user.email}</td>
-				   			<td>${user.mobile}</td>
+							<td><a href="${contextPath}<%=RequestUrls.VIEW_USER %>?<%=FieldNames.ID %>=${user.id}" >${user.firstName} ${user.lastName}</a></td>
+				   		<td>${user.email}</td>
+				   		<td>${user.mobile}</td>
 							<td>
 							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">

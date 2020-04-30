@@ -1,6 +1,7 @@
 package com.app.ecom.store.masterdata.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.app.ecom.store.masterdata.dto.IdsDto;
 import com.app.ecom.store.masterdata.dto.QueryRequest;
@@ -13,8 +14,6 @@ import com.app.ecom.store.masterdata.model.Setting;
 import com.app.ecom.store.masterdata.repository.SettingRepository;
 import com.app.ecom.store.masterdata.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -30,20 +29,21 @@ public class SettingServiceImpl implements SettingService {
 	
 	@Autowired
 	private QueryHandler<Setting> queryHandler;
-	
-	@Autowired
-	private CacheManager cacheManager;
 
 	@Override
 	@Transactional
 	public SettingDto addUpdateSetting(SettingDto settingDto) {
 		Setting setting = settingRepository.save(settingMapper.settingDtoToSetting(settingDto));
-		cacheManager.getCache("settingCache").clear();
 		return settingMapper.settingToSettingDto(setting);
+	}
+	
+	@Override
+	public SettingDto getSettingById(Long id) {
+		Optional<Setting> optionalSetting = settingRepository.findById(id);
+		return optionalSetting.isPresent() ? settingMapper.settingToSettingDto(optionalSetting.get()) : null;
 	}
 
 	@Override
-	@Cacheable(value = "settingCache")
 	public SettingDtos getSettings(SettingSearchRequest settingSearchRequest) {
 		queryHandler.setType(Setting.class);
 		QueryRequest queryRequest = new QueryRequest();
@@ -65,7 +65,5 @@ public class SettingServiceImpl implements SettingService {
 		} else {
 			settingRepository.deleteByIdIn(idsDto.getIds());
 		}
-		cacheManager.getCache("settingCache").clear();
 	}
-
 }

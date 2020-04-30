@@ -79,6 +79,7 @@ public class PrivilegeMapper {
 		PrivilegeDto privilegeDto = new PrivilegeDto();
 		privilegeDto.setId(privilege.getId());
 		privilegeDto.setName(privilege.getName());
+		privilegeDto.setOldName(privilege.getName());
 		privilegeDto.setType(privilege.getType() == null ? null : RoleType.valueOf(privilege.getType()));
 		privilegeDto.setDescription(privilege.getDescription());
 		privilegeDto.setParentId(privilege.getParentId());

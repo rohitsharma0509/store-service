@@ -33,6 +33,7 @@
 		<module>support-service</module>
 		<module>user-service</module>
 		<module>user-token-service</module>
+		<module>template-service</module>
 	</modules>
 
 	<dependencyManagement>

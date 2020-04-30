@@ -135,6 +135,16 @@ NotificationDtos notificationDtos = notificationService.getNotifications();
 .mt-40 {
   margin-top: 40px;
 }
+.heading {
+    padding: 10px;
+    background-color: #f2f3f8;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.tab-content>.active {
+    background-color: #fff;
+}
 </style>
 <div class="row">
   <div class="col-sm-12">
@@ -142,13 +152,15 @@ NotificationDtos notificationDtos = notificationService.getNotifications();
         <!-- <a class="navbar-brand" href="#"><img src="../images/logo.jpg" alt="Store" style="width:40px;"></a> -->
         <ul class="navbar-nav">
            <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.HOME %>"><spring:message code="Dashboard" text="Dashboard" /></a></li>
-           <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
-           <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.SHOPPING_CART %>"><spring:message code="Shopping Cart" text="Shopping Cart" /></a>
-           <security:authorize access="hasAuthority('ADMIN')">
+           <security:authorize access="hasAuthority('CAN_VIEW_PRODUCT_MODULE')">
+             <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.PRODUCT_ALL %>"><spring:message code="Products" text="Products" /></a></li>
+           </security:authorize>
+           <security:authorize access="hasAuthority('CAN_VIEW_STOCK_MODULE')">
              <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.STOCK %>"><spring:message code="Stock" text="Stock" /></a></li>
            </security:authorize>
-          <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.ORDERS %>"><spring:message code="Orders" text="Orders" /></a></li>
-          <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.SUPPORT_TICKETS %>"><spring:message code="Support" text="Support" /></a></li>
+	         <security:authorize access="hasAuthority('CAN_VIEW_SUPPORT_MODULE')">
+	           <li class="nav-item"><a class="nav-link" href="${contextPath}<%=RequestUrls.SUPPORT_TICKETS %>"><spring:message code="Support" text="Support" /></a></li>
+	         </security:authorize>
         </ul>
         <ul class="navbar-nav ml-auto nav-flex-icons">
 		      <li class="nav-item dropdown">
@@ -188,6 +200,10 @@ NotificationDtos notificationDtos = notificationService.getNotifications();
                     <a class="dropdown-item" href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a>
                   </security:authorize>
                   <a class="dropdown-item" href="${contextPath}<%=RequestUrls.MY_ACCOUNT %>"><spring:message code="My Account" text="My Account" /></a>
+                  <security:authorize access="hasAuthority('CAN_VIEW_PRODUCT_MODULE')">
+                    <a class="dropdown-item" href="${contextPath}<%=RequestUrls.SHOPPING_CART %>"><spring:message code="Shopping Cart" text="Shopping Cart" /></a>
+                    <a class="dropdown-item" href="${contextPath}<%=RequestUrls.ORDERS %>"><spring:message code="Your Orders" text="Your Orders" /></a>
+                  </security:authorize>
                   <a class="dropdown-item" href="#" onclick="document.forms['logoutForm'].submit()"><spring:message code="Logout" text="Logout" /></a>
                 </form>
               </c:if>

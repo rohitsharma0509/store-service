@@ -1,5 +1,6 @@
 package com.app.ecom.store.userservice.resource;
 
+import com.app.ecom.store.userservice.constants.Constants;
 import com.app.ecom.store.userservice.constants.Endpoint;
 import com.app.ecom.store.userservice.dto.IdsDto;
 import com.app.ecom.store.userservice.dto.UserDto;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,7 +44,7 @@ public class UserResource {
 		}
 	}
 	
-	@GetMapping(value = Endpoint.GET_USER)
+	@GetMapping(value = Endpoint.USER_WITH_ID)
 	public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
 		try {
 			UserDto userDto = userService.getUserById(id);
@@ -83,6 +85,17 @@ public class UserResource {
 		} catch (Exception e) {
 			logger.error(new StringBuilder("Exception while deleting user: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(value = Endpoint.USER_WITH_ID)
+	public ResponseEntity<Boolean> changePassword(@PathVariable Long id, @RequestParam(name = Constants.PSWRD, required = true) String pswrd) {
+		try {
+			userService.changePassword(id, pswrd);
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while changing password: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

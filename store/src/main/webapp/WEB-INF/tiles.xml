@@ -49,6 +49,11 @@
         <put-attribute name="title" value="Reset Password" />  
         <put-attribute name="body" value="/WEB-INF/jsp/resetPassword.jsp" />  
     </definition>
+    
+    <definition name="changePswrd" extends="empty.definition">  
+        <put-attribute name="title" value="Change Password" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/changePswrd.jsp" />  
+    </definition>
 
     <definition name="registration" extends="plain.definition">
         <put-attribute name="title" value="Registration" />  
@@ -100,14 +105,14 @@
         <put-attribute name="body" value="/WEB-INF/jsp/addEmailAccount.jsp" />  
     </definition>
     
-    <definition name="addEmailTemplates" extends="base.definition">  
-        <put-attribute name="title" value="Add Email Templates" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/addEmailTemplates.jsp" />  
+    <definition name="addTemplate" extends="base.definition">  
+        <put-attribute name="title" value="Add Template" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/addTemplate.jsp" />  
     </definition>
     
-    <definition name="emailTemplates" extends="base.definition">  
-        <put-attribute name="title" value="Email Templates" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/admin/emailTemplates.jsp" />  
+    <definition name="templates" extends="base.definition">  
+        <put-attribute name="title" value="Templates" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/templates.jsp" />  
     </definition>
     
     <definition name="addCategory" extends="base.definition">  
@@ -148,6 +153,25 @@
     <definition name="editUser" extends="base.definition">  
         <put-attribute name="title" value="Edit User" />  
         <put-attribute name="body" value="/WEB-INF/jsp/admin/editUser.jsp" />  
+    </definition>
+    
+    <definition name="viewUser" extends="base.definition">  
+        <put-attribute name="title" value="Edit User" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/viewUser.jsp" />  
+    </definition>
+    
+    <definition name="accountSetting" extends="empty.definition">  
+        <put-attribute name="title" value="Account Setting" />
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/accountSetting.jsp" />  
+    </definition>
+    
+    <definition name="personalInformation" extends="empty.definition">  
+        <put-attribute name="title" value="Personal Information" />
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/personalInformation.jsp" />  
+    </definition>
+    
+    <definition name="modifyUserRoles" extends="empty.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/modifyUserRoles.jsp" />  
     </definition>
     
     <definition name="roles" extends="base.definition">  

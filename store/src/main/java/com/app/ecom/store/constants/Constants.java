@@ -21,9 +21,6 @@ public class Constants {
 	public static final String DEFAULT_ADMIN_ROLE = "ROLE_ADMIN";
 	public static final String DEFAULT_ADMIN_PRIVILEGE = "ADMIN";
 	public static final String DEFAULT_ADMIN_PRIVILEGE_DESC = "Is Admin?";
-	public static final String DEFAULT_GUEST_ROLE = "ROLE_GUEST";
-	public static final String DEFAULT_GUEST_PRIVILEGE = "GUEST";
-	public static final String DEFAULT_GUEST_PRIVILEGE_DESC = "Is Guest?";
 
 	private Constants() {
 

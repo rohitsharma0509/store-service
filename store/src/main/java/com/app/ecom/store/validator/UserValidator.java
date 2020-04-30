@@ -1,6 +1,7 @@
 package com.app.ecom.store.validator;
 
 import com.app.ecom.store.constants.FieldNames;
+import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.UserService;
@@ -54,4 +55,13 @@ public class UserValidator implements Validator {
         	errors.rejectValue(FieldNames.MOBILE, commonUtil.getMessage(ErrorCode.ERR000014.getCode()));
         }
     }
+
+	public Response validatePassword(String pswrd, String confirmPswrd) {
+		if(StringUtils.isEmpty(pswrd) || StringUtils.isEmpty(confirmPswrd)) {
+			return commonUtil.getResponse(true, ErrorCode.ERR000003.getCode());
+		}
+		
+		boolean isPswrdMatch = pswrd.equals(confirmPswrd);
+		return commonUtil.getResponse(!isPswrdMatch, ErrorCode.ERR000007.getCode());
+	}
 }

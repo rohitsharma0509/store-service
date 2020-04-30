@@ -6,7 +6,6 @@ import java.util.List;
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.RoleDto;
-import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.RoleType;
 import com.app.ecom.store.service.PrivilegeService;
 import com.app.ecom.store.service.RoleService;
@@ -34,10 +33,10 @@ public class ApplicationReadyListener implements ApplicationListener<Application
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		try {
+		/*try {
 			UserDto user = userService.findUserByUsername("rohits");
 			if (null == user) {
-				saveRole(Constants.DEFAULT_GUEST_ROLE, Constants.DEFAULT_GUEST_PRIVILEGE, Constants.DEFAULT_GUEST_PRIVILEGE_DESC, RoleType.GUEST);
+				//saveRole(Constants.DEFAULT_GUEST_ROLE, Constants.DEFAULT_GUEST_PRIVILEGE, Constants.DEFAULT_GUEST_PRIVILEGE_DESC, RoleType.GUEST);
 				UserDto userDto = new UserDto();
 				userDto.setFirstName("Rohit");
 				userDto.setLastName("Sharma");
@@ -51,7 +50,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
 			}
 		} catch (Exception e) {
 			logger.error(new StringBuilder("Exception while pushing default users and roles: ").append(e.getMessage()));
-		}
+		}*/
 	}
 
 	private List<RoleDto> getAdminRole() {

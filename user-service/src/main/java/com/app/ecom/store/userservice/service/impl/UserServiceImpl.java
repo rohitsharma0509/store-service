@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 @Service
@@ -88,5 +89,11 @@ public class UserServiceImpl implements UserService {
 		} else {
 			userRepository.deleteByIdIn(idsDto.getIds());
 		}
+	}
+
+	@Override
+	@Transactional
+	public void changePassword(Long userId, String pswrd) {
+		userRepository.updatePassword(userId, pswrd);
 	}
 }

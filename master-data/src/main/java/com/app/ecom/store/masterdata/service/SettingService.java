@@ -8,6 +8,8 @@ import com.app.ecom.store.masterdata.dto.setting.SettingSearchRequest;
 public interface SettingService {
 
 	SettingDto addUpdateSetting(SettingDto settingDto);
+	
+	SettingDto getSettingById(Long id);
 
 	SettingDtos getSettings(SettingSearchRequest settingSearchRequest);
 

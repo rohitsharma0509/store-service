@@ -39,7 +39,7 @@
 		  <div class="col-sm-6">
 		    <table class="table">
 		      <tr class="info"><th><b><spring:message code="Templates" text="Templates" /></b></th></tr>
-		      <tr><td><a href="${contextPath}<%=RequestUrls.EMAIL_TEMPLATES %>"><spring:message code="Manage Email Template" text="Manage Email Template" /></a></td></tr>
+		      <tr><td><a href="${contextPath}<%=RequestUrls.TEMPLATES %>"><spring:message code="Manage Template" text="Manage Template" /></a></td></tr>
 		    </table>
 		  </div>
 		  <div class="col-sm-6">

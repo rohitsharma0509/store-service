@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import com.app.ecom.store.client.AddressLookupServiceClient;
 import com.app.ecom.store.client.UserServiceClient;
-import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.userservice.RoleDtos;
-import com.app.ecom.store.dto.userservice.RoleSearchRequest;
+import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
+import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.userservice.UserDtos;
 import com.app.ecom.store.dto.userservice.UserSearchRequest;
@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private HttpSession httpSession;
     
+    @Autowired
+    private AddressLookupServiceClient addressLookupServiceClient;
+    
     @Override
     public UserDto createUser(UserDto userDto) {
     	if(!StringUtils.isEmpty(userDto.getPassword())) {
@@ -67,12 +70,6 @@ public class UserServiceImpl implements UserService {
     		userDto.setLastModifiedBy(loggedInUser.getUsername());
     		userDto.setLastModifiedTs(ZonedDateTime.now());
     	}
-    	if(CollectionUtils.isEmpty(userDto.getRoles())) {
-    		RoleSearchRequest roleSearchRequest = new RoleSearchRequest();
-    		roleSearchRequest.setRoleName(Constants.DEFAULT_GUEST_ROLE);
-    		RoleDtos roleDtos = userServiceClient.getRoles(roleSearchRequest);
-    		userDto.setRoles(null == roleDtos ? null : roleDtos.getRoles());
-    	}
     	return userServiceClient.createUpdateUser(userDto);
     }
     
@@ -83,10 +80,9 @@ public class UserServiceImpl implements UserService {
     
     @Override
 	public UserDto findUserById(Long id) {
-    	UserSearchRequest userSearchRequest = new UserSearchRequest();
-    	userSearchRequest.setUserId(id);
-    	UserDtos userDtos = userServiceClient.getUsers(userSearchRequest);
-        return userDtos == null || CollectionUtils.isEmpty(userDtos.getUsers()) ? null : userDtos.getUsers().get(0);
+    	UserDto userDto = userServiceClient.getUser(id);
+    	setAddressInUserDto(userDto);
+    	return userDto;
 	}
     
     @Override
@@ -94,7 +90,9 @@ public class UserServiceImpl implements UserService {
     	UserSearchRequest userSearchRequest = new UserSearchRequest();
     	userSearchRequest.setUsername(username);
     	UserDtos userDtos = userServiceClient.getUsers(userSearchRequest);
-        return userDtos == null || CollectionUtils.isEmpty(userDtos.getUsers()) ? null : userDtos.getUsers().get(0);
+    	UserDto userDto = userDtos == null || CollectionUtils.isEmpty(userDtos.getUsers()) ? null : userDtos.getUsers().get(0);
+    	setAddressInUserDto(userDto);
+        return userDto;
     }
     
     @Override
@@ -102,7 +100,9 @@ public class UserServiceImpl implements UserService {
     	UserSearchRequest userSearchRequest = new UserSearchRequest();
     	userSearchRequest.setEmail(email);
     	UserDtos userDtos = userServiceClient.getUsers(userSearchRequest);
-        return userDtos == null || CollectionUtils.isEmpty(userDtos.getUsers()) ? null : userDtos.getUsers().get(0);
+    	UserDto userDto = userDtos == null || CollectionUtils.isEmpty(userDtos.getUsers()) ? null : userDtos.getUsers().get(0);
+    	setAddressInUserDto(userDto);
+        return userDto;
     }
     
 	@Override
@@ -163,4 +163,18 @@ public class UserServiceImpl implements UserService {
     	logger.info("Change password Event url: "+url);
         applicationEventPublisher.publishEvent(new ChangePasswordEvent(url.toString(), request.getLocale(), userDto));
     }
+	
+	@Override
+	public boolean changePassword(Long userId, String pswrd) {
+		return userServiceClient.changePassword(userId, bCryptPasswordEncoder.encode(pswrd));
+	}
+	
+	private void setAddressInUserDto(UserDto userDto) {
+		if(userDto != null) {
+			AddressSearchRequest addressSearchRequest = new AddressSearchRequest();
+	    	addressSearchRequest.setUserId(userDto.getId());
+	    	AddressDtos addressDtos = addressLookupServiceClient.getAddresses(addressSearchRequest);
+	    	userDto.setAddressDtos(addressDtos == null ? null : addressDtos.getAddresses());
+		}
+	}
 }

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="rohshar (generated)" id="1586532378655-1">
+        <createTable tableName="address">
+            <column autoIncrement="true" name="address_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="address_line1" type="VARCHAR(255)"/>
+            <column name="address_line2" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_primary" type="BIT(1)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pincode" type="VARCHAR(255)"/>
+            <column name="state" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-2">
+        <createTable tableName="email_account">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="host" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="port" type="INT"/>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-3">
+        <createTable tableName="email_templates">
+            <column autoIncrement="true" name="template_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email_bcc" type="VARCHAR(255)"/>
+            <column name="body" type="TEXT"/>
+            <column name="email_cc" type="VARCHAR(255)"/>
+            <column name="email_from" type="VARCHAR(255)"/>
+            <column name="subject" type="VARCHAR(255)"/>
+            <column name="email_to" type="VARCHAR(255)"/>
+            <column name="template_type" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-4">
+        <createTable tableName="order_details">
+            <column autoIncrement="true" name="order_detail_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="BIGINT"/>
+            <column name="quantity" type="INT"/>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-5">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="order_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="address_id" type="BIGINT"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_number" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(10)"/>
+            <column name="total_amount" type="DOUBLE"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-6">
+        <createTable tableName="privileges">
+            <column autoIncrement="true" name="privilege_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_desc" type="VARCHAR(255)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_name" type="VARCHAR(255)"/>
+            <column name="parent_id" type="BIGINT"/>
+            <column name="privilege_type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-7">
+        <createTable tableName="product_category">
+            <column autoIncrement="true" name="category_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-8">
+        <createTable tableName="products">
+            <column autoIncrement="true" name="product_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="alert_quantity" type="INT"/>
+            <column name="brand_name" type="VARCHAR(255)"/>
+            <column name="category_id" type="BIGINT"/>
+            <column name="product_code" type="VARCHAR(255)"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_desc" type="VARCHAR(255)"/>
+            <column name="image" type="LONGBLOB"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="VARCHAR(255)"/>
+            <column name="per_product_price" type="DOUBLE"/>
+            <column name="purchase_price" type="DOUBLE"/>
+            <column name="quantity" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-9">
+        <createTable tableName="role_privileges">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-10">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="role_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_name" type="VARCHAR(255)"/>
+            <column name="is_deletable" type="BIT(1)"/>
+            <column name="role_type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-11">
+        <createTable tableName="settings">
+            <column autoIncrement="true" name="setting_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="value" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-12">
+        <createTable tableName="support_ticket_activity_history">
+            <column autoIncrement="true" name="activity_history_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="VARCHAR(255)"/>
+            <column name="ticket_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-13">
+        <createTable tableName="support_ticket_assignment_strategy">
+            <column autoIncrement="true" name="strategy_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT"/>
+            <column name="strategy_type" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-14">
+        <createTable tableName="support_ticket_status_change_history">
+            <column autoIncrement="true" name="status_change_history_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_from" type="VARCHAR(255)"/>
+            <column name="status_to" type="VARCHAR(255)"/>
+            <column name="ticket_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-15">
+        <createTable tableName="support_tickets">
+            <column autoIncrement="true" name="ticket_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="assigned_to" type="VARCHAR(255)"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ticket_number" type="VARCHAR(255)"/>
+            <column name="order_number" type="VARCHAR(255)"/>
+            <column name="priority" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-16">
+        <createTable tableName="user_role">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-17">
+        <createTable tableName="user_tokens">
+            <column autoIncrement="true" name="token_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_date" type="datetime(6)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-18">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="is_enabled" type="BIT(1)"/>
+            <column name="language" type="VARCHAR(255)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column defaultValue="0000-00-00 00:00:00" name="last_modified_ts" type="TIMESTAMP(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="mobile" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-19">
+        <createIndex indexName="FK284ywbpdhrdh9ub0hn6seexdu" tableName="support_ticket_activity_history">
+            <column name="ticket_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-20">
+        <createIndex indexName="FKbosd0iqvr1efg44c01jcuvdxt" tableName="role_privileges">
+            <column name="privilege_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-21">
+        <createIndex indexName="FKddceebgln19s0c4tjwj01v1ou" tableName="role_privileges">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-22">
+        <createIndex indexName="FKj345gk1bovqvfame88rcx7yyx" tableName="user_role">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-23">
+        <createIndex indexName="FKjam5y7moy3m54ybwxwdkr58nx" tableName="support_ticket_status_change_history">
+            <column name="ticket_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-24">
+        <createIndex indexName="FKjyu2qbqt8gnvno9oe9j2s2ldk" tableName="order_details">
+            <column name="order_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="rohshar (generated)" id="1586532378655-25">
+        <createIndex indexName="FKt7e7djp752sqn6w22i6ocqy6q" tableName="user_role">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

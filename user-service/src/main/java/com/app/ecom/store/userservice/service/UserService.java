@@ -16,5 +16,7 @@ public interface UserService {
 	Long countUsers(UserSearchRequest userSearchRequest);
 
 	void deleteUsers(IdsDto idsDto);
+
+	void changePassword(Long userId, String pswrd);
 	
 }

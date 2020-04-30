@@ -48,7 +48,7 @@ public class PrivilegeController {
 
 	
 	@GetMapping(value = RequestUrls.PRIVILEGES)
-    public String getRoles(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required=false) String name) {
+    public String getPrivileges(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required=false) String name) {
 		Map<String, String> params = new HashMap<>();
 		params.put(FieldNames.NAME, name);
 		CustomPage<PrivilegeDto> page = privilegeService.getPrivileges(pageable, params);
@@ -97,7 +97,7 @@ public class PrivilegeController {
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_BULK_PRIVILEGES)
-	public Response deleteRoles(@RequestBody IdsDto idsDto) {
+	public Response deletePrivileges(@RequestBody IdsDto idsDto) {
 		Response response = privilegeValidator.validatePrivilegeAssociation(idsDto.getIds());
 		if(HttpStatus.OK.value() == response.getCode()) {
 			privilegeService.deletePrivileges(idsDto);
@@ -107,7 +107,7 @@ public class PrivilegeController {
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_ALL_PRIVILEGES)
-	public Response deleteAllRoles() {
+	public Response deleteAllPrivileges() {
 		Response response = privilegeValidator.validatePrivilegeAssociation(null);
 		if(HttpStatus.OK.value() == response.getCode()) {
 			privilegeService.deletePrivileges(null);

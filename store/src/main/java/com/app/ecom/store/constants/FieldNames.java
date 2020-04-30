@@ -50,7 +50,7 @@ public class FieldNames {
 	public static final String SETTING_DTO = "settingDto";
 	public static final String USER_DTO = "userDto";
 	public static final String USER_DTOS = "userDtos";
-	public static final String EMAIL_TEMPLATE_DTO = "emailTemplateDto";
+	public static final String TEMPLATE_DTO = "templateDto";
 	public static final String IMAGE = "image";
 	public static final String PRODUCT_CATEGORY = "productCategory";
 	public static final String PRODUCT_CATEGORY_DTO = "productCategoryDto";
@@ -121,4 +121,7 @@ public class FieldNames {
 	public static final String NUMBER = "number";
 	public static final String ASSIGNED_TO = "assignedTo";
 	public static final String UNCLOSED_FOR = "unclosedFor";
+	public static final String PSWRD = "pswrd";
+	public static final String CONFIRM_PSWRD = "confirmPswrd";
+	public static final String IS_VALIDATION_REQUIRED = "isValidationRequired";
 }

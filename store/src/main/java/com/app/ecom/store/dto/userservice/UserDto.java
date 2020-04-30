@@ -3,7 +3,6 @@ package com.app.ecom.store.dto.userservice;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Transient;
 
@@ -51,7 +50,7 @@ public class UserDto implements Serializable {
 	private Boolean isAdmin;
 
 	@JsonProperty("addressDtos")
-	private Set<AddressDto> addressDtos;
+	private List<AddressDto> addressDtos;
 
 	@JsonProperty("roles")
 	private List<RoleDto> roles;
@@ -144,6 +143,10 @@ public class UserDto implements Serializable {
 	public Boolean isEnabled() {
 		return isEnabled;
 	}
+	
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
 
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
@@ -157,11 +160,11 @@ public class UserDto implements Serializable {
 		this.isAdmin = isAdmin;
 	}
 
-	public Set<AddressDto> getAddressDtos() {
+	public List<AddressDto> getAddressDtos() {
 		return addressDtos;
 	}
 
-	public void setAddressDtos(Set<AddressDto> addressDtos) {
+	public void setAddressDtos(List<AddressDto> addressDtos) {
 		this.addressDtos = addressDtos;
 	}
 

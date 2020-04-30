@@ -31,11 +31,11 @@ public class RequestUrls {
 	public static final String SEND_EMAIL = "/sendEmail";
 	public static final String GET_EMAIL_ACCOUNT = "/getEmailAccount";
 	public static final String ADD_EMAIL_ACCOUNT = "/addEmailAccount";
-	public static final String EMAIL_TEMPLATES = "/admin/emailTemplates";
-	public static final String ADD_EMAIL_TEMPLATES = "/admin/addEmailTemplates";
-	public static final String DELETE_EMAIL_TEMPLATES = EMAIL_TEMPLATES+"/{id}";
-	public static final String DELETE_BULK_EMAIL_TEMPLATES = "/admin/bulkemailTemplates";
-	public static final String DELETE_ALL_EMAIL_TEMPLATES = "/admin/allemailTemplates";
+	public static final String TEMPLATES = "/admin/templates";
+	public static final String ADD_TEMPLATE = "/admin/addTemplate";
+	public static final String DELETE_TEMPLATE = TEMPLATES+"/{id}";
+	public static final String DELETE_BULK_TEMPLATES = "/admin/bulkTemplates";
+	public static final String DELETE_ALL_TEMPLATES = "/admin/allTemplates";
 	
 	public static final String EXCEL = "/excel";
 	public static final String SAMPLE = "/sample";
@@ -65,12 +65,17 @@ public class RequestUrls {
 	public static final String FORGET_PASSWORD = "/forgetPassword";
 	public static final String CHANGE_PASSWORD = "/changePassword";
 	public static final String RESET_PASSWORD = "/resetPassword";
+	public static final String CHANGE_PSWRD = "/changePswrd";
 	public static final String HOME = "/home";
+	public static final String FAILURE = "/failure";
 	public static final String ACCESS_DENIED = "/accessDenied";
 	public static final String USERS = "/admin/users";
+	public static final String USER_WITH_ID = USERS + "{id}";
 	public static final String EDIT_USER = "/admin/editUser";
+	public static final String VIEW_USER = "/admin/viewUser";
 	public static final String EDIT_USERS = "/editUsers";
-	public static final String FAILURE = "/failure";
+	public static final String ACCOUNT_SETTING = "/admin/accountSetting";
+	public static final String PERSONAL_INFORMATION = "/admin/personalInformation";
 	
 	public static final String SUPPORT_TICKETS = "/supportTickets";
 	public static final String CREATE_SUPPORT_TICKET = "/createSupportTicket";

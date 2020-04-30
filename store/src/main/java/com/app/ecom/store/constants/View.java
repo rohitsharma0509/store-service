@@ -8,8 +8,8 @@ public class View {
 	public static final String ADD_ADDRESS = "addAddress";
 	public static final String ADMIN = "admin";
 	public static final String COMPOSE_EMAIL = "composeEmail";
-	public static final String ADD_EMAIL_TEMPLATES = "addEmailTemplates";
-	public static final String EMAIL_TEMPLATES = "emailTemplates";
+	public static final String ADD_TEMPLATE = "addTemplate";
+	public static final String TEMPLATES = "templates";
 	public static final String HOME = "home";
 	public static final String ORDER = "order";
 	public static final String ORDERS = "orders";
@@ -36,10 +36,14 @@ public class View {
 	public static final String FORGET_PASSWORD = "forgetPassword";
 	public static final String CHANGE_PASSWORD = "changePassword";
 	public static final String RESET_PASSWORD = "resetPassword";
+	public static final String CHANGE_PSWRD = "changePswrd";
 	public static final String REGISTRATION = "registration";
 	public static final String STOCK = "stock";
 	public static final String USERS = "users";
 	public static final String EDIT_USER = "editUser";
+	public static final String VIEW_USER = "viewUser";
+	public static final String ACCOUNT_SETTING = "accountSetting";
+	public static final String PERSONAL_INFORMATION = "personalInformation";
 	public static final String MY_ACCOUNT = "myAccount";
 	public static final String EDIT_PROFILE = "editProfile";
 	public static final String FAILURE = "failure";

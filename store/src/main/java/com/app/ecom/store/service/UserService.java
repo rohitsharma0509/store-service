@@ -32,4 +32,6 @@ public interface UserService {
 	UserDto findUserById(Long id);
 	
 	void sendChangePasswordLink(UserDto userDto, HttpServletRequest request);
+
+	boolean changePassword(Long userId, String pswrd);
 }

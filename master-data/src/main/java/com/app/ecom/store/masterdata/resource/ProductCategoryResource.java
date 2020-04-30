@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,17 @@ public class ProductCategoryResource {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(value = Endpoint.CATEGORY_WITH_ID)
+	public ResponseEntity<ProductCategoryDto> getProductCategoryById(@PathVariable Long id) {
+		try {
+			ProductCategoryDto productCategoryDto = productCategoryService.getProductCategoryById(id);
+			return new ResponseEntity<>(productCategoryDto, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while getting privilege: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@PostMapping(value = Endpoint.CATEGORY)
 	public ResponseEntity<ProductCategoryDtos> getProductCategories(@RequestBody ProductCategorySearchRequest productCategorySearchRequest) {
@@ -62,13 +75,24 @@ public class ProductCategoryResource {
 		}
 	}
 	
-	@DeleteMapping(value = Endpoint.CATEGORY)
-	public ResponseEntity<Void> deleteCategories(@RequestBody IdsDto idsDto) {
+	@DeleteMapping(value = Endpoint.CATEGORY_WITH_ID)
+	public ResponseEntity<Void> deleteProductCategoryById(@PathVariable Long id) {
 		try {
-			productCategoryService.deleteCategories(idsDto);
+			productCategoryService.deleteProductCategoryById(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error(new StringBuilder("Exception while deleting product category: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@DeleteMapping(value = Endpoint.CATEGORY)
+	public ResponseEntity<Void> deleteProductCategories(@RequestBody IdsDto idsDto) {
+		try {
+			productCategoryService.deleteProductCategories(idsDto);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while deleting product categories: ").append(commonUtil.getStackTraceAsString(e)));
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

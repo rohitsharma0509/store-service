@@ -39,6 +39,7 @@ String action = "Save";
               <div class="col-sm-6">
                   <label for="<%=FieldNames.NAME %>"><spring:message code="Privilege Name" text="Privilege Name" />&nbsp;<span class="urgent_fields">*</span></label>
                   <form:input type="text" path="<%=FieldNames.NAME %>" id="<%=FieldNames.NAME %>" class="form-control input-sm"/>
+                  <form:input type="hidden" path="<%=FieldNames.OLD_NAME %>" id="<%=FieldNames.OLD_NAME %>"/>
                   <form:errors path="<%=FieldNames.NAME %>" class="help-inline has-error"></form:errors>
               </div>
           </div>

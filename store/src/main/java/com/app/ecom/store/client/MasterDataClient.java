@@ -33,18 +33,25 @@ public class MasterDataClient {
 	@Autowired
 	private CommonUtil commonUtil;
 	
+	//@Autowired
+	//private CacheManager cacheManager;
+	
+	//@CachePut(cacheNames = "productCategoryCache", key = "{#productCategoryDto.getId(), #productCategoryDto.getName()}")
+	//@CacheEvict(cacheNames = "productCategoryCountCache", key = "{#productCategoryDto.getId(), #productCategoryDto.getName()}")
 	public ProductCategoryDto addUpdateProductCategory(ProductCategoryDto productCategoryDto) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, CATEGORY);
 		ExternalApiRequest<ProductCategoryDto> externalApi = commonUtil.getExternalApiRequest(ProductCategoryDto.class, url, HttpMethod.PUT, null, null, productCategoryDto);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
+	//@Cacheable(value = "productCategoryCache", key = "{#productCategorySearchRequest.getId(), #productCategorySearchRequest.getName()}")
 	public ProductCategoryDtos getProductCategories(ProductCategorySearchRequest productCategorySearchRequest) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, CATEGORY);
 		ExternalApiRequest<ProductCategoryDtos> externalApi = commonUtil.getExternalApiRequest(ProductCategoryDtos.class, url, HttpMethod.POST, null, null, productCategorySearchRequest);
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
+	//@Cacheable(value = "productCategoryCountCache", key = "{#productCategoryDto.getId(), #productCategoryDto.getName()}")
 	public Long countProductCategories(ProductCategoryDto productCategoryDto) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_CATEGORY);
 		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, productCategoryDto);
@@ -55,6 +62,11 @@ public class MasterDataClient {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, CATEGORY);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
+		/*if (idsDto == null || CollectionUtils.isEmpty(idsDto.getIds())) {
+			cacheManager.getCache("productCategoryCache").clear();
+		} else {
+			cacheManager.getCache("productCategoryCache").evict(idsDto.getIds());
+		}*/
 	}
 	
 	public SettingDto addUpdateSetting(SettingDto settingDto) {

@@ -1,6 +1,7 @@
 package com.app.ecom.store.masterdata.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.app.ecom.store.masterdata.dto.IdsDto;
 import com.app.ecom.store.masterdata.dto.QueryRequest;
@@ -13,8 +14,6 @@ import com.app.ecom.store.masterdata.model.ProductCategory;
 import com.app.ecom.store.masterdata.repository.ProductCategoryRepository;
 import com.app.ecom.store.masterdata.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -30,20 +29,21 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
 	@Autowired
 	private QueryHandler<ProductCategory> queryHandler;
-	
-	@Autowired
-	private CacheManager cacheManager;
 
 	@Override
 	@Transactional
 	public ProductCategoryDto addUpdateProductCategory(ProductCategoryDto productCategoryDto) {
 		ProductCategory productCategory = productCategoryRepository.save(productCategoryMapper.productCategoryDtoToProductCategory(productCategoryDto));
-		cacheManager.getCache("productCategoriesCache").clear();
 		return productCategoryMapper.productCategoryToProductCategoryDto(productCategory);
+	}
+	
+	@Override
+	public ProductCategoryDto getProductCategoryById(Long id) {
+		Optional<ProductCategory> optionalRole = productCategoryRepository.findById(id);
+		return optionalRole.isPresent() ? productCategoryMapper.productCategoryToProductCategoryDto(optionalRole.get()) : null;
 	}
 
 	@Override
-	@Cacheable(value = "productCategoriesCache", key = "{ #productCategorySearchRequest.getId(), #productCategorySearchRequest.getName()}")
 	public ProductCategoryDtos getProductCategories(ProductCategorySearchRequest productCategorySearchRequest) {
 		queryHandler.setType(ProductCategory.class);
 		QueryRequest queryRequest = new QueryRequest();
@@ -62,10 +62,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		queryRequest.setWhereClauses(productCategoryMapper.productCategoryDtoToWhereClauses(productCategoryDto));
 		return queryHandler.countByQueryRequest(queryRequest, "id");
 	}
+	
+	@Override
+	@Transactional
+	public void deleteProductCategoryById(Long id) {
+		productCategoryRepository.deleteById(id);
+	}
 
 	@Override
 	@Transactional
-	public void deleteCategories(IdsDto idsDto) {
+	public void deleteProductCategories(IdsDto idsDto) {
 		if (idsDto == null || CollectionUtils.isEmpty(idsDto.getIds())) {
 			productCategoryRepository.deleteAll();
 		} else if (idsDto.getIds().size() == 1) {
@@ -73,6 +79,5 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		} else {
 			productCategoryRepository.deleteByIdIn(idsDto.getIds());
 		}
-		cacheManager.getCache("productCategoriesCache").clear();
 	}
 }
