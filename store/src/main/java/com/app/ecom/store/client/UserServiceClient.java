@@ -81,6 +81,12 @@ public class UserServiceClient {
 		return externalApiHandler.callExternalApi(externalApi);
 	}
 	
+	public boolean modifyUserRoles(Long userId, IdsDto idsDto) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, USER + "/" + userId + ROLE);
+		ExternalApiRequest<Boolean> externalApi = commonUtil.getExternalApiRequest(Boolean.class, url, HttpMethod.PUT, null, null, idsDto);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
 	public RoleDto createUpdateRole(RoleDto roleDto) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ROLE);
 		ExternalApiRequest<RoleDto> externalApi = commonUtil.getExternalApiRequest(RoleDto.class, url, HttpMethod.PUT, null, null, roleDto);
@@ -128,4 +134,5 @@ public class UserServiceClient {
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
 	}
+	
 }

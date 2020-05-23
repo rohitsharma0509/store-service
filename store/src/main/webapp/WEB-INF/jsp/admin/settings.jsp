@@ -19,7 +19,7 @@
     <div class="row" style="height: 10px;"></div>
     <div class="row">
       <div class="col-sm-12">
-        <table class="table content-table">
+        <table class="table">
           <tr>
             <th><spring:message code="Name" text="Name" /></th>
             <th><spring:message code="Description" text="Description" /></th>

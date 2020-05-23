@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -6,7 +7,7 @@
 $('form[name=addressForm]').submit(function(e) {
 	e.preventDefault();
 	$.post({
-        url : "addAddress",
+        url : '<%=RequestUrls.ADD_ADDRESS %>',
         data : $("form[name=addressForm]").serialize(),
         success : function(response) {
           window.parent.location.reload();
@@ -36,7 +37,7 @@ String action = "Add Your Address";
           </button>
         </div>
         <div class="modal-body mx-3">
-          <form:form method="POST" modelAttribute="addressDto" name="addressForm" action="addAddress">
+          <form:form method="POST" modelAttribute="addressDto" name="addressForm">
           <form:hidden path="<%=FieldNames.ID %>"/>
              <div class="row form-group">
                <div class="col-sm-12">
@@ -77,6 +78,7 @@ String action = "Add Your Address";
              <div class="row form-group">
                <div class="col-sm-12">
                  <button type="submit" class="btn btn-info"><spring:message code="<%=action %>" text="<%=action %>" /></button>
+                 <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close"><spring:message code="Close" text="Close" /></button>
                </div>
              </div>
           </form:form>

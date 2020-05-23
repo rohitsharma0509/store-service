@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.app.ecom.store.dto.CustomPage;
+import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.userservice.UserDto;
 import org.springframework.data.domain.Pageable;
 
@@ -34,4 +35,6 @@ public interface UserService {
 	void sendChangePasswordLink(UserDto userDto, HttpServletRequest request);
 
 	boolean changePassword(Long userId, String pswrd);
+
+	boolean modifyUserRoles(Long id, IdsDto idsDto);
 }

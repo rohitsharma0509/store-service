@@ -98,4 +98,15 @@ public class UserResource {
 			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PutMapping(value = Endpoint.USER_ROLE)
+	public ResponseEntity<Boolean> modifyUserRole(@PathVariable Long id, @RequestBody IdsDto idsDto) {
+		try {
+			boolean isSuccess = userService.modifyUserRole(id, idsDto);
+			return new ResponseEntity<>(isSuccess, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(new StringBuilder("Exception while modifing user roles: ").append(commonUtil.getStackTraceAsString(e)));
+			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

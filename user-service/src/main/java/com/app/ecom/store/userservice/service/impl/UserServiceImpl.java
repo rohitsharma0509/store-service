@@ -11,6 +11,7 @@ import com.app.ecom.store.userservice.dto.UserSearchRequest;
 import com.app.ecom.store.userservice.handler.QueryHandler;
 import com.app.ecom.store.userservice.mapper.UserMapper;
 import com.app.ecom.store.userservice.model.User;
+import com.app.ecom.store.userservice.repository.RoleRepository;
 import com.app.ecom.store.userservice.repository.UserRepository;
 import com.app.ecom.store.userservice.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -52,6 +56,20 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDto)));
 		}
+	}
+	
+	@Override
+	@Transactional
+	public boolean modifyUserRole(Long userId, IdsDto idsDto) {
+		boolean flag = false;
+		Optional<User> optionalUser = userRepository.findById(userId);
+    	if(optionalUser.isPresent()) {
+    		User user = optionalUser.get();
+    		user.setRoles(roleRepository.findByIdIn(idsDto.getIds()));
+    		userRepository.save(user);
+    		flag = true;
+    	}
+		return flag;
 	}
 	
 	@Override

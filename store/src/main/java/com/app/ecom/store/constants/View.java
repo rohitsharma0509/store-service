@@ -44,6 +44,7 @@ public class View {
 	public static final String VIEW_USER = "viewUser";
 	public static final String ACCOUNT_SETTING = "accountSetting";
 	public static final String PERSONAL_INFORMATION = "personalInformation";
+	public static final String MODIFY_USER_ROLES = "modifyUserRoles";
 	public static final String MY_ACCOUNT = "myAccount";
 	public static final String EDIT_PROFILE = "editProfile";
 	public static final String FAILURE = "failure";

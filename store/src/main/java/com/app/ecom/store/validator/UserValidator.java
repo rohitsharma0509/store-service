@@ -1,11 +1,13 @@
 package com.app.ecom.store.validator;
 
 import com.app.ecom.store.constants.FieldNames;
+import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -63,5 +65,13 @@ public class UserValidator implements Validator {
 		
 		boolean isPswrdMatch = pswrd.equals(confirmPswrd);
 		return commonUtil.getResponse(!isPswrdMatch, ErrorCode.ERR000007.getCode());
+	}
+
+	public Response validateRoleIds(IdsDto idsDto) {
+		if(idsDto == null || CollectionUtils.isEmpty(idsDto.getIds())) {
+			return commonUtil.getResponse(true, ErrorCode.ERR000003.getCode());
+		} else {
+			return commonUtil.getResponse(false, null);
+		}
 	}
 }

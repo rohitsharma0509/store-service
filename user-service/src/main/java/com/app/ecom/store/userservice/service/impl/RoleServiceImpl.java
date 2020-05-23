@@ -15,6 +15,7 @@ import com.app.ecom.store.userservice.repository.RoleRepository;
 import com.app.ecom.store.userservice.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 @Service
@@ -61,6 +62,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteRoles(IdsDto idsDto) {
 		if (idsDto == null || CollectionUtils.isEmpty(idsDto.getIds())) {
 			roleRepository.deleteAll();

@@ -5,11 +5,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <script>
 function modifyRoles(userId) {
-	var url = '<%=RequestUrls.USERS%>/'+userId;
+	var url = '<%=RequestUrls.USERS%>'+'/'+userId;
 	
-  $.get(url, function(modal) {
-    $("#addressModal").html(modal);
-    $("#modalAddAddress").modal("show");
+  $.get(url, function(responseAsModal) {
+    $("#modifyRolesModal").html(responseAsModal);
+    $("#roleModal").modal("show");
   });
 }
 </script>
@@ -33,8 +33,9 @@ function modifyRoles(userId) {
   <div class="col-sm-3 text-right"><spring:message code="Language" text="Language" /> : </div>
   <div class="col-sm-3 text-left">${userDto.language}</div>
 </div>
-<%--<div class="heading"><spring:message code="Roles & Privileges" text="Roles & Privileges" />&nbsp;(<a href="#" onclick="modifyRoles('${userDto.id}');"><spring:message code="Modify Roles" text="Modify Roles" /></a>)</div> --%>
-<div class="heading"><spring:message code="Roles & Privileges" text="Roles & Privileges" /></div>
+<div class="heading"><spring:message code="Roles & Privileges" text="Roles & Privileges" />&nbsp;(<a href="#" onclick="modifyRoles('${userDto.id}');"><spring:message code="Modify Roles" text="Modify Roles" /></a>)</div>
+<div class="alert alert-success alert-dismissible d-none" id="role-update-success"><button type="button" class="close" data-dismiss="alert">&times;</button><span id="success-msg"></span></div>
+<div class="alert alert-danger alert-dismissible d-none" id="role-update-failure"><button type="button" class="close" data-dismiss="alert">&times;</button><span id="failure-msg"></span></div>
 <c:choose>
 	<c:when test="${userDto.getRoles().size() > 0}">
 		<div class="row">
@@ -66,3 +67,4 @@ function modifyRoles(userId) {
 		</div>
 	</c:otherwise>
 </c:choose>
+<div id="modifyRolesModal"></div>

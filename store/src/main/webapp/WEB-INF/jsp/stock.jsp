@@ -54,7 +54,7 @@
 			<c:when test="${page.getContent().size() > 0}">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table content-table">
+						<table class="table">
 							<tr>
 								<th><spring:message code="Category Name" text="Category Name" /></th>
 								<th><spring:message code="Brand Name" text="Brand Name" /></th>

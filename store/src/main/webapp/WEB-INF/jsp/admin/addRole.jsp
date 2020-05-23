@@ -41,11 +41,11 @@ $('form[id=roleForm]').submit(function(e) {
                 <div class="steps-row setup-panel">
                     <div class="steps-step">
                         <a href="#step-1" type="button" class="btn btn-indigo btn-circle">1</a>
-                        <p>Select Role Details</p>
+                        <p><spring:message code="Select Role Details" text="Select Role Details" /></p>
                     </div>
                     <div class="steps-step">
                         <a href="#step-2" type="button" class="btn btn-default btn-circle">2</a>
-                        <p>Select Privileges</p>
+                        <p><spring:message code="Select Privileges" text="Select Privileges" /></p>
                     </div>
                 </div>
             </div>

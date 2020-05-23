@@ -4,11 +4,9 @@
 <title><tiles:getAsString name="title" /></title>
 </head>
 <body style="background-color: #F2F3F8;">
+  <tiles:insertAttribute name="header" />
   <div class="container">
-    <tiles:insertAttribute name="header" />
-    <!-- <tiles:insertAttribute name="menu" />-->
     <tiles:insertAttribute name="body" />
-    <!-- <tiles:insertAttribute name="footer" /> -->
   </div>
 </body>
 </html>

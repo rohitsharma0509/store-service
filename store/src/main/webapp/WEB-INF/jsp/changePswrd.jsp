@@ -16,10 +16,10 @@ UserDto userDto = (UserDto) request.getSession().getAttribute(FieldNames.USER);
           <div class="row justify-content-center mb-4">
               <div class="col-xl-7 col-lg-8 col-10 list text-left">
                 <c:if test="${not empty message}">
-				          <div class="alert alert-success hide" >${message}</div>
+				          <div class="alert alert-success" >${message}</div>
 				        </c:if>
 				        <c:if test="${not empty error}">
-                  <div class="alert alert-danger hide" >${error}</div>
+                  <div class="alert alert-danger" >${error}</div>
                 </c:if>
                 <div class="form-group">
                   <label for="<%=FieldNames.PSWRD %>"><spring:message code="New Password" text="New Password" />&nbsp;<span class="urgent_fields">*</span></label>

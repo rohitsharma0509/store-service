@@ -4,69 +4,45 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <script src="../js/actions.js"></script>
-<script>
-var filterState=0;
-$(document).ready(function(){
-   $('#hideShowDiv').click(function() { 
-      if(filterState==0){
-        $("#filters").slideUp("slow");
-        $("#hideShowDiv").html("<a href='#'>Show Filters</a>");
-        filterState=1;
-      }else if(filterState==1){
-        $("#filters").slideDown("slow");
-        $("#hideShowDiv").html("<a href='#'>Hide Filters</a>");
-        filterState=0;
-      }
-   });
-});
-</script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.ADMIN %>"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Users" text="Users" /></li>
-  <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
-<div class="row" style="height: 10px;"></div>
-<div class="row" id="filters">
-	<div class="col-sm-12">
-		<form method="GET" class="form-horizontal" action="<%=RequestUrls.USERS%>">
-			<div class="card">
-				<div class="card-body main-center">
-					<div class="row">
-						<div class="col-sm-2">
-							<label for="<%=FieldNames.NAME %>"><spring:message code="Name" text="Name" /></label>
-							<input type="text" id="<%=FieldNames.NAME %>" name="<%=FieldNames.NAME %>" value="${param.name}" class="form-control input-sm" />
-						</div>
-						<div class="col-sm-1"></div>
-						<div class="col-sm-2">
-							<label for="<%=FieldNames.EMAIL %>"><spring:message code="Email" text="Email" /></label> 
-							<input type="text" id="<%=FieldNames.EMAIL %>" name="<%=FieldNames.EMAIL %>" value="${param.email}" class="form-control input-sm" />
-						</div>
-						<div class="col-sm-1"></div>
-						<div class="col-sm-2">
-              <label for="<%=FieldNames.MOBILE %>"><spring:message code="Mobile" text="Mobile" /></label>
-              <input type="text" id="<%=FieldNames.MOBILE %>" name="<%=FieldNames.MOBILE %>" value="${param.mobile}" class="form-control input-sm" />
-            </div>
-						<div class="col-sm-4"></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-1">
-							<input type="submit" value="<spring:message code="Search" text="Search" />" style="margin-top: 15px;" class="btn btn-sm btn-info form-control">
-						</div>
-						<div class="col-sm-11"></div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+<section id="filters">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+       <form method="GET" class="form-horizontal" action="<%=RequestUrls.USERS%>">
+        <div class="row">
+          <div class="col-sm-2 p-0">
+            <spring:message code="Name" text="Name" var="label" />
+            <input type="text" id="<%=FieldNames.NAME %>" name="<%=FieldNames.NAME %>" value="${param.name}" class="form-control" placeholder="${label}" />
+          </div>
+          <div class="col-sm-2 p-0">
+            <spring:message code="Email" text="Email" var="label" />
+            <input type="text" id="<%=FieldNames.EMAIL %>" name="<%=FieldNames.EMAIL %>" value="${param.email}" class="form-control" placeholder="${label}" />
+          </div>
+          <div class="col-sm-2 p-0">
+            <spring:message code="Mobile" text="Mobile" var="label" />
+            <input type="text" id="<%=FieldNames.MOBILE %>" name="<%=FieldNames.MOBILE %>" value="${param.mobile}" class="form-control" placeholder="${label}" />
+          </div>
+          <div class="col-sm-6 p-0">
+            <button type="submit" class="btn btn-info"><i class="fa fa-search" style="font-size: 18px;"></i></button>
+          </div>
+        </div>
+       </form>
+      </div>
+    </div>
+  </div>
+</section>
 <div class="row" style="height: 20px;"></div>
 <c:choose>
 	<c:when test="${page.getContent().size() > 0}">
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table content-table">
+				<table class="table">
 					<tr>
-						<th><input type="checkbox" name="ids" id="all" /></th>
+						<th><input type="checkbox" id="all" /></th>
 						<th><spring:message code="Name" text="Name" /></th>
 						<th><spring:message code="Email" text="Email" /></th>
 						<th><spring:message code="Mobile" text="Mobile" /></th>

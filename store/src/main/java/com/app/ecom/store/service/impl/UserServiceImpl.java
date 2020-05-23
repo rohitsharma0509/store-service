@@ -14,6 +14,7 @@ import com.app.ecom.store.client.AddressLookupServiceClient;
 import com.app.ecom.store.client.UserServiceClient;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
+import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
 import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
@@ -176,5 +177,10 @@ public class UserServiceImpl implements UserService {
 	    	AddressDtos addressDtos = addressLookupServiceClient.getAddresses(addressSearchRequest);
 	    	userDto.setAddressDtos(addressDtos == null ? null : addressDtos.getAddresses());
 		}
+	}
+
+	@Override
+	public boolean modifyUserRoles(Long id, IdsDto idsDto) {
+		return userServiceClient.modifyUserRoles(id, idsDto);
 	}
 }

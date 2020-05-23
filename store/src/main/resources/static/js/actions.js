@@ -87,11 +87,6 @@
 		  var selectedIds = [];
 		  $.each($("input[name='ids']:checked"), function() {
 			selectedIds.push($(this).val());
-		    var index = selectedIds.indexOf(-1);
-		    	
-		    if (index > -1) {
-		      array.splice(index, 1);
-		    }
 		  });
 		  return selectedIds;
 	  }

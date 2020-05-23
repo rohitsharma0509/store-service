@@ -70,7 +70,7 @@ public class RequestUrls {
 	public static final String FAILURE = "/failure";
 	public static final String ACCESS_DENIED = "/accessDenied";
 	public static final String USERS = "/admin/users";
-	public static final String USER_WITH_ID = USERS + "{id}";
+	public static final String USER_WITH_ID = USERS + "/{id}";
 	public static final String EDIT_USER = "/admin/editUser";
 	public static final String VIEW_USER = "/admin/viewUser";
 	public static final String EDIT_USERS = "/editUsers";

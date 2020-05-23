@@ -9,6 +9,8 @@ public interface UserService {
 
 	UserDto createUpdateUser(UserDto userDto);
 	
+	boolean modifyUserRole(Long userId, IdsDto idsDto);
+	
 	UserDto getUserById(Long id);
 
 	UserDtos getUsers(UserSearchRequest userSearchRequest);
@@ -17,6 +19,5 @@ public interface UserService {
 
 	void deleteUsers(IdsDto idsDto);
 
-	void changePassword(Long userId, String pswrd);
-	
+	void changePassword(Long userId, String pswrd);	
 }

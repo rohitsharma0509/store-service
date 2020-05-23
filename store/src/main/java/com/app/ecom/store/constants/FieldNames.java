@@ -3,6 +3,7 @@ package com.app.ecom.store.constants;
 public class FieldNames {
 	private FieldNames(){}
 	public static final String ID = "id";
+	public static final String IDS = "ids";
 	public static final String NAME = "name";
 	public static final String OLD_NAME = "oldName";
 	public static final String FIRST_NAME = "firstName";
@@ -51,6 +52,7 @@ public class FieldNames {
 	public static final String USER_DTO = "userDto";
 	public static final String USER_DTOS = "userDtos";
 	public static final String TEMPLATE_DTO = "templateDto";
+	public static final String IDS_DTO = "idsDto";
 	public static final String IMAGE = "image";
 	public static final String PRODUCT_CATEGORY = "productCategory";
 	public static final String PRODUCT_CATEGORY_DTO = "productCategoryDto";
@@ -86,6 +88,7 @@ public class FieldNames {
 	public static final String SALES_COMPARISION_GRAPH = "salesComparisionGraph";
 	public static final String SUPPORT_TICKET_STATUS_GRAPH = "supportTicketStatusGraph";
 	public static final String ROLE = "role";
+	public static final String ROLES = "roles";
 	public static final String MONTHS = "months";
 	public static final String YEARS = "years";
 	public static final String MONTH = "month";

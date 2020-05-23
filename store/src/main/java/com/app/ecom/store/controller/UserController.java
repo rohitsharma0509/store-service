@@ -1,8 +1,10 @@
 package com.app.ecom.store.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,13 +14,16 @@ import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.CustomPage;
+import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.userservice.RoleDto;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.UserValidator;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -99,13 +105,55 @@ public class UserController {
 	}
 	
 	@GetMapping(value = RequestUrls.USER_WITH_ID)
-	public String modifyUserRoles(Model model, @PathVariable Long userId) {
+	public String redirectToModifyUserRoles(Model model, @PathVariable(name = FieldNames.ID) Long userId) {
 		UserDto userDto = userService.findUserById(userId);
+		List<Long> userRoleIds = new ArrayList<>();
+		if(!CollectionUtils.isEmpty(userDto.getRoles())) {
+			userRoleIds = userDto.getRoles().stream().map(RoleDto::getId).collect(Collectors.toList());
+		}
+		IdsDto idsDto = new IdsDto();
+		idsDto.setIds(userRoleIds);
+		
+		model.addAttribute(FieldNames.USER_ID, userId);
 		model.addAttribute(FieldNames.ROLE_DTOS, roleService.getAllRoles());
-		model.addAttribute(FieldNames.USER_DTO, userDto);
-		return "modifyUserRoles";
+		model.addAttribute(FieldNames.IDS_DTO, idsDto);
+		return View.MODIFY_USER_ROLES;
 	}
-
+	
+	/*@PostMapping(value = RequestUrls.USER_WITH_ID)
+	public String modifyUserRole(Model model, @PathVariable(FieldNames.ID) Long id, @ModelAttribute(FieldNames.IDS_DTO) IdsDto idsDto) {
+		Response response = userValidator.validateRoleIds(idsDto);
+		if(HttpStatus.OK.value() == response.getCode()) {
+			boolean isSuccess = userService.modifyUserRoles(id, idsDto);
+			if(isSuccess) {
+				model.addAttribute(FieldNames.MESSAGE, environment.getProperty(ErrorCode.ERR000030.getCode()));
+			} else {
+				model.addAttribute(FieldNames.ERROR, environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));
+			}
+		} else {
+			model.addAttribute(FieldNames.ERROR, response.getDescription());
+		}
+		UserDto userDto = userService.findUserById(id);
+		model.addAttribute(FieldNames.USER_DTO, userDto);
+		return View.VIEW_USER;
+	}*/
+	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.USER_WITH_ID)
+	public Response modifyUserRole(Model model, @PathVariable(FieldNames.ID) Long id, @RequestBody IdsDto idsDto) {
+		Response response = userValidator.validateRoleIds(idsDto);
+		if(HttpStatus.OK.value() == response.getCode()) {
+			boolean isSuccess = userService.modifyUserRoles(id, idsDto);
+			if(isSuccess) {
+				response.setDescription(environment.getProperty(ErrorCode.ERR000030.getCode()));
+			} else {
+				response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+				response.setMessage(HttpStatus.INTERNAL_SERVER_ERROR.name());
+				response.setDescription(environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));
+			}
+		}
+		return response;
+	}
 	
 	@PostMapping(value = RequestUrls.USERS)
 	public String editUser(@ModelAttribute(FieldNames.USER_DTO) UserDto userDto) {
@@ -152,10 +200,10 @@ public class UserController {
 				if(flag) {
 					model.addAttribute(FieldNames.MESSAGE, environment.getProperty(ErrorCode.ERR000029.getCode()));
 				} else {
-					model.addAttribute(FieldNames.MESSAGE, environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));
+					model.addAttribute(FieldNames.ERROR, environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));
 				}
 			} else {
-				model.addAttribute(FieldNames.ERROR, environment.getProperty(String.valueOf(response.getCode())));
+				model.addAttribute(FieldNames.ERROR, response.getDescription());
 			}
 		}
 		return View.CHANGE_PSWRD;
