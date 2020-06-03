@@ -2,7 +2,7 @@ package com.app.ecom.store.validator;
 
 import java.util.Calendar;
 
-import com.app.ecom.store.constants.FieldNames;
+import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.util.CommonUtil;
@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -28,16 +29,21 @@ public class UserTokenValidator implements Validator {
 
 	@Override
 	public void validate(Object o, Errors errors) {
-		UserTokenDto userTokenDto = (UserTokenDto) o;
+		
+	}
+	
+	public Response validateToken(UserTokenDto userTokenDto) {
+		String errorCode = "";
 		if (userTokenDto == null) {
         	logger.info("Invalid token");
-        	errors.rejectValue(FieldNames.TOKEN, commonUtil.getMessage(ErrorCode.ERR000025.getCode()));
+        	errorCode = ErrorCode.ERR000025.getCode();
         } else {
 	        Calendar cal = Calendar.getInstance();
 	        if ((userTokenDto.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 	        	logger.info("Token has been expired");
-	        	errors.rejectValue(FieldNames.TOKEN, commonUtil.getMessage(ErrorCode.ERR000026.getCode()));
+	        	errorCode = ErrorCode.ERR000026.getCode();
 	        }
         }
+		return commonUtil.getResponse(!StringUtils.isEmpty(errorCode), errorCode);
 	}
 }

@@ -20,6 +20,7 @@ public class FieldNames {
 	public static final String ROLE_NAME = "roleName";
 	public static final String ROLE_ID = "roleId";
 	public static final String SUBJECT = "subject";
+	public static final String OLD_SUBJECT = "oldSubject";
 	public static final String FROM = "from";
 	public static final String TO = "to";
 	public static final String CC = "cc";
@@ -127,4 +128,8 @@ public class FieldNames {
 	public static final String PSWRD = "pswrd";
 	public static final String CONFIRM_PSWRD = "confirmPswrd";
 	public static final String IS_VALIDATION_REQUIRED = "isValidationRequired";
+	public static final String LOCALE = "locale";
+	public static final String RESET_PSWRD_LINK = "resetPswrdLink";
+	public static final String ACCOUNT_ACTIVATION_LINK = "accountActivationLink";
+
 }

@@ -66,7 +66,7 @@
           </div>
           <button type="submit" class="btn btn-sm btn-info btn-block login-page-font btn-signin"><spring:message code="Sign In" text="Sign In" /></button>
           <div class="text-left">
-            <a href="${contextPath}<%=RequestUrls.FORGET_PASSWORD %>" class="login-page-font"><spring:message code="Need help signing in" text="Need help signing in" />?</a>
+            <a href="${contextPath}<%=RequestUrls.FORGET_PSWRD %>" class="login-page-font"><spring:message code="Need help signing in" text="Need help signing in" />?</a>
           </div>
           <hr>
           <div class="login-page-font"><spring:message code="Don't have an account" text="Don't have an account" />?<span>&nbsp;&nbsp;<a href="${contextPath}<%=RequestUrls.REGISTRATION %>"><spring:message code="Sign up" text="Sign up" /></a></span></div>

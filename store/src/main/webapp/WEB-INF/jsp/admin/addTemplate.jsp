@@ -43,30 +43,7 @@ String action = "Save";
                   <label for="<%=FieldNames.SUBJECT %>"><spring:message code="Subject" text="Subject" />&nbsp;<span class="urgent_fields">*</span></label>
                   <form:input type="text" path="<%=FieldNames.SUBJECT %>" id="<%=FieldNames.SUBJECT %>" class="form-control input-sm"/>
                   <form:errors path="<%=FieldNames.SUBJECT %>" class="help-inline has-error"></form:errors>
-              </div>
-          </div>
-          <div class="form-group row">
-              <div class="col-sm-6">
-                  <label for="<%=FieldNames.FROM %>"><spring:message code="From" text="From" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="<%=FieldNames.FROM %>" id="<%=FieldNames.FROM %>" class="form-control input-sm"/>
-                  <form:errors path="<%=FieldNames.FROM %>" class="help-inline has-error"></form:errors>
-              </div>
-              <div class="col-sm-6">
-                  <label for="<%=FieldNames.TO %>"><spring:message code="To" text="To" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="<%=FieldNames.TO %>" id="<%=FieldNames.TO %>" class="form-control input-sm"/>
-                  <form:errors path="<%=FieldNames.TO %>" class="help-inline has-error"></form:errors>
-              </div>
-          </div>
-          <div class="form-group row">
-              <div class="col-sm-6">
-                  <label for="<%=FieldNames.CC %>"><spring:message code="CC" text="CC" /></label>
-                  <form:input type="text" path="<%=FieldNames.CC %>" id="<%=FieldNames.CC %>" class="form-control input-sm"/>
-                  <form:errors path="<%=FieldNames.CC %>" class="help-inline has-error"></form:errors>
-              </div>
-              <div class="col-sm-6">
-                  <label for="<%=FieldNames.BCC %>"><spring:message code="BCC" text="BCC" /></label>
-                  <form:input type="text" path="<%=FieldNames.BCC %>" id="<%=FieldNames.BCC %>" class="form-control input-sm"/>
-                  <form:errors path="<%=FieldNames.BCC %>" class="help-inline has-error"></form:errors>
+                  <form:input type="hidden" path="<%=FieldNames.OLD_SUBJECT %>" id="<%=FieldNames.OLD_SUBJECT %>"/>
               </div>
           </div>
           <div class="form-group row">

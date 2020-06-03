@@ -43,26 +43,29 @@
 					<tr>
 						<th><input type="checkbox" id="all" /></th>
 						<th><spring:message code="Template For" text="Template For" /></th>
-						<th><spring:message code="From" text="From" /></th>
-						<th><spring:message code="To" text="To" /></th>
-						<th><spring:message code="CC" text="CC" /></th>
-						<th><spring:message code="BCC" text="BCC" /></th>
+						<th><spring:message code="Subject" text="Subject" /></th>
+						<th><spring:message code="Created By" text="Created By" /></th>
+						<th><spring:message code="Created On" text="Created On" /></th>
 						<th><spring:message code="Action" text="Action" /></th>
 					</tr>
 					<c:forEach var="template" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${template.id}" /></td>
 							<td>${template.type}</td>
-				   			<td>${template.from}</td>
-				   			<td>${template.to}</td>
-				   			<td>${template.cc}</td>
-				   			<td>${template.bcc}</td>
+				   		<td>${template.subject}</td>
+				   		<td>${template.createdBy}</td>
+				   		<td>${template.createdTs}</td>
 							<td>
 						    <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_TEMPLATE %>?<%=FieldNames.ID %>=${template.id}"><spring:message code="Edit" text="Edit" /></a></li>
-                    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.TEMPLATES %>/${template.id}"><spring:message code="Delete" text="Delete" /></a></li>
+                    <c:if test="${template.isEditable}">
+                      <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_TEMPLATE %>?<%=FieldNames.ID %>=${template.id}"><spring:message code="Edit" text="Edit" /></a></li>
+                    </c:if>
+                    <c:if test="${template.isDeletable}">
+                      <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.TEMPLATES %>/${template.id}"><spring:message code="Delete" text="Delete" /></a></li>
+                    </c:if>
+                    <li class="list-group-item list-group-item-action"><a href="<%=RequestUrls.TEMPLATES %>/${template.id}"><spring:message code="Preview Template" text="Preview Template" /></a></li>
                   </ul>
                 </div>
 							</td>

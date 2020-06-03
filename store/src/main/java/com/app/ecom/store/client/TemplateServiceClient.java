@@ -1,9 +1,15 @@
 package com.app.ecom.store.client;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.templateservice.TemplateDto;
 import com.app.ecom.store.dto.templateservice.TemplateDtos;
+import com.app.ecom.store.dto.templateservice.TemplateMailDto;
 import com.app.ecom.store.dto.templateservice.TemplateSearchRequest;
 import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,7 @@ public class TemplateServiceClient {
 	
 	private static final String TEMPLATE = "/template";
 	private static final String COUNT_TEMPLATE = "/countTemplate";
+	private static final String SEND_TEMPLATE_MAIL = "/sendTemplateMail";
 	
 	@Value("${application.template-service.name}")
 	private String serviceName;
@@ -56,6 +63,14 @@ public class TemplateServiceClient {
 	public void deleteTemplates(IdsDto idsDto) {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TEMPLATE);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
+		externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public void sendTemplateMail(TemplateMailDto templateMailDto, Locale locale) {
+		Map<String, String> queryParamMap = new HashMap<>();
+		queryParamMap.put(FieldNames.LOCALE, locale.getDisplayName());
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, SEND_TEMPLATE_MAIL);
+		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.POST, null, queryParamMap, templateMailDto);
 		externalApiHandler.callExternalApi(externalApi);
 	}
 }

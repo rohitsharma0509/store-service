@@ -2,7 +2,6 @@ package com.app.ecom.store.validator;
 
 import java.util.List;
 
-import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.templateservice.TemplateDto;
@@ -32,30 +31,15 @@ public class TemplateValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         TemplateDto templateDto = (TemplateDto) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.TO, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.TYPE, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.SUBJECT, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, FieldNames.BODY, commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
-
-        String[] to = commonUtil.convertStringToArray(templateDto.getTo(), Constants.COMMA);
-        if(!commonUtil.isValidEmails(to)){
-        	errors.rejectValue(FieldNames.TO, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
-        }
-        
-        String[] cc = commonUtil.convertStringToArray(templateDto.getCc(), Constants.COMMA);
-        if(!commonUtil.isValidEmails(cc)){
-        	errors.rejectValue(FieldNames.CC, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
-        }
-        
-        String[] bcc = commonUtil.convertStringToArray(templateDto.getBcc(), Constants.COMMA);
-        if(!commonUtil.isValidEmails(bcc)){
-        	errors.rejectValue(FieldNames.BCC, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
-        }
         
         List<TemplateDto> templateDtos = templateService.getAllTemplates();
 		
 		for(TemplateDto template : templateDtos) {
 			if(!template.getSubject().equalsIgnoreCase(templateDto.getOldSubject()) && template.getSubject().equalsIgnoreCase(templateDto.getSubject())) {
-				errors.rejectValue(FieldNames.NAME, commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
+				errors.rejectValue(FieldNames.SUBJECT, commonUtil.getMessage(ErrorCode.ERR000031.getCode()));
 			}
 		}
     }

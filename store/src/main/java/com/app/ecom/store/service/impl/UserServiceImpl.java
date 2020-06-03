@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 import com.app.ecom.store.client.AddressLookupServiceClient;
 import com.app.ecom.store.client.UserServiceClient;
@@ -20,20 +19,16 @@ import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.userservice.UserDtos;
 import com.app.ecom.store.dto.userservice.UserSearchRequest;
-import com.app.ecom.store.events.ChangePasswordEvent;
-import com.app.ecom.store.events.RegistrationCompleteEvent;
 import com.app.ecom.store.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,9 +37,6 @@ public class UserServiceImpl implements UserService {
 	
     @Autowired
     private LocaleResolver localeResolver;
-    
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -68,7 +60,9 @@ public class UserServiceImpl implements UserService {
     		userDto.setCreatedTs(ZonedDateTime.now());
     	} else {
     		UserDto loggedInUser = (UserDto) httpSession.getAttribute(FieldNames.USER);
-    		userDto.setLastModifiedBy(loggedInUser.getUsername());
+    		if(loggedInUser != null && !StringUtils.isEmpty(userDto.getLastModifiedBy())) {
+	    		userDto.setLastModifiedBy(loggedInUser.getUsername());
+    		}
     		userDto.setLastModifiedTs(ZonedDateTime.now());
     	}
     	return userServiceClient.createUpdateUser(userDto);
@@ -145,24 +139,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateLocale(HttpServletRequest request, HttpServletResponse response, String language){
     	localeResolver.setLocale(request, response, Locale.forLanguageTag(language));
-    }
-
-    @Override
-    @Transactional
-    public void sendVerificationLink(UserDto userDto, HttpServletRequest request) {
-    	StringBuilder url = new StringBuilder(ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString());
-    	url.append(request.getContextPath());
-    	logger.info("Registration complete Event url: "+url);
-        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(url.toString(), request.getLocale(), userDto));
-    }
-	
-	@Override
-	@Transactional
-    public void sendChangePasswordLink(UserDto userDto, HttpServletRequest request) {
-    	StringBuilder url = new StringBuilder(ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString());
-    	url.append(request.getContextPath());
-    	logger.info("Change password Event url: "+url);
-        applicationEventPublisher.publishEvent(new ChangePasswordEvent(url.toString(), request.getLocale(), userDto));
     }
 	
 	@Override

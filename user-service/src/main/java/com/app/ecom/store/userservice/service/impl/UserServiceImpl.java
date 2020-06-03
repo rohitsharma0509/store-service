@@ -49,6 +49,9 @@ public class UserServiceImpl implements UserService {
 	    		userToUpdate.setEmail(userDto.getEmail());
 	    		userToUpdate.setMobile(userDto.getMobile());
 	    		userToUpdate.setLanguage(userDto.getLanguage());
+	    		if(userDto.getIsEnabled()) {
+	    			userToUpdate.setIsEnabled(userDto.getIsEnabled());
+	    		}
 	    		return userMapper.userToUserDto(userRepository.save(userToUpdate));
 	    	} else {
 	    		return null;

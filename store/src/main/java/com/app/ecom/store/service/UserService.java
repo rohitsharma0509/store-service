@@ -28,11 +28,7 @@ public interface UserService {
 
     void updateLocale(HttpServletRequest request, HttpServletResponse response, String language);
 
-    void sendVerificationLink(UserDto userDto, HttpServletRequest request);
-
-	UserDto findUserById(Long id);
-	
-	void sendChangePasswordLink(UserDto userDto, HttpServletRequest request);
+    UserDto findUserById(Long id);
 
 	boolean changePassword(Long userId, String pswrd);
 

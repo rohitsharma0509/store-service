@@ -15,18 +15,6 @@ public class TemplateDto {
 	@JsonProperty("type")
     private Long type;
 
-	@JsonProperty("from")
-    private String from;
-
-	@JsonProperty("to")
-    private String to;
-
-	@JsonProperty("cc")
-    private String cc;
-
-	@JsonProperty("bcc")
-    private String bcc;
-
 	@JsonProperty("subject")
     private String subject;
 	
@@ -35,6 +23,12 @@ public class TemplateDto {
 
 	@JsonProperty("body")
     private String body;
+	
+	@JsonProperty("isEditable")
+    private boolean isEditable;
+    
+	@JsonProperty("isDeletable")
+    private boolean isDeletable;
 	
 	@JsonProperty("createdBy")
 	private String createdBy;
@@ -63,39 +57,7 @@ public class TemplateDto {
     public void setType(Long type) {
         this.type = type;
     }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getCc() {
-        return cc;
-    }
-
-    public void setCc(String cc) {
-        this.cc = cc;
-    }
-
-    public String getBcc() {
-        return bcc;
-    }
-
-    public void setBcc(String bcc) {
-        this.bcc = bcc;
-    }
-
+    
     public String getSubject() {
         return subject;
     }
@@ -120,6 +82,22 @@ public class TemplateDto {
         this.body = body;
     }
 	
+	public boolean getIsEditable() {
+		return isEditable;
+	}
+
+	public void setIsEditable(boolean isEditable) {
+		this.isEditable = isEditable;
+	}
+
+	public boolean getIsDeletable() {
+		return isDeletable;
+	}
+
+	public void setIsDeletable(boolean isDeletable) {
+		this.isDeletable = isDeletable;
+	}
+
 	public String getCreatedBy() {
 		return createdBy;
 	}

@@ -33,10 +33,9 @@ public class View {
 	public static final String ADD_SETTING = "addSetting";
 	public static final String SHOPPING_CART_CONFIRM = "shoppingCartConfirm";
 	public static final String LOGIN = "login";
-	public static final String FORGET_PASSWORD = "forgetPassword";
-	public static final String CHANGE_PASSWORD = "changePassword";
-	public static final String RESET_PASSWORD = "resetPassword";
+	public static final String FORGET_PSWRD = "forgetPswrd";
 	public static final String CHANGE_PSWRD = "changePswrd";
+	public static final String RESET_PSWRD = "resetPswrd";
 	public static final String REGISTRATION = "registration";
 	public static final String STOCK = "stock";
 	public static final String USERS = "users";

@@ -55,8 +55,14 @@ public class TemplateController {
         List<TemplateType> templateTypes = new ArrayList<>();
         TemplateType templateType = new TemplateType();
         templateType.setId(1L);
-        templateType.setType("User registration mail");
+        templateType.setType("Password Reset Template");
         templateTypes.add(templateType);
+        
+        templateType = new TemplateType();
+        templateType.setId(2L);
+        templateType.setType("Password Changed Template");
+        templateTypes.add(templateType);
+        
         model.addAttribute("types", templateTypes);
         return View.ADD_TEMPLATE;
     }

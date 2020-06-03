@@ -2,6 +2,7 @@ package com.app.ecom.store.service.impl;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.templateservice.TemplateDto;
 import com.app.ecom.store.dto.templateservice.TemplateDtos;
+import com.app.ecom.store.dto.templateservice.TemplateMailDto;
 import com.app.ecom.store.dto.templateservice.TemplateSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.TemplateService;
@@ -42,6 +44,8 @@ public class TemplateServiceImpl implements TemplateService {
 			templateDto.setLastModifiedBy(userDto.getUsername());
 			templateDto.setLastModifiedTs(ZonedDateTime.now());
 		} else {
+			templateDto.setIsEditable(true);
+			templateDto.setIsDeletable(true);
 			templateDto.setCreatedBy(userDto.getUsername());
 			templateDto.setCreatedTs(ZonedDateTime.now());
 			templateDto.setLastModifiedBy(userDto.getUsername());
@@ -78,4 +82,9 @@ public class TemplateServiceImpl implements TemplateService {
 		TemplateDtos templateDtos = templateServiceClient.getTemplates(new TemplateSearchRequest());
 		return templateDtos == null ? null : templateDtos.getTemplates();
 	}
+	
+    @Override
+    public void sendTemplateMail(TemplateMailDto templateMailDto, Locale locale) {
+    	templateServiceClient.sendTemplateMail(templateMailDto, locale);
+    }
 }

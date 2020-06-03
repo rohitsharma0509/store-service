@@ -174,11 +174,10 @@ public class CommonUtil {
 	}
 	
 	public String[] convertStringToArray(String str, String delimeter) {
-		if(StringUtils.isEmpty(str)){
-			return null;
-		} else {
+		if(!StringUtils.isEmpty(str)){
 			return str.split(delimeter);
 		}
+		return null;
 	}
 	
 	public String getValue(String value) {

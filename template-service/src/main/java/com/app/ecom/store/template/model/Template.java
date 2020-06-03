@@ -20,23 +20,17 @@ public class Template {
     @Column(name = "template_type")
     private Long type;
 
-    @Column(name = "email_from")
-    private String from;
-    
-    @Column(name = "email_to")
-    private String to;
-
-    @Column(name = "email_cc")
-    private String cc;
-
-    @Column(name = "email_bcc")
-    private String bcc;
-
     @Column(name = "subject")
     private String subject;
 
     @Column(name = "body", columnDefinition="text")
     private String body;
+    
+    @Column(name="is_editable", columnDefinition="tinyint(1)")
+    private boolean isEditable;
+    
+    @Column(name="is_deletable", columnDefinition="tinyint(1)")
+    private boolean isDeletable;
 	
 	@Column(name = "created_by")
 	private String createdBy;
@@ -66,40 +60,6 @@ public class Template {
         this.type = type;
     }
 
-    
-    public String getFrom() {
-        return from;
-    }
-
-    
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getCc() {
-        return cc;
-    }
-
-    public void setCc(String cc) {
-        this.cc = cc;
-    }
-
-    public String getBcc() {
-        return bcc;
-    }
-
-    public void setBcc(String bcc) {
-        this.bcc = bcc;
-    }
-
     public String getSubject() {
         return subject;
     }
@@ -116,6 +76,22 @@ public class Template {
         this.body = body;
     }
 	
+	public boolean getIsEditable() {
+		return isEditable;
+	}
+
+	public void setIsEditable(boolean isEditable) {
+		this.isEditable = isEditable;
+	}
+
+	public boolean getIsDeletable() {
+		return isDeletable;
+	}
+
+	public void setIsDeletable(boolean isDeletable) {
+		this.isDeletable = isDeletable;
+	}
+
 	public String getCreatedBy() {
 		return createdBy;
 	}

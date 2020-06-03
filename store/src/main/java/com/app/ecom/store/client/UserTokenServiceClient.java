@@ -17,10 +17,10 @@ public class UserTokenServiceClient {
 	
 	private static final String TOKEN = "/token";
 	
-	@Value("${application.order-service.name}")
+	@Value("${application.user-token-service.name}")
 	private String serviceName;
 	
-	@Value("${application.order-service.context-path}")
+	@Value("${application.user-token-service.context-path}")
 	private String contextPath;
 	
 	@Autowired

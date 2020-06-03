@@ -120,24 +120,6 @@ public class UserController {
 		return View.MODIFY_USER_ROLES;
 	}
 	
-	/*@PostMapping(value = RequestUrls.USER_WITH_ID)
-	public String modifyUserRole(Model model, @PathVariable(FieldNames.ID) Long id, @ModelAttribute(FieldNames.IDS_DTO) IdsDto idsDto) {
-		Response response = userValidator.validateRoleIds(idsDto);
-		if(HttpStatus.OK.value() == response.getCode()) {
-			boolean isSuccess = userService.modifyUserRoles(id, idsDto);
-			if(isSuccess) {
-				model.addAttribute(FieldNames.MESSAGE, environment.getProperty(ErrorCode.ERR000030.getCode()));
-			} else {
-				model.addAttribute(FieldNames.ERROR, environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));
-			}
-		} else {
-			model.addAttribute(FieldNames.ERROR, response.getDescription());
-		}
-		UserDto userDto = userService.findUserById(id);
-		model.addAttribute(FieldNames.USER_DTO, userDto);
-		return View.VIEW_USER;
-	}*/
-	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.USER_WITH_ID)
 	public Response modifyUserRole(Model model, @PathVariable(FieldNames.ID) Long id, @RequestBody IdsDto idsDto) {

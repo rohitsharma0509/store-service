@@ -9,4 +9,5 @@ public class Endpoint {
 	public static final String TEMPLATE = "/template";
 	public static final String TEMPLATE_WITH_ID = TEMPLATE+"/{id}";
 	public static final String COUNT_TEMPLATE = "/countTemplate";
+	public static final String SEND_TEMPLATE_MAIL = "/sendTemplateMail";
 }

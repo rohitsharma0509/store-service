@@ -18,6 +18,6 @@ public class WebSocketConfiguration extends AbstractSecurityWebSocketMessageBrok
     
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat-messaging").withSockJS();
+        registry.addEndpoint("/chat-messaging", "/fileupload").withSockJS();
     }
 }

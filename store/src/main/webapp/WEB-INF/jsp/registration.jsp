@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -61,7 +62,7 @@
         </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="Submit" text="Submit" /></button>
-        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="window.history.back()"><spring:message code="Back" text="Back" /></button>
+        <a class="btn btn-lg btn-primary" href="${contextPath}<%=RequestUrls.LOGIN %>" style="margin-top: 10px;width:100%;"><spring:message code="Back" text="Back" /></a>
     </form:form>
 
 </div>
