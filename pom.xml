@@ -20,6 +20,20 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+		<sonar.projectKey>${project.artifactId}</sonar.projectKey>
+		<sonar.projectName>${project.name}</sonar.projectName>
+		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+		<sonar.sources>/build/src/main</sonar.sources>
+		<sonar.tests>/build/src/test</sonar.tests>
+		<sonar.java.binaries>/build/target/classes</sonar.java.binaries>
+		<sonar.jacoco.reportPaths>/build/target/jacoco.exec</sonar.jacoco.reportPaths>
+		<sonar.junit.reportPaths>/build/target/surefire-reports</sonar.junit.reportPaths>
+		<sonar.exclusions>
+            src/main/webapp/*.*,
+			src/main/webapp/**/*.*,
+			target/**/*.*,
+        </sonar.exclusions>
 	</properties>
 
 	<modules>
@@ -54,6 +68,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+			</plugin>			
 		</plugins>
 	</build>
 
