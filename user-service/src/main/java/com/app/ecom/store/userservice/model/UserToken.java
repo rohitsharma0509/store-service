@@ -1,4 +1,4 @@
-package com.app.ecom.store.token.model;
+package com.app.ecom.store.userservice.model;
 
 import java.time.ZonedDateTime;
 import java.util.Date;

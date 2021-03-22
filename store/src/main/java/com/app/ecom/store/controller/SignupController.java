@@ -12,7 +12,7 @@ import com.app.ecom.store.constants.View;
 import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.templateservice.TemplateMailDto;
 import com.app.ecom.store.dto.userservice.UserDto;
-import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
+import com.app.ecom.store.dto.userservice.UserTokenDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.enums.MailTemplateName;
 import com.app.ecom.store.service.TemplateService;

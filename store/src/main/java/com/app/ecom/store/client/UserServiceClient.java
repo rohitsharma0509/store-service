@@ -6,9 +6,9 @@ import java.util.Map;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
-import com.app.ecom.store.dto.addresslookupservice.AddressDto;
-import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
-import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
+import com.app.ecom.store.dto.userservice.AddressDto;
+import com.app.ecom.store.dto.userservice.AddressDtos;
+import com.app.ecom.store.dto.userservice.AddressSearchRequest;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDtos;
 import com.app.ecom.store.dto.userservice.PrivilegeSearchRequest;
@@ -18,6 +18,7 @@ import com.app.ecom.store.dto.userservice.RoleSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.userservice.UserDtos;
 import com.app.ecom.store.dto.userservice.UserSearchRequest;
+import com.app.ecom.store.dto.userservice.UserTokenDto;
 import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public class UserServiceClient {
 	private static final String COUNT_PRIVILEGE = "/countPrivilege";
 	private static final String ADDRESS = "/address";
 	private static final String COUNT_ADDRESS = "/countAddress";
+	private static final String TOKEN = "/token";
 	
 	@Value("${application.user-service.name}")
 	private String serviceName;
@@ -162,5 +164,19 @@ public class UserServiceClient {
 		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
 		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
 		externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public UserTokenDto createToken(UserTokenDto userTokenDto) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TOKEN);
+		ExternalApiRequest<UserTokenDto> externalApi = commonUtil.getExternalApiRequest(UserTokenDto.class, url, HttpMethod.PUT, null, null, userTokenDto);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public UserTokenDto getToken(String token) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, TOKEN);
+		Map<String, String> queryParamMap = new HashMap<>();
+		queryParamMap.put(FieldNames.TOKEN, token);
+		ExternalApiRequest<UserTokenDto> externalApi = commonUtil.getExternalApiRequest(UserTokenDto.class, url, HttpMethod.GET, null, queryParamMap, null);
+		return externalApiHandler.callExternalApi(externalApi);
 	}
 }

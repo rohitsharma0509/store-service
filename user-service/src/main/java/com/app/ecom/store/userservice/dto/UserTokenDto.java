@@ -1,4 +1,4 @@
-package com.app.ecom.store.dto.usertokenservice;
+package com.app.ecom.store.userservice.dto;
 
 import java.time.ZonedDateTime;
 import java.util.Date;

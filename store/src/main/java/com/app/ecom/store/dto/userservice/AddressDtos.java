@@ -1,4 +1,4 @@
-package com.app.ecom.store.dto.addresslookupservice;
+package com.app.ecom.store.dto.userservice;
 
 import java.util.List;
 

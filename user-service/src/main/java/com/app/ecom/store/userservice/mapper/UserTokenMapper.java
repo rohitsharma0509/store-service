@@ -1,8 +1,9 @@
-package com.app.ecom.store.token.mapper;
+package com.app.ecom.store.userservice.mapper;
 
-import com.app.ecom.store.token.dto.UserTokenDto;
-import com.app.ecom.store.token.model.UserToken;
 import org.springframework.stereotype.Component;
+
+import com.app.ecom.store.userservice.dto.UserTokenDto;
+import com.app.ecom.store.userservice.model.UserToken;
 
 @Component
 public class UserTokenMapper {

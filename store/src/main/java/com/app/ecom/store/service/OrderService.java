@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.app.ecom.store.dto.orderservice.OrderDetailDto;
 import com.app.ecom.store.dto.orderservice.OrderDto;
+import com.app.ecom.store.dto.userservice.AddressDto;
 import com.app.ecom.store.dto.userservice.UserDto;
+
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {

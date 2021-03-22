@@ -10,9 +10,9 @@ import org.springframework.util.CollectionUtils;
 
 import com.app.ecom.store.client.UserServiceClient;
 import com.app.ecom.store.constants.FieldNames;
-import com.app.ecom.store.dto.addresslookupservice.AddressDto;
-import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
-import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
+import com.app.ecom.store.dto.userservice.AddressDto;
+import com.app.ecom.store.dto.userservice.AddressDtos;
+import com.app.ecom.store.dto.userservice.AddressSearchRequest;
 import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.service.AddressService;
 

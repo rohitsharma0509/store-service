@@ -1,40 +1,25 @@
-package com.app.ecom.store.dto.addresslookupservice;
+package com.app.ecom.store.dto.userservice;
 
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(value = Include.NON_NULL)
-public class AddressDto {
-	
+public class UserTokenDto {
 	@JsonProperty("id")
 	private Long id;
-
-	@JsonProperty("addressLine1")
-	private String addressLine1;
-
-	@JsonProperty("addressLine2")
-	private String addressLine2;
-
-	@JsonProperty("city")
-	private String city;
-
-	@JsonProperty("state")
-	private String state;
-
-	@JsonProperty("pincode")
-	private String pincode;
-
-	@JsonProperty("country")
-	private String country;
 	
-	@JsonProperty("isPrimary")
-	private Boolean isPrimary;
+	@JsonProperty("token")
+	private String token;
 	
 	@JsonProperty("userId")
 	private Long userId;
+	
+	@JsonProperty("expiryDate")
+	private Date expiryDate;
 	
 	@JsonProperty("createdBy")
 	private String createdBy;
@@ -56,60 +41,12 @@ public class AddressDto {
 		this.id = id;
 	}
 
-	public String getAddressLine1() {
-		return addressLine1;
+	public String getToken() {
+		return token;
 	}
 
-	public void setAddressLine1(String addressLine1) {
-		this.addressLine1 = addressLine1;
-	}
-
-	public String getAddressLine2() {
-		return addressLine2;
-	}
-
-	public void setAddressLine2(String addressLine2) {
-		this.addressLine2 = addressLine2;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public Boolean getIsPrimary() {
-		return isPrimary;
-	}
-
-	public void setIsPrimary(Boolean isPrimary) {
-		this.isPrimary = isPrimary;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public Long getUserId() {
@@ -118,6 +55,14 @@ public class AddressDto {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
 	}
 
 	public String getCreatedBy() {

@@ -1,4 +1,4 @@
-package com.app.ecom.store.dto.addresslookupservice;
+package com.app.ecom.store.dto.userservice;
 
 import com.app.ecom.store.dto.DefaultSearchRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;

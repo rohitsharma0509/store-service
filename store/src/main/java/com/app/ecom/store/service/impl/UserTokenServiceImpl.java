@@ -6,10 +6,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-import com.app.ecom.store.client.UserTokenServiceClient;
+import com.app.ecom.store.client.UserServiceClient;
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.userservice.UserDto;
-import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
+import com.app.ecom.store.dto.userservice.UserTokenDto;
 import com.app.ecom.store.service.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserTokenServiceImpl implements UserTokenService {
 
     @Autowired
-    private UserTokenServiceClient userTokenServiceClient;
+    private UserServiceClient userServiceClient;
     
     private static final int TOKEN_EXPIRY_TIME = 24 * 60;
 
@@ -38,12 +38,12 @@ public class UserTokenServiceImpl implements UserTokenService {
         userTokenDto.setToken(token);
         userTokenDto.setExpiryDate(expiryDate);
         userTokenDto.setUserId(userDto.getId());
-        UserTokenDto tokenDto = userTokenServiceClient.createToken(userTokenDto);
+        UserTokenDto tokenDto = userServiceClient.createToken(userTokenDto);
         return tokenDto == null ? Constants.EMPTY_STRING : tokenDto.getToken();
     }
 
     @Override
     public UserTokenDto getUserToken(String token) {
-        return userTokenServiceClient.getToken(token);
+        return userServiceClient.getToken(token);
     }
 }

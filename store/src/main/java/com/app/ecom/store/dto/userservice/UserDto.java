@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Transient;
 
-import com.app.ecom.store.dto.addresslookupservice.AddressDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;

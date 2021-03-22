@@ -36,9 +36,6 @@ application:
   user-service:
     name: user-service
     context-path: /api/userservice/v1
-  user-token-service:
-    name: user-token-service
-    context-path: /api/usertokenservice/v1
   support-service:
     name: support-service
     context-path: /api/supportservice/v1

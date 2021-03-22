@@ -1,4 +1,4 @@
-package com.app.ecom.store.token.dto;
+package com.app.ecom.store.userservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

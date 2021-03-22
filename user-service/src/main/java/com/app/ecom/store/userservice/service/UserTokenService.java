@@ -1,6 +1,6 @@
-package com.app.ecom.store.token.service;
+package com.app.ecom.store.userservice.service;
 
-import com.app.ecom.store.token.dto.UserTokenDto;
+import com.app.ecom.store.userservice.dto.UserTokenDto;
 
 public interface UserTokenService {
 

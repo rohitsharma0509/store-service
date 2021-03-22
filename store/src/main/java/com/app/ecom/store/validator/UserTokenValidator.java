@@ -3,7 +3,7 @@ package com.app.ecom.store.validator;
 import java.util.Calendar;
 
 import com.app.ecom.store.dto.Response;
-import com.app.ecom.store.dto.usertokenservice.UserTokenDto;
+import com.app.ecom.store.dto.userservice.UserTokenDto;
 import com.app.ecom.store.enums.ErrorCode;
 import com.app.ecom.store.util.CommonUtil;
 import org.apache.logging.log4j.LogManager;

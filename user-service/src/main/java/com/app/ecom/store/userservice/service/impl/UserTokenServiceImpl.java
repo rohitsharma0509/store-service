@@ -1,27 +1,24 @@
-package com.app.ecom.store.token.service.impl;
+package com.app.ecom.store.userservice.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.app.ecom.store.token.dto.QueryRequest;
-import com.app.ecom.store.token.dto.UserTokenDto;
-import com.app.ecom.store.token.dto.WhereClause;
-import com.app.ecom.store.token.enums.OperationType;
-import com.app.ecom.store.token.handler.QueryHandler;
-import com.app.ecom.store.token.mapper.UserTokenMapper;
-import com.app.ecom.store.token.model.UserToken;
-import com.app.ecom.store.token.repository.UserTokenRepository;
-import com.app.ecom.store.token.service.UserTokenService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.app.ecom.store.userservice.dto.QueryRequest;
+import com.app.ecom.store.userservice.dto.UserTokenDto;
+import com.app.ecom.store.userservice.dto.WhereClause;
+import com.app.ecom.store.userservice.enums.OperationType;
+import com.app.ecom.store.userservice.handler.QueryHandler;
+import com.app.ecom.store.userservice.mapper.UserTokenMapper;
+import com.app.ecom.store.userservice.model.UserToken;
+import com.app.ecom.store.userservice.repository.UserTokenRepository;
+import com.app.ecom.store.userservice.service.UserTokenService;
+
 @Service
 public class UserTokenServiceImpl implements UserTokenService {
-	
-	private static final Logger logger = LogManager.getLogger(UserTokenServiceImpl.class);
 	
 	@Autowired
 	private UserTokenRepository userTokenRepository;

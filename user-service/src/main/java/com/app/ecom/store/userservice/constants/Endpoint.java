@@ -23,4 +23,6 @@ public class Endpoint {
 	
 	public static final String ADDRESS = "/address";
 	public static final String COUNT_ADDRESS = "/countAddress";
+	
+	public static final String TOKEN = "/token";
 }

@@ -1,4 +1,4 @@
-package com.app.ecom.store.token.dto;
+package com.app.ecom.store.userservice.dto;
 
 import java.util.List;
 
