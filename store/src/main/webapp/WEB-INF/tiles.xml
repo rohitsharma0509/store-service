@@ -279,4 +279,19 @@
         <put-attribute name="body" value="/WEB-INF/jsp/postSupportTicketActivity.jsp" />  
     </definition>
     
+    <definition name="addInventory" extends="base.definition">  
+        <put-attribute name="title" value="Add Inventory" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/inventory/addInventory.jsp" />  
+    </definition>
+    
+    <definition name="viewInventory" extends="base.definition">  
+        <put-attribute name="title" value="View Inventory" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/inventory/viewInventory.jsp" />  
+    </definition>
+    
+    <definition name="inventories" extends="base.definition">  
+        <put-attribute name="title" value="Inventories" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/inventory/inventories.jsp" />  
+    </definition>
+    
  </tiles-definitions>

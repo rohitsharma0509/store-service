@@ -86,11 +86,15 @@
 		          <p class=""><spring:message code="Configure product categories and products" /></p>
 	          </div>
 	          <div class="row">
-	            <div class="col-sm-6">
+	            <div class="col-sm-4">
+	              <a href="${contextPath}<%=RequestUrls.INVENTORY %>"><spring:message code="Manage Inventory" text="Manage Inventory" /></a>
+	              <p class=""><spring:message code="Manage Inventory" text="Manage Inventory" /></p>
+	            </div>
+	            <div class="col-sm-4">
 	              <a href="${contextPath}<%=RequestUrls.CATEGORIES %>"><spring:message code="Manage Category" text="Manage Category" /></a>
 	              <p class=""><spring:message code="Add/modify/delete product categories" /></p>
 	            </div>
-	            <div class="col-sm-6">
+	            <div class="col-sm-4">
 	              <a href="${contextPath}<%=RequestUrls.PRODUCTS %>"><spring:message code="Manage Products" text="Manage Products" /></a>
 	              <p class=""><spring:message code="Add/modify/delete products" /></p>
 	            </div>

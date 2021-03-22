@@ -132,4 +132,20 @@ public class FieldNames {
 	public static final String RESET_PSWRD_LINK = "resetPswrdLink";
 	public static final String ACCOUNT_ACTIVATION_LINK = "accountActivationLink";
 
+	
+	public static final String BILL_NUMBER = "billNumber";
+	public static final String BILL_DATE = "billDate";
+	public static final String GST_NUMBER = "gstNumber";
+	
+	public static final String AGENCY_NAME = "agencyName";
+	public static final String AGENCY_ADDRESS = "agencyAddress";
+	public static final String AGENCY_EMAIL = "agencyEmail";
+	public static final String AGENCY_CONTACT_NUMBER = "agencyContactNumber";
+	public static final String PAN_NUMBER = "panNumber";
+	public static final String SALESMAN_NAME = "salesmanName";
+	public static final String PAYMENT_STATUS = "paymentStatus";
+	public static final String PAYMENT_MODE = "paymentMode";
+	public static final String INVENTORY_DTO = "inventoryDto";
+	public static final String PAYMENT_STATUSES = "paymentStatuses";
+	public static final String PAYMENT_MODES = "paymentModes";
 }

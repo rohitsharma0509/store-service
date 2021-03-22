@@ -48,3 +48,6 @@ application:
   template-service:
     name: template-service
     context-path: /api/templateservice/v1
+  inventory-service:
+    name: inventory-service
+    context-path: /api/inventory/v1

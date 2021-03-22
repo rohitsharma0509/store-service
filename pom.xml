@@ -40,6 +40,7 @@
 		<module>address-lookup-service</module>
 		<module>api-gateway-service</module>
 		<module>discovery-service</module>
+		<module>inventory-service</module>
 		<module>master-data</module>
 		<module>order-service</module>
 		<module>product-service</module>

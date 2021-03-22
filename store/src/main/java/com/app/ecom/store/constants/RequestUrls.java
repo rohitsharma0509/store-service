@@ -4,6 +4,11 @@ public class RequestUrls {
 	private RequestUrls() {
 	}
 	
+	public static final String ADMIN = "/admin";
+	public static final String INVENTORY = "/admin/inventory";
+	public static final String ADD_INVENTORY = "/admin/addInventory";
+	public static final String VIEW_INVENTORY = "/admin/viewInventory";
+	
 	public static final String DEFAULT = "/";
 	public static final String PRODUCT_ALL = "/allProducts";
 	public static final String PRODUCTS_AJAX = "/products/ajax";
@@ -24,8 +29,6 @@ public class RequestUrls {
 	public static final String DOWNLOAD_ORDER = "/orders/download/{id}";
 	
 	public static final String STOCK = "/stock";
-	
-	public static final String ADMIN = "/admin";
 	
 	public static final String COMPOSE_EMAIL = "/composeEmail";
 	public static final String SEND_EMAIL = "/sendEmail";
