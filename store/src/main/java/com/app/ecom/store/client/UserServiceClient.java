@@ -6,6 +6,9 @@ import java.util.Map;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.ExternalApiRequest;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.addresslookupservice.AddressDto;
+import com.app.ecom.store.dto.addresslookupservice.AddressDtos;
+import com.app.ecom.store.dto.addresslookupservice.AddressSearchRequest;
 import com.app.ecom.store.dto.userservice.PrivilegeDto;
 import com.app.ecom.store.dto.userservice.PrivilegeDtos;
 import com.app.ecom.store.dto.userservice.PrivilegeSearchRequest;
@@ -30,6 +33,8 @@ public class UserServiceClient {
 	private static final String COUNT_ROLE = "/countRole";
 	private static final String PRIVILEGE = "/privilege";
 	private static final String COUNT_PRIVILEGE = "/countPrivilege";
+	private static final String ADDRESS = "/address";
+	private static final String COUNT_ADDRESS = "/countAddress";
 	
 	@Value("${application.user-service.name}")
 	private String serviceName;
@@ -135,4 +140,27 @@ public class UserServiceClient {
 		externalApiHandler.callExternalApi(externalApi);
 	}
 	
+	public AddressDto createUpdateAddress(AddressDto addressDto) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
+		ExternalApiRequest<AddressDto> externalApi = commonUtil.getExternalApiRequest(AddressDto.class, url, HttpMethod.PUT, null, null, addressDto);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public AddressDtos getAddresses(AddressSearchRequest addressSearchRequest) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
+		ExternalApiRequest<AddressDtos> externalApi = commonUtil.getExternalApiRequest(AddressDtos.class, url, HttpMethod.POST, null, null, addressSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public Long countAddresses(AddressSearchRequest addressSearchRequest) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, COUNT_ADDRESS);
+		ExternalApiRequest<Long> externalApi = commonUtil.getExternalApiRequest(Long.class, url, HttpMethod.POST, null, null, addressSearchRequest);
+		return externalApiHandler.callExternalApi(externalApi);
+	}
+	
+	public void deleteAddresses(IdsDto idsDto) {
+		String url = externalApiHandler.getExternalServiceUri(serviceName, contextPath, ADDRESS);
+		ExternalApiRequest<Void> externalApi = commonUtil.getExternalApiRequest(Void.class, url, HttpMethod.DELETE, null, null, (idsDto == null ? new IdsDto() : idsDto));
+		externalApiHandler.callExternalApi(externalApi);
+	}
 }

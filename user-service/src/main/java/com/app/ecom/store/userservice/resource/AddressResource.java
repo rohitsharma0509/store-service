@@ -1,12 +1,5 @@
-package com.app.ecom.store.address.resource;
+package com.app.ecom.store.userservice.resource;
 
-import com.app.ecom.store.address.constants.Endpoint;
-import com.app.ecom.store.address.dto.AddressDto;
-import com.app.ecom.store.address.dto.AddressDtos;
-import com.app.ecom.store.address.dto.AddressSearchRequest;
-import com.app.ecom.store.address.dto.IdsDto;
-import com.app.ecom.store.address.service.AddressService;
-import com.app.ecom.store.address.util.CommonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.app.ecom.store.userservice.constants.Endpoint;
+import com.app.ecom.store.userservice.dto.AddressDto;
+import com.app.ecom.store.userservice.dto.AddressDtos;
+import com.app.ecom.store.userservice.dto.AddressSearchRequest;
+import com.app.ecom.store.userservice.dto.IdsDto;
+import com.app.ecom.store.userservice.service.AddressService;
+import com.app.ecom.store.userservice.util.CommonUtil;
 
 @RestController
 public class AddressResource {

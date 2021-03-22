@@ -1,56 +1,51 @@
-package com.app.ecom.store.address.model;
+package com.app.ecom.store.userservice.dto;
 
 import java.time.ZonedDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity
-@Table(name = "address")
-public class Address {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "address_id")
+@JsonInclude(value = Include.NON_NULL)
+public class AddressDto {
+	
+	@JsonProperty("id")
 	private Long id;
 
-	@Column(name = "address_line1")
+	@JsonProperty("addressLine1")
 	private String addressLine1;
 
-	@Column(name = "address_line2")
+	@JsonProperty("addressLine2")
 	private String addressLine2;
 
-	@Column(name = "city")
+	@JsonProperty("city")
 	private String city;
 
-	@Column(name = "state")
+	@JsonProperty("state")
 	private String state;
 
-	@Column(name = "pincode")
+	@JsonProperty("pincode")
 	private String pincode;
 
-	@Column(name = "country")
+	@JsonProperty("country")
 	private String country;
-
-	@Column(name = "is_primary", columnDefinition = "tinyint(1)")
+	
+	@JsonProperty("isPrimary")
 	private Boolean isPrimary;
-
-	@Column(name = "user_id")
+	
+	@JsonProperty("userId")
 	private Long userId;
 	
-	@Column(name = "created_by")
+	@JsonProperty("createdBy")
 	private String createdBy;
 
-	@Column(name = "created_ts", columnDefinition = "timestamp")
+	@JsonProperty("createdTs")
 	private ZonedDateTime createdTs;
 
-	@Column(name = "last_modified_by")
+	@JsonProperty("lastModifiedBy")
 	private String lastModifiedBy;
 
-	@Column(name = "last_modified_ts", columnDefinition = "timestamp")
+	@JsonProperty("lastModifiedTs")
 	private ZonedDateTime lastModifiedTs;
 
 	public Long getId() {

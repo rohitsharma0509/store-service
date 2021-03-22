@@ -36,9 +36,6 @@ application:
   user-service:
     name: user-service
     context-path: /api/userservice/v1
-  address-lookup-service:
-    name: address-lookup-service
-    context-path: /api/addresslookupservice/v1
   user-token-service:
     name: user-token-service
     context-path: /api/usertokenservice/v1

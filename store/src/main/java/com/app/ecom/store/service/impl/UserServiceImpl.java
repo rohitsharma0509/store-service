@@ -9,7 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.app.ecom.store.client.AddressLookupServiceClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.LocaleResolver;
+
 import com.app.ecom.store.client.UserServiceClient;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.dto.CustomPage;
@@ -20,20 +27,9 @@ import com.app.ecom.store.dto.userservice.UserDto;
 import com.app.ecom.store.dto.userservice.UserDtos;
 import com.app.ecom.store.dto.userservice.UserSearchRequest;
 import com.app.ecom.store.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.LocaleResolver;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
-	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 	
     @Autowired
     private LocaleResolver localeResolver;
@@ -46,9 +42,6 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     private HttpSession httpSession;
-    
-    @Autowired
-    private AddressLookupServiceClient addressLookupServiceClient;
     
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -150,7 +143,7 @@ public class UserServiceImpl implements UserService {
 		if(userDto != null) {
 			AddressSearchRequest addressSearchRequest = new AddressSearchRequest();
 	    	addressSearchRequest.setUserId(userDto.getId());
-	    	AddressDtos addressDtos = addressLookupServiceClient.getAddresses(addressSearchRequest);
+	    	AddressDtos addressDtos = userServiceClient.getAddresses(addressSearchRequest);
 	    	userDto.setAddressDtos(addressDtos == null ? null : addressDtos.getAddresses());
 		}
 	}

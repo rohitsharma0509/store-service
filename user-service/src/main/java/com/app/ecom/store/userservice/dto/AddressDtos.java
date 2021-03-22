@@ -1,4 +1,4 @@
-package com.app.ecom.store.address.dto;
+package com.app.ecom.store.userservice.dto;
 
 import java.util.List;
 

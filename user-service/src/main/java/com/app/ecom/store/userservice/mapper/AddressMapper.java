@@ -1,18 +1,19 @@
-package com.app.ecom.store.address.mapper;
+package com.app.ecom.store.userservice.mapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.app.ecom.store.address.dto.AddressDto;
-import com.app.ecom.store.address.dto.AddressDtos;
-import com.app.ecom.store.address.dto.AddressSearchRequest;
-import com.app.ecom.store.address.dto.WhereClause;
-import com.app.ecom.store.address.enums.OperationType;
-import com.app.ecom.store.address.model.Address;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+
+import com.app.ecom.store.userservice.dto.AddressDto;
+import com.app.ecom.store.userservice.dto.AddressDtos;
+import com.app.ecom.store.userservice.dto.AddressSearchRequest;
+import com.app.ecom.store.userservice.dto.WhereClause;
+import com.app.ecom.store.userservice.enums.OperationType;
+import com.app.ecom.store.userservice.model.Address;
 
 @Component
 public class AddressMapper {

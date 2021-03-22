@@ -1,22 +1,23 @@
-package com.app.ecom.store.address.service.impl;
+package com.app.ecom.store.userservice.service.impl;
 
 import java.util.List;
 
-import com.app.ecom.store.address.dto.AddressDto;
-import com.app.ecom.store.address.dto.AddressDtos;
-import com.app.ecom.store.address.dto.AddressSearchRequest;
-import com.app.ecom.store.address.dto.IdsDto;
-import com.app.ecom.store.address.dto.QueryRequest;
-import com.app.ecom.store.address.handler.QueryHandler;
-import com.app.ecom.store.address.mapper.AddressMapper;
-import com.app.ecom.store.address.model.Address;
-import com.app.ecom.store.address.repository.AddressRepository;
-import com.app.ecom.store.address.service.AddressService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import com.app.ecom.store.userservice.dto.AddressDto;
+import com.app.ecom.store.userservice.dto.AddressDtos;
+import com.app.ecom.store.userservice.dto.AddressSearchRequest;
+import com.app.ecom.store.userservice.dto.IdsDto;
+import com.app.ecom.store.userservice.dto.QueryRequest;
+import com.app.ecom.store.userservice.handler.QueryHandler;
+import com.app.ecom.store.userservice.mapper.AddressMapper;
+import com.app.ecom.store.userservice.model.Address;
+import com.app.ecom.store.userservice.repository.AddressRepository;
+import com.app.ecom.store.userservice.service.AddressService;
 
 @Service
 public class AddressServiceImpl implements AddressService {

@@ -20,4 +20,7 @@ public class Endpoint {
 	public static final String PRIVILEGE = "/privilege";
 	public static final String GET_PRIVILEGE = PRIVILEGE + ID;
 	public static final String COUNT_PRIVILEGE = "/countPrivilege";
+	
+	public static final String ADDRESS = "/address";
+	public static final String COUNT_ADDRESS = "/countAddress";
 }

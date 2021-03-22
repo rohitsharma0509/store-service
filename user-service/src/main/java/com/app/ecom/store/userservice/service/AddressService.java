@@ -1,9 +1,9 @@
-package com.app.ecom.store.address.service;
+package com.app.ecom.store.userservice.service;
 
-import com.app.ecom.store.address.dto.AddressDto;
-import com.app.ecom.store.address.dto.AddressDtos;
-import com.app.ecom.store.address.dto.AddressSearchRequest;
-import com.app.ecom.store.address.dto.IdsDto;
+import com.app.ecom.store.userservice.dto.AddressDto;
+import com.app.ecom.store.userservice.dto.AddressDtos;
+import com.app.ecom.store.userservice.dto.AddressSearchRequest;
+import com.app.ecom.store.userservice.dto.IdsDto;
 
 public interface AddressService {
 
