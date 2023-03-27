@@ -19,7 +19,7 @@
 	   <tiles-version>3.0.8</tiles-version>
 	   <tiles-request-api-version>1.0.6</tiles-request-api-version>
 	   <jfreechart-version>1.5.0</jfreechart-version>
-	   <itextpdf-version>5.5.13</itextpdf-version>
+	   <itextpdf-version>5.5.13.3</itextpdf-version>
 	   <apache-poi-version>4.0.0</apache-poi-version>
 	   <ckeditor-version>3.5.3</ckeditor-version>
 	</properties>
